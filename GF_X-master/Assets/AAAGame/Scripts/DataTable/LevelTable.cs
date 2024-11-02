@@ -37,6 +37,15 @@ public class LevelTable : DataRowBase
         }
 
         /// <summary>
+        /// 关卡脚本名
+        /// </summary>
+        public string LvLogicName
+        {
+            get;
+            private set;
+        }
+
+        /// <summary>
         /// 玩家初始钱数
         /// </summary>
         public int InitMoney
@@ -85,6 +94,7 @@ public class LevelTable : DataRowBase
             m_Id = int.Parse(columnStrings[index++]);
             index++;
             LvPfbName = columnStrings[index++];
+            LvLogicName = columnStrings[index++];
             InitMoney = int.Parse(columnStrings[index++]);
             MoneyColorId = int.Parse(columnStrings[index++]);
             LvDisplayName = columnStrings[index++];
@@ -101,6 +111,7 @@ public class LevelTable : DataRowBase
                 {
                     m_Id = binaryReader.Read7BitEncodedInt32();
                     LvPfbName = binaryReader.ReadString();
+                    LvLogicName = binaryReader.ReadString();
                     InitMoney = binaryReader.Read7BitEncodedInt32();
                     MoneyColorId = binaryReader.Read7BitEncodedInt32();
                     LvDisplayName = binaryReader.ReadString();

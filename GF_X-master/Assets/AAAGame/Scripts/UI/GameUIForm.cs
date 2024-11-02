@@ -19,6 +19,9 @@ public partial class GameUIForm : UIFormBase
     protected override void OnOpen(object userData)
     {
         base.OnOpen(userData);
+        GF.Event.Subscribe(PlayerEventArgs.EventId, OnPlayerEvent);
+
+
         RefreshCoinsText();
         var lvTb = GF.DataTable.GetDataTable<LevelTable>();
         var playerDm = GF.DataModel.GetOrCreate<PlayerDataModel>();
@@ -26,6 +29,8 @@ public partial class GameUIForm : UIFormBase
         LvTimer = lvTb[lvId].LvTimer;
         LvTimerV = LvTimer;
         varTimeBar.fillAmount = LvTimer;
+        
+        varNodProcess.gameObject.SetActive(false);
     }
 
     private void RefreshCoinsText()
@@ -54,8 +59,38 @@ public partial class GameUIForm : UIFormBase
         }
     }
 
+    private void OnPlayerEvent(object sender, GameEventArgs e)
+    {
+        var args = e as PlayerEventArgs;
+
+        switch (args.EventType)
+        {
+            case PlayerEventType.RefreshTimer:
+                // 重置时间    
+                var data = args.EventData as Dictionary<string, object>;
+                if (data != null && data.ContainsKey("Timer"))
+                {
+                    LvTimerV = (int)data["Timer"];
+                }
+
+                break;
+            case PlayerEventType.DragBtnKongbu:
+                var data2 = args.EventData as Dictionary<string, object>;
+                if (data2 != null && data2.ContainsKey("value"))
+                {
+                    varNodProcess.gameObject.SetActive(true);
+                    varProcessBar.fillAmount =(float)(int)data2["value"] / 500;
+                }
+
+                break;
+
+            //varNodProcess
+        }
+    }
+
     protected override void OnClose(bool isShutdown, object userData)
     {
         base.OnClose(isShutdown, userData);
+        GF.Event.Unsubscribe(PlayerEventArgs.EventId, OnPlayerEvent);
     }
 }

@@ -1,9 +1,9 @@
-﻿#	关卡表					i18n	
-#	ID		LvPfbName	InitMoney	MoneyColorId	LvDisplayName	LvTimer
-#	int		string	int	int	string	int
-#		备注	关卡prefab名	玩家初始钱数	取值1-6	关卡显示名(多语言)	关卡时间秒
-	1		Lv_1	200	1	Level.DisplayName1	10
-	2		Lv_1	160	5	Level.DisplayName2	10
-	3		Lv_1	315	6	Level.DisplayName3	10
-	4		Lv_1	210	6	Level.DisplayName4	10
-	5		Lv_1	315	3	Level.DisplayName5	10
+﻿#	关卡表						i18n	
+#	ID		LvPfbName	LvLogicName	InitMoney	MoneyColorId	LvDisplayName	LvTimer
+#	int		string	string	int	int	string	int
+#		备注	关卡prefab名	关卡脚本名	玩家初始钱数	取值1-6	关卡显示名(多语言)	关卡时间秒
+	1		Lv_1-1	Level1d1Entity	200	1	Level.DisplayName1	10
+	2		Lv_1-1	Level1d1Entity	160	5	Level.DisplayName2	10
+	3		Lv_1-1	Level1d1Entity	315	6	Level.DisplayName3	10
+	4		Lv_1-1	Level1d1Entity	210	6	Level.DisplayName4	10
+	5		Lv_1-1	Level1d1Entity	315	3	Level.DisplayName5	10

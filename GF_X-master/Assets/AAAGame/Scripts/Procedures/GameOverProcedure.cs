@@ -45,6 +45,6 @@ public class GameOverProcedure : ProcedureBase
 
     internal void NextLevel()
     {
-        ChangeState<MenuProcedure>(procedure);
+        ChangeState<SecretManMenuProcedure>(procedure);
     }
 }

@@ -35,3 +35,4 @@ MonoBehaviour:
   - GameProcedure
   - MenuProcedure
   - PreloadProcedure
+  - SecretManMenuProcedure

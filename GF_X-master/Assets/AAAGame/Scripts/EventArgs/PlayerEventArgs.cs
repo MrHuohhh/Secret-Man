@@ -16,7 +16,11 @@ public enum PlayerEventType
     ClaimMoney,
     NotifyFreshUpgradeView, //通知刷新升级界面信息
     InterstitialAdClose,
-    UpgradeByAd
+    UpgradeByAd,
+    RefreshTimer, // 刷新倒计时
+    CreateKongjie,//创造空姐
+    DragBtnKongbu,//恐怖分子积累
+    DragBtnKongjie,//空姐警戒积累
 }
 public class PlayerEventArgs : GameEventArgs
 {

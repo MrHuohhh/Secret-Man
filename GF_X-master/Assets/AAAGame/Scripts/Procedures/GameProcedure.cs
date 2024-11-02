@@ -9,7 +9,7 @@ using GameFramework.Event;
 public class GameProcedure : ProcedureBase
 {
     public GameUIForm GameUI { get; private set; }
-    public LevelEntity Level { get; private set; }
+    public LevelBase Level { get; private set; }
     private IFsm<IProcedureManager> procedure;
 
     protected override void OnEnter(IFsm<IProcedureManager> procedureOwner)
@@ -24,8 +24,8 @@ public class GameProcedure : ProcedureBase
         GF.Event.Subscribe(ShowEntitySuccessEventArgs.EventId, OnShowEntitySuccess);
         GF.Event.Subscribe(OpenUIFormSuccessEventArgs.EventId, OnOpenUIFormSuccess);
         GF.Event.Subscribe(CloseUIFormCompleteEventArgs.EventId, OnCloseUIForm);
-        Level = procedureOwner.GetData<VarUnityObject>("LevelEntity").Value as LevelEntity;
-        procedureOwner.RemoveData("LevelEntity");
+        Level = procedureOwner.GetData<VarUnityObject>("LevelBase").Value  as LevelBase;
+        procedureOwner.RemoveData("LevelBase");
         Level.StartGame();
 
         var uiParms = UIParams.Create();

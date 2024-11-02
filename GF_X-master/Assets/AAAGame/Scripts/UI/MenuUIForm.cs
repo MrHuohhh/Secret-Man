@@ -47,11 +47,16 @@ public partial class MenuUIForm : UIFormBase
             case "SETTING":
                 GF.UI.OpenUIForm(UIViews.SettingDialog);
                 break;
+            case "ClearLevelData":
+                var playerDm = GF.DataModel.GetOrCreate<PlayerDataModel>();
+                playerDm.GAME_LEVEL = 1;
+                break;
         }
 
         var text = GF.Localization.GetText("Test123");
         Log.Error(text);
     }
+    
 
     private void OnUserDataChanged(object sender, GameEventArgs e)
     {

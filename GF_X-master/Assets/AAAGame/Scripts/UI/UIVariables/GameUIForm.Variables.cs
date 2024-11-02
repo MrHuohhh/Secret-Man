@@ -11,4 +11,6 @@ public partial class GameUIForm
 	[Header("UI Variables:")]
 	[SerializeField] private TextMeshProUGUI coinNumText = null;
 	[SerializeField] private Image varTimeBar = null;
+	[SerializeField] private GameObject varNodProcess = null;
+	[SerializeField] private Image varProcessBar = null;
 }
