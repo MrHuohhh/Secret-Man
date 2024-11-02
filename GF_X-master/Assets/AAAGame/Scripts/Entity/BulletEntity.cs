@@ -26,6 +26,9 @@ public class BulletEntity : EntityBase
 
     private void LifeTimeOver()
     {
-        GF.Entity.HideEntity(this.Entity);
+        if (GF.Entity.HasEntity(this.Entity.Id))
+        {
+            GF.Entity.HideEntity(this.Entity);
+        }
     }
 }

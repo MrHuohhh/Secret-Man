@@ -70,7 +70,7 @@ public class GameProcedure : ProcedureBase
     {
         ChangeState<MenuProcedure>(procedure);
     }
-    private void OnGameOver(bool isWin)
+    public void OnGameOver(bool isWin)
     {
         Log.Info("Game Over, isWin:{0}", isWin);
         procedure.SetData<VarBoolean>("IsWin", isWin);
