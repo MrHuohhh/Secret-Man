@@ -1,0 +1,93 @@
+﻿#include "pch-c.h"
+#ifndef _MSC_VER
+# include <alloca.h>
+#else
+# include <malloc.h>
+#endif
+
+
+#include "codegen/il2cpp-codegen-metadata.h"
+
+
+
+
+
+extern void NavMeshQueryFilter_get_costs_mC77382AAEE4ACE0D8B280AC74C008B2754E808A2 (void);
+extern void NavMeshQueryFilter_set_costs_mB46F5091BA094DE42E9E2C8D67D2FC63C92D6419 (void);
+extern void NavMeshQueryFilter_get_areaMask_m807F8791711143E606FAC18A28E3C11E9061556F (void);
+extern void NavMeshQueryFilter_set_areaMask_mF9F9C7B2D9F8606328E44F7BFF68A29C82F234EF (void);
+extern void NavMeshQueryFilter_get_agentTypeID_m41A59E38E3AB8A3025E8B906AFB47B66B324E7C6 (void);
+extern void NavMeshQueryFilter_set_agentTypeID_mE5EAFEB90D758E2FB9A1AF642F2656FFF6157C79 (void);
+extern void NavMeshQueryFilter_GetAreaCost_m3FAFE58339F8DDD3C5EDFD3717D2718EB26C1194 (void);
+extern void NavMeshQueryFilter_SetAreaCost_mCAE0F95F57787396528FA7333DED8B46D92CD297 (void);
+extern void NavMesh_Internal_CallOnNavMeshPreUpdate_m2A62DB32F5E1435F527AD8A59A882B9F2A193177 (void);
+extern void OnNavMeshPreUpdate__ctor_m7142A3AA991BE50B637A16D946AB7604C64EF9BA (void);
+extern void OnNavMeshPreUpdate_Invoke_mFB224B9BBF9C78B7F39AA91A047F175C69897914 (void);
+static Il2CppMethodPointer s_methodPointers[11] = 
+{
+	NavMeshQueryFilter_get_costs_mC77382AAEE4ACE0D8B280AC74C008B2754E808A2,
+	NavMeshQueryFilter_set_costs_mB46F5091BA094DE42E9E2C8D67D2FC63C92D6419,
+	NavMeshQueryFilter_get_areaMask_m807F8791711143E606FAC18A28E3C11E9061556F,
+	NavMeshQueryFilter_set_areaMask_mF9F9C7B2D9F8606328E44F7BFF68A29C82F234EF,
+	NavMeshQueryFilter_get_agentTypeID_m41A59E38E3AB8A3025E8B906AFB47B66B324E7C6,
+	NavMeshQueryFilter_set_agentTypeID_mE5EAFEB90D758E2FB9A1AF642F2656FFF6157C79,
+	NavMeshQueryFilter_GetAreaCost_m3FAFE58339F8DDD3C5EDFD3717D2718EB26C1194,
+	NavMeshQueryFilter_SetAreaCost_mCAE0F95F57787396528FA7333DED8B46D92CD297,
+	NavMesh_Internal_CallOnNavMeshPreUpdate_m2A62DB32F5E1435F527AD8A59A882B9F2A193177,
+	OnNavMeshPreUpdate__ctor_m7142A3AA991BE50B637A16D946AB7604C64EF9BA,
+	OnNavMeshPreUpdate_Invoke_mFB224B9BBF9C78B7F39AA91A047F175C69897914,
+};
+extern void NavMeshQueryFilter_get_costs_mC77382AAEE4ACE0D8B280AC74C008B2754E808A2_AdjustorThunk (void);
+extern void NavMeshQueryFilter_set_costs_mB46F5091BA094DE42E9E2C8D67D2FC63C92D6419_AdjustorThunk (void);
+extern void NavMeshQueryFilter_get_areaMask_m807F8791711143E606FAC18A28E3C11E9061556F_AdjustorThunk (void);
+extern void NavMeshQueryFilter_set_areaMask_mF9F9C7B2D9F8606328E44F7BFF68A29C82F234EF_AdjustorThunk (void);
+extern void NavMeshQueryFilter_get_agentTypeID_m41A59E38E3AB8A3025E8B906AFB47B66B324E7C6_AdjustorThunk (void);
+extern void NavMeshQueryFilter_set_agentTypeID_mE5EAFEB90D758E2FB9A1AF642F2656FFF6157C79_AdjustorThunk (void);
+extern void NavMeshQueryFilter_GetAreaCost_m3FAFE58339F8DDD3C5EDFD3717D2718EB26C1194_AdjustorThunk (void);
+extern void NavMeshQueryFilter_SetAreaCost_mCAE0F95F57787396528FA7333DED8B46D92CD297_AdjustorThunk (void);
+static Il2CppTokenAdjustorThunkPair s_adjustorThunks[8] = 
+{
+	{ 0x06000001, NavMeshQueryFilter_get_costs_mC77382AAEE4ACE0D8B280AC74C008B2754E808A2_AdjustorThunk },
+	{ 0x06000002, NavMeshQueryFilter_set_costs_mB46F5091BA094DE42E9E2C8D67D2FC63C92D6419_AdjustorThunk },
+	{ 0x06000003, NavMeshQueryFilter_get_areaMask_m807F8791711143E606FAC18A28E3C11E9061556F_AdjustorThunk },
+	{ 0x06000004, NavMeshQueryFilter_set_areaMask_mF9F9C7B2D9F8606328E44F7BFF68A29C82F234EF_AdjustorThunk },
+	{ 0x06000005, NavMeshQueryFilter_get_agentTypeID_m41A59E38E3AB8A3025E8B906AFB47B66B324E7C6_AdjustorThunk },
+	{ 0x06000006, NavMeshQueryFilter_set_agentTypeID_mE5EAFEB90D758E2FB9A1AF642F2656FFF6157C79_AdjustorThunk },
+	{ 0x06000007, NavMeshQueryFilter_GetAreaCost_m3FAFE58339F8DDD3C5EDFD3717D2718EB26C1194_AdjustorThunk },
+	{ 0x06000008, NavMeshQueryFilter_SetAreaCost_mCAE0F95F57787396528FA7333DED8B46D92CD297_AdjustorThunk },
+};
+static const int32_t s_InvokerIndices[11] = 
+{
+	17053,
+	13944,
+	16999,
+	13894,
+	16999,
+	13894,
+	12684,
+	8063,
+	28914,
+	8399,
+	17266,
+};
+IL2CPP_EXTERN_C const Il2CppCodeGenModule g_UnityEngine_AIModule_CodeGenModule;
+const Il2CppCodeGenModule g_UnityEngine_AIModule_CodeGenModule = 
+{
+	"UnityEngine.AIModule.dll",
+	11,
+	s_methodPointers,
+	8,
+	s_adjustorThunks,
+	s_InvokerIndices,
+	0,
+	NULL,
+	0,
+	NULL,
+	0,
+	NULL,
+	NULL,
+	NULL,
+	NULL,
+	NULL,
+	NULL,
+};
