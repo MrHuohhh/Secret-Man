@@ -21,5 +21,5 @@ public class AppSettings : ScriptableObject
     [Tooltip("资源模式: 单机/全热更/需要时热更")]
     public ResourceMode ResourceMode = ResourceMode.Package;
     [Tooltip("屏幕设计分辨率:")]
-    public Vector2Int DesignResolution = new Vector2Int(750, 1334);
+    public Vector2Int DesignResolution = new Vector2Int(1080, 1920);
 }

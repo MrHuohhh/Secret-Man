@@ -78,7 +78,7 @@ public partial class Lv2d1UIForm : UIFormBase, IPointerDownHandler, IPointerUpHa
         varNodAttack.transform.DOMove(varNodAttack.transform.position + new Vector3(-0.5f, 0, 0), 1f);
 
 
-        if (varNodAttack.transform.localPosition.x >= 2000)
+        if (varNodAttack.transform.localPosition.x >= 1300)
         {
             LvTimerV = 20;
             LvTimer = 20;
@@ -201,7 +201,7 @@ public partial class Lv2d1UIForm : UIFormBase, IPointerDownHandler, IPointerUpHa
         {
             case "BtnClick":
                 //varNodAttack向右移动一小段
-                varNodAttack.transform.DOMove(varNodAttack.transform.position + new Vector3(20, 0, 0), 1f);
+                varNodAttack.transform.DOMove(varNodAttack.transform.position + new Vector3(40, 0, 0), 1f);
                 break;
             case "boom1Btn":
                 if (!isDragging1)
