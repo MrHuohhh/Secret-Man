@@ -101,7 +101,10 @@ public class SecretManMenuProcedure : ProcedureBase
     private void OnLevelAllReady()
     {
         Debug.Log("LevelBaseset");
-        procedure.SetData<VarUnityObject>("LevelBase", lvEntity);
+        if (lvEntity != null)
+        {
+            procedure.SetData<VarUnityObject>("LevelBase", lvEntity);
+        }
         GF.BuiltinView.HideLoadingProgress();
     }
 
@@ -116,6 +119,10 @@ public class SecretManMenuProcedure : ProcedureBase
         if (args.Entity.Id == LevelBaseId)
         {
             lvEntity = args.Entity.Logic as LevelBase;
+            if (lvEntity != null)
+            {
+                procedure.SetData<VarUnityObject>("LevelBase", lvEntity);
+            }
             //CameraFollower.Instance.SetFollowTarget(lvEntity.transform);
         }
     }

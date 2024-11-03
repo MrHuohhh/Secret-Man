@@ -147,7 +147,7 @@ public partial class Lv2d1UIForm : UIFormBase, IPointerDownHandler, IPointerUpHa
         }
 
         //开启下一关
-        if (boom1 && boom2 && boom3&& !isDragging1&&!isDragging2&&!isDragging3)
+        if (boom1 && boom2 && boom3&& !isDragging1&&!isDragging2&&!isDragging3&&!lv3Start)
         {
             LvTimerV = 15;
             LvTimer = 15;
