@@ -13,4 +13,5 @@ public partial class GameUIForm
 	[SerializeField] private Image varTimeBar = null;
 	[SerializeField] private GameObject varNodProcess = null;
 	[SerializeField] private Image varProcessBar = null;
+	[SerializeField] private Image varKongjieBar = null;
 }

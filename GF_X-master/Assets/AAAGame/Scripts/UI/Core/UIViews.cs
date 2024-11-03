@@ -9,5 +9,6 @@ public enum UIViews : int
 	ToastTips = 6,
 	GameOverUIForm = 7,
 	MenuUIForm = 8,
-	LanguagesDialog = 9
+	LanguagesDialog = 9,
+	Lv2d1UIForm = 10
 }

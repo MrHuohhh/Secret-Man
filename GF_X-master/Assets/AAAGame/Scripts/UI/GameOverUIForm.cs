@@ -83,14 +83,15 @@ public class GameOverUIForm : UIFormBase
                 gameOverProc.NextLevel();
                 break;
             case "CLAIM":
-                if (!isClaimed)
-                {
-                    this.ClaimReward(1, () =>
-                    {
-                        var gameOverProc = GF.Procedure.CurrentProcedure as GameOverProcedure;
-                        gameOverProc.NextLevel();
-                    });
-                }
+                var gameOverProc2 = GF.Procedure.CurrentProcedure as GameOverProcedure;
+                gameOverProc2.NextLevel();
+                //if (!isClaimed)
+                //{
+                    //this.ClaimReward(1, () =>
+                   // {
+                        
+                   // });
+              //  }
                 break;
         }
     }

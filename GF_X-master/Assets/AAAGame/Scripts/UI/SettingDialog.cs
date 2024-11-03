@@ -103,6 +103,9 @@ public partial class SettingDialog : UIFormBase
         }
         else if (btSelf == varBtnHelp)
         {
+            varGroup_Setting.DOShakePosition(0.1f, new Vector3(100f, 0, 0), 10, 90, false, true).SetEase(Ease.OutBack);
+            GF.UI.OpenUIForm(UIViews.Lv2d1UIForm);
+
             GF.UI.ShowToast(GF.Localization.GetString("Nothing"));
         }
         else if (btSelf == varBtnPrivacy)

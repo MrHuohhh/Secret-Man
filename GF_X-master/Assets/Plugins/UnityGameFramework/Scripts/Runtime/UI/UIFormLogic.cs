@@ -6,6 +6,7 @@
 //------------------------------------------------------------
 
 using UnityEngine;
+using UnityEngine.EventSystems;
 
 namespace UnityGameFramework.Runtime
 {
@@ -13,6 +14,7 @@ namespace UnityGameFramework.Runtime
     /// 界面逻辑基类。
     /// </summary>
     public abstract class UIFormLogic : MonoBehaviour
+
     {
         private bool m_Available = false;
         private bool m_Visible = false;
@@ -203,5 +205,21 @@ namespace UnityGameFramework.Runtime
         {
             gameObject.SetActive(visible);
         }
+        
+        
+        public void OnPointerDown(PointerEventData eventData)
+          {
+              
+          }
+
+          public void OnPointerUp(PointerEventData eventData)
+          {
+           Debug.LogError(("OnPointerUp"));
+          }
+
+          public void OnDrag(PointerEventData eventData)
+          {
+              
+          }
     }
 }

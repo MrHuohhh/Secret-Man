@@ -25,8 +25,10 @@ public class GameProcedure : ProcedureBase
         GF.Event.Subscribe(OpenUIFormSuccessEventArgs.EventId, OnOpenUIFormSuccess);
         GF.Event.Subscribe(CloseUIFormCompleteEventArgs.EventId, OnCloseUIForm);
         Level = procedureOwner.GetData<VarUnityObject>("LevelBase").Value  as LevelBase;
-        procedureOwner.RemoveData("LevelBase");
+        Debug.Log("LevelBaseGet");
         Level.StartGame();
+        procedureOwner.RemoveData("LevelBase");
+
 
         var uiParms = UIParams.Create();
         uiParms.ButtonClickCallback = (sender, btId) =>
@@ -86,7 +88,7 @@ public class GameProcedure : ProcedureBase
         {
             if (!GF.Base.IsGamePaused)
             {
-                GF.Base.PauseGame();
+               // GF.Base.PauseGame();
             }
         }
         else

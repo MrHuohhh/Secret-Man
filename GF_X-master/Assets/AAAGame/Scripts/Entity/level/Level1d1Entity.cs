@@ -16,6 +16,9 @@ public class Level1d1Entity : LevelBase
     int mKongjieId;
     public int PlayerId { get => mPlayerId; }
     List<int> enemyList;
+    
+    private GameObject m_Item;
+
     protected override void OnInit(object userData)
     {
         base.OnInit(userData);
@@ -23,6 +26,8 @@ public class Level1d1Entity : LevelBase
         enemyList = new List<int>();
         playerSpawnPoint = transform.Find("PlayerSpawnPoint");
         KongjieSpawnPoint = transform.Find("KongjieSpawnPoint");
+        m_Item = GameObject.Find(("Item"));
+        m_Item.SetActive(false);
     }
     protected override void OnShow(object userData)
     {
@@ -55,8 +60,8 @@ public class Level1d1Entity : LevelBase
     }
     public void StartGame()
     {
-        var player = GF.Entity.GetEntity<PlayerEntity>(mPlayerId);
-        player.Ctrlable = true;
+        // var player = GF.Entity.GetEntity<PlayerEntity>(mPlayerId);
+        // player.Ctrlable = true;
     }
     private void OnShowEntitySuccess(object sender, GameEventArgs e)
     {
@@ -129,5 +134,6 @@ public class Level1d1Entity : LevelBase
 
         mKongjieId = GF.Entity.ShowEntity<KongjieEntity>("Kongjie", Const.EntityGroup.Player, kongjieParams);
         loadEntityTaskList.Add(mKongjieId);
+        m_Item.SetActive(true);
     }
 }

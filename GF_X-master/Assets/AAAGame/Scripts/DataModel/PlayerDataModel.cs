@@ -21,7 +21,7 @@ public class PlayerDataModel : DataModelBase
         }
     }
     /// <summary>
-    /// 关卡
+    /// ???
     /// </summary>
     public int GAME_LEVEL
     {
@@ -105,7 +105,7 @@ public class PlayerDataModel : DataModelBase
         GF.UI.OpenUIForm(UIViews.RatingDialog);
     }
     /// <summary>
-    /// 触发用户数据改变事件
+    /// ????????????????
     /// </summary>
     /// <param name="tp"></param>
     /// <param name="udt"></param>

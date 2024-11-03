@@ -100,6 +100,7 @@ public class SecretManMenuProcedure : ProcedureBase
 
     private void OnLevelAllReady()
     {
+        Debug.Log("LevelBaseset");
         procedure.SetData<VarUnityObject>("LevelBase", lvEntity);
         GF.BuiltinView.HideLoadingProgress();
     }

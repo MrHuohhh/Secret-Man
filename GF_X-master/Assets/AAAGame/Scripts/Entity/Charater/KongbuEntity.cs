@@ -14,16 +14,23 @@ public class KongbuEntity : SampleEntity
         get => false;
     }
 
-    BoxCollider2D boxClick;
+    private BoxCollider2D boxClick;
     private bool mCtrlable;
-    
+
     private bool mNextLevel = false;
-    
+
     private bool isDragging = false;
-    
+
     public int BuValue = 0;
-    
-    Transform m_transform;
+
+    public int JieValue = 0;
+
+    private bool mIsSee = false;
+
+    private Entity KongjieEntity;
+
+    private Transform m_transform;
+
 
     public bool Ctrlable
     {
@@ -31,7 +38,7 @@ public class KongbuEntity : SampleEntity
         set
         {
             mCtrlable = value;
-           // if (!IsAIPlayer) GF.StaticUI.JoystickEnable = mCtrlable;
+            // if (!IsAIPlayer) GF.StaticUI.JoystickEnable = mCtrlable;
         }
     }
 
@@ -45,13 +52,39 @@ public class KongbuEntity : SampleEntity
     protected override void OnUpdate(float elapseSeconds, float realElapseSeconds)
     {
         base.OnUpdate(elapseSeconds, realElapseSeconds);
-        if (!isDragging && BuValue>0)
+        if (!isDragging && BuValue > 0)
         {
-            BuValue --;
-            GF.Event.Fire(this, ReferencePool.Acquire<PlayerEventArgs>().Fill(PlayerEventType.DragBtnKongbu, new Dictionary<string, object>
+            BuValue--;
+            GF.Event.Fire(this, ReferencePool.Acquire<PlayerEventArgs>().Fill(PlayerEventType.DragBtnKongbu,
+                new Dictionary<string, object>
+                {
+                    ["value"] = BuValue,
+                }));
+        }
+
+        if (!KongjieEntity)
+        {
+            if (!GF.Entity.HasEntity("Assets/AAAGame/Prefabs/Entity/Kongjie.prefab"))
             {
-                ["value"] = BuValue,
-            }));
+            }
+            else
+            {
+                KongjieEntity = GF.Entity.GetEntity("Assets/AAAGame/Prefabs/Entity/Kongjie.prefab");
+            }
+        }
+        else
+        {
+            mIsSee = KongjieEntity.GetComponent<KongjieEntity>().IsWatching;
+        }
+
+        if ((!isDragging || !mIsSee) && JieValue > 0 )
+        {
+            JieValue--;
+            GF.Event.Fire(this, ReferencePool.Acquire<PlayerEventArgs>().Fill(PlayerEventType.DragBtnKongjie,
+                new Dictionary<string, object>
+                {
+                    ["value"] = JieValue,
+                }));
         }
     }
 
@@ -62,46 +95,64 @@ public class KongbuEntity : SampleEntity
         isDragging = true;
         if (!mNextLevel)
         {
-            GF.Event.Fire(this, ReferencePool.Acquire<PlayerEventArgs>().Fill(PlayerEventType.RefreshTimer, new Dictionary<string, object>
-            {
-                ["Timer"] = 10,
-            }));
-        
+            GF.Event.Fire(this, ReferencePool.Acquire<PlayerEventArgs>().Fill(PlayerEventType.RefreshTimer,
+                new Dictionary<string, object>
+                {
+                    ["Timer"] = 10,
+                }));
+
             //掉物品
-            GF.Event.Fire(this, ReferencePool.Acquire<PlayerEventArgs>().Fill(PlayerEventType.CreateKongjie, new Dictionary<string, Action>
-            {
-            }));
+            GF.Event.Fire(this, ReferencePool.Acquire<PlayerEventArgs>().Fill(PlayerEventType.CreateKongjie,
+                new Dictionary<string, Action>
+                {
+                }));
             mNextLevel = true;
         }
         else
         {
             //dotween旋转
-            m_transform.DOLocalRotate(new Vector3(0, 0, 80), 1f, RotateMode.Fast );
-            //旋转到固定角度
-            if (!GF.Entity.HasEntity("Kongjie")) return;
-            Entity KongjieEntity = GF.Entity.GetEntity("Kongjie");
-            //KongjieEntity.GetComponent<KongjieEntity>().Ctrlable = true;
-        } 
+            m_transform.DOLocalRotate(new Vector3(0, 0, 80), 1f, RotateMode.Fast);
+        }
     }
-    
+
     //持续
     void OnMouseDrag()
     {
         if (isDragging)
         {
             BuValue++;
-            GF.Event.Fire(this, ReferencePool.Acquire<PlayerEventArgs>().Fill(PlayerEventType.DragBtnKongbu, new Dictionary<string, object>
-            {
-                ["value"] = BuValue,
-            }));
+            GF.Event.Fire(this, ReferencePool.Acquire<PlayerEventArgs>().Fill(PlayerEventType.DragBtnKongbu,
+                new Dictionary<string, object>
+                {
+                    ["value"] = BuValue,
+                }));
             Debug.Log("Value increased: " + BuValue);
+
+            if (!KongjieEntity)
+            {
+                if (!GF.Entity.HasEntity("Assets/AAAGame/Prefabs/Entity/Kongjie.prefab")) return;
+                KongjieEntity = GF.Entity.GetEntity("Assets/AAAGame/Prefabs/Entity/Kongjie.prefab");
+            }
+
+            ;
+            mIsSee = KongjieEntity.GetComponent<KongjieEntity>().IsWatching;
+
+            if (mIsSee)
+            {
+                JieValue++;
+                GF.Event.Fire(this, ReferencePool.Acquire<PlayerEventArgs>().Fill(PlayerEventType.DragBtnKongjie,
+                    new Dictionary<string, object>
+                    {
+                        ["value"] = JieValue,
+                    }));
+            }
         }
     }
 
     void OnMouseUp()
     {
         //dotween旋转
-        m_transform.DOLocalRotate(new Vector3(0, 0, 0), 1f, RotateMode.Fast );
+        m_transform.DOLocalRotate(new Vector3(0, 0, 0), 1f, RotateMode.Fast);
 
         if (isDragging)
         {
