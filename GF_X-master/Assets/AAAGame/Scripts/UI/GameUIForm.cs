@@ -48,8 +48,8 @@ public partial class GameUIForm : UIFormBase
         if (LvTimerV >= 0)
         {
             varTimeBar.fillAmount = LvTimerV / LvTimer;
-            LvTimerV -= realElapseSeconds;
-            if (LvTimerV < 0 || Kongjie == 1)
+            //LvTimerV -= realElapseSeconds;
+            if (LvTimerV < 0 || Kongjie > 0)
             {
                 LvTimerV = -1;
                 var curProcedure = GF.Procedure.CurrentProcedure;
@@ -59,7 +59,8 @@ public partial class GameUIForm : UIFormBase
                     gameProcedure.OnGameOver(false);
                 }
             }
-            if (kongbu == 1)
+
+            if (kongbu > 1)
             {
                 // var curProcedure = GF.Procedure.CurrentProcedure;
                 // if (curProcedure is GameProcedure)
@@ -67,8 +68,8 @@ public partial class GameUIForm : UIFormBase
                 //     var gameProcedure = curProcedure as GameProcedure;
                 //     gameProcedure.OnGameOver(true);
                 // }
-                LvTimerV = -1;
-                GF.UI.OpenUIForm(UIViews.Lv2d1UIForm);
+                // LvTimerV = -1;
+                // GF.UI.OpenUIForm(UIViews.Lv2d1UIForm);
             }
         }
     }
@@ -94,7 +95,8 @@ public partial class GameUIForm : UIFormBase
                 {
                     varNodProcess.gameObject.SetActive(true);
                     varProcessBar.fillAmount = (float)(int)data2["value"] / 200;
-                    kongbu = (float)(int)data2["value"] / 200;
+                    kongbu = (float)(int)data2["value"];
+                    coinNumText.text = kongbu.ToString();
                 }
 
                 break;
@@ -103,8 +105,7 @@ public partial class GameUIForm : UIFormBase
                 if (data3 != null && data3.ContainsKey("value"))
                 {
                     varKongjieBar.fillAmount = (float)(int)data3["value"] / 100;
-                    Kongjie = (float)(int)data3["value"] / 100;
-
+                    Kongjie = (float)(int)data3["value"];
                 }
 
                 break;
