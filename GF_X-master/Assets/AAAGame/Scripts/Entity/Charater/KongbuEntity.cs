@@ -95,16 +95,15 @@ public class KongbuEntity : SampleEntity
         {
             mIsSee2 = DoorManEntity.GetComponent<DoorManEntity>().IsWatching;
         }
-        //
-        // if ((!isDragging || (!mIsSee1 && !mIsSee2)) && JieValue > 0)
-        // {
-        //     JieValue--;
-        //     GF.Event.Fire(this, ReferencePool.Acquire<PlayerEventArgs>().Fill(PlayerEventType.DragBtnKongjie,
-        //         new Dictionary<string, object>
-        //         {
-        //             ["value"] = JieValue,
-        //         }));
-        // }
+        if ((!isDragging || (!mIsSee1 && !mIsSee2)) && JieValue > 0)
+        {
+            JieValue = 0;
+            GF.Event.Fire(this, ReferencePool.Acquire<PlayerEventArgs>().Fill(PlayerEventType.DragBtnKongjie,
+                new Dictionary<string, object>
+                {
+                    ["value"] = JieValue,
+                }));
+        }
     }
 
     //按下

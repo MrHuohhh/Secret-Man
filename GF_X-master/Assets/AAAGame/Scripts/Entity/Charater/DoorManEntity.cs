@@ -62,7 +62,7 @@ public class DoorManEntity : SampleEntity
             if (shouldRotate)
             {
                 // mIsSee为false
-                timer = 5; // 下一次旋转的间隔时间
+                timer = 10; // 下一次旋转的间隔时间
                 ActionKit.Sequence()
                     .Callback(() =>   //x轴从初始位置0到-6停下,震动,增量移动
                         m_transform.DOMove(new Vector3(50, -40,-1), 0.2f).SetEase(Ease.InOutSine))
@@ -73,17 +73,10 @@ public class DoorManEntity : SampleEntity
                         m_transform.DOMove(new Vector3(16, -24, -1), 0.5f).SetEase(Ease.InOutSine))
                     .Delay(0.2f)
                     .Callback(() => mIsSee = true)
-                    .Start(this);
-              
-            }
-            else
-            {
-                // 旋转回初始状态并设置mIsSee为true
-                timer = 3; // 下一次检查的间隔时间
-                ActionKit.Sequence()
+                    .Delay(3f)
                     .Callback(() =>  m_transform.DOMove(new Vector3(56, -40,-1), 0.5f).SetEase(Ease.InOutSine))
-                    .Delay(0.2f)
                     .Callback(() => mIsSee = false)
+                    .Delay(0.2f)
                     .Start(this);
             }
         }
