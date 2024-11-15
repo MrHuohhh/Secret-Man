@@ -965,7 +965,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 1, y: 1}
-  m_AnchoredPosition: {x: -1098, y: -235}
+  m_AnchoredPosition: {x: -515, y: -165}
   m_SizeDelta: {x: -979.0698, y: -905.4}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!1 &5245235129494733423
@@ -1058,7 +1058,7 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 0}
+      - m_Target: {fileID: 1723033201572825416}
         m_TargetAssemblyTypeName: UIFormBase, Hotfix
         m_MethodName: ClickUIButton
         m_Mode: 5
@@ -1798,7 +1798,7 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 0}
+      - m_Target: {fileID: 1723033201572825416}
         m_TargetAssemblyTypeName: UIFormBase, Hotfix
         m_MethodName: ClickUIButton
         m_Mode: 5

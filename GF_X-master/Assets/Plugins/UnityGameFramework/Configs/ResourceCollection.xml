@@ -16,6 +16,7 @@
     <Assets>
       <Asset Guid="02cbc534a52481241872d42107e29c57" ResourceName="Prefabs/Entity" />
       <Asset Guid="034b209892546994d8037e72ca910089" ResourceName="Language" />
+      <Asset Guid="07de51161fa888b40916039835c1070c" ResourceName="Prefabs/Entity" />
       <Asset Guid="0b69b108d75f47940881a60045f21976" ResourceName="Prefabs/UI" />
       <Asset Guid="13b0b1255d7d6cf44a4d1987723460ef" ResourceName="ScriptableAssets" />
       <Asset Guid="1b586e20031d8b44a9495620988ad3dc" ResourceName="HotfixDlls" />
@@ -34,6 +35,7 @@
       <Asset Guid="6a4e2eebc9726fd49952a02518d04a6b" ResourceName="Prefabs/UI" />
       <Asset Guid="6be38d7fc85a442489bc513d73291793" ResourceName="HotfixDlls" />
       <Asset Guid="6da5a876b48a9de47be114eed0191623" ResourceName="Prefabs/Entity" />
+      <Asset Guid="7245c64a3b8b99c40ae2a8cb2a32c6d7" ResourceName="Prefabs/Entity" />
       <Asset Guid="73d884ecdd851124aaca044feebbe87d" ResourceName="DataTable" />
       <Asset Guid="743d91e4e5cb9bc478f0ab99fbd8f7d1" ResourceName="Prefabs/UI" />
       <Asset Guid="74b06ad59906133448a2fe06366e4889" ResourceName="Language" />
@@ -48,6 +50,7 @@
       <Asset Guid="a29db755b6ae1104a94df297de29cfc8" ResourceName="SharedAssets" />
       <Asset Guid="a8043c8d11e46d648bb702e4a3572406" ResourceName="Prefabs/Entity" />
       <Asset Guid="af959909b2bedb44c85c65e572641265" ResourceName="Prefabs/UI" />
+      <Asset Guid="b624c3b27b5d8c94caff545a44cb70d9" ResourceName="Prefabs/Entity" />
       <Asset Guid="b8f790017d833da45a5aec7344ed4f97" ResourceName="SharedAssets" />
       <Asset Guid="c4e839cf3d001e0499336fb7f53c0310" ResourceName="DataTable" />
       <Asset Guid="c7a26b8d1ff63834298841254b2332c4" ResourceName="Prefabs/UI" />

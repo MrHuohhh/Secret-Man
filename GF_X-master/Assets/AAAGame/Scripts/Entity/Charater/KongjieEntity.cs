@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using DG.Tweening;
 using GameFramework;
+using GameFramework.Event;
 using QFramework;
 using UnityEngine;
 using Log = UnityGameFramework.Runtime.Log;
@@ -18,6 +19,7 @@ public class KongjieEntity : SampleEntity
     private bool mIsSee = true;
 
     private float timer = 3;
+
     Transform m_transform;
 
 
@@ -46,38 +48,30 @@ public class KongjieEntity : SampleEntity
     {
         base.OnInit(userData);
         m_transform = GetComponent<Transform>();
+        GF.Event.Subscribe(PlayerEventArgs.EventId, OnPlayerEvent);
     }
 
     protected override void OnUpdate(float elapseSeconds, float realElapseSeconds)
     {
         base.OnUpdate(elapseSeconds, realElapseSeconds);
-
-        timer -= realElapseSeconds;
-
-        if (timer <= 0)
+        if (!mIsSee)
         {
-            // 随机选择下一个状态
-            bool shouldRotate = UnityEngine.Random.Range(0, 2) == 0;
-
-            if (shouldRotate)
+            timer -= realElapseSeconds;
+            if (timer <= 0)
             {
-                // 旋转180度并设置mIsSee为false
-                timer = 2; // 下一次旋转的间隔时间
-                ActionKit.Sequence()
-                    .Callback(() => m_transform.DOLocalRotate(new Vector3(0, 0, 90), 0.5f, RotateMode.Fast))
-                    .Delay(0.2f)
-                    .Callback(() => mIsSee = false)
-                    .Start(this);
-            }
-            else
-            {
-                // 旋转回初始状态并设置mIsSee为true
-                timer = 1; // 下一次检查的间隔时间
-                ActionKit.Sequence()
-                    .Callback(() => m_transform.DOLocalRotate(new Vector3(0, 0, -90), 0.5f, RotateMode.Fast))
-                    .Delay(0.5f)
-                    .Callback(() => mIsSee = true)
-                    .Start(this);
+                // 随机选择下一个状态
+                bool shouldRotate = UnityEngine.Random.Range(0, 2) == 0;
+                if (shouldRotate)
+                {
+                    // 旋转回初始状态并设置mIsSee为true
+                    timer = 1; // 下一次检查的间隔时间
+                    ActionKit.Sequence()
+                        .Callback(() => m_transform.DOLocalRotate(new Vector3(0, 0, -90), 0.5f, RotateMode.Fast))
+                        .Delay(0.5f)
+                        .Callback(() => mIsSee = true)
+                        .Start(this);
+                }
+            
             }
         }
     }
@@ -86,5 +80,38 @@ public class KongjieEntity : SampleEntity
     void OnMouseDown()
     {
         Debug.Log("Object clicked!");
+    }
+
+    private void OnPlayerEvent(object sender, GameEventArgs e)
+    {
+        var args = e as PlayerEventArgs;
+
+        switch (args.EventType)
+        {
+            case PlayerEventType.PhoneCall:
+                CallPhone();
+                break;
+
+            //varNodProcess
+        }
+    }
+
+    //去接电话
+    private void CallPhone()
+    {
+        // 旋转180度并设置mIsSee为false
+        timer = 4; // 下一次旋转的间隔时间
+        ActionKit.Sequence()
+            .Callback(() => m_transform.DOLocalRotate(new Vector3(0, 0, 90), 0.5f, RotateMode.Fast))
+            .Delay(0.2f)
+            .Callback(() => mIsSee = false)
+            .Start(this);
+    }
+
+    //销毁
+    protected override void OnRecycle()
+    {
+        base.OnRecycle();
+        GF.Event.Unsubscribe(PlayerEventArgs.EventId, OnPlayerEvent);
     }
 }

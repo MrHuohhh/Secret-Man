@@ -26,7 +26,7 @@ public class KongbuEntity : SampleEntity
     public int JieValue = 0;
 
     private bool mIsSee1 = false;
-    private bool mIsSee2 = false;
+    private bool mIsOverSee = false;
 
     private Entity KongjieEntity;
 
@@ -93,9 +93,9 @@ public class KongbuEntity : SampleEntity
         }
         else
         {
-            mIsSee2 = DoorManEntity.GetComponent<DoorManEntity>().IsWatching;
+            mIsOverSee = DoorManEntity.GetComponent<DoorManEntity>().IsOverSee;
         }
-        if ((!isDragging || (!mIsSee1 && !mIsSee2)) && JieValue > 0)
+        if ((!isDragging || (!mIsSee1 || mIsOverSee)) && JieValue > 0)
         {
             JieValue = 0;
             GF.Event.Fire(this, ReferencePool.Acquire<PlayerEventArgs>().Fill(PlayerEventType.DragBtnKongjie,
@@ -132,6 +132,7 @@ public class KongbuEntity : SampleEntity
         m_transform.DOLocalRotate(new Vector3(0, 0, 80), 1f, RotateMode.Fast);
         //}
     }
+    
 
     //持续
     void OnMouseDrag()
@@ -162,9 +163,9 @@ public class KongbuEntity : SampleEntity
                 DoorManEntity = GF.Entity.GetEntity("Assets/AAAGame/Prefabs/Entity/DoorMan.prefab");
             }
 
-            bool mIsSee2 = DoorManEntity.GetComponent<DoorManEntity>().IsWatching;
+            bool mIsOverSee = DoorManEntity.GetComponent<DoorManEntity>().IsOverSee;
 
-            if (mIsSee1 || mIsSee2)
+            if (mIsSee1 && !mIsOverSee)
             {
                 JieValue++;
                 GF.Event.Fire(this, ReferencePool.Acquire<PlayerEventArgs>().Fill(PlayerEventType.DragBtnKongjie,

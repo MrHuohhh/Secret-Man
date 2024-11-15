@@ -21,6 +21,8 @@ public enum PlayerEventType
     CreateKongjie,//创造空姐
     DragBtnKongbu,//恐怖分子积累
     DragBtnKongjie,//空姐警戒积累
+    
+    PhoneCall,//电话接通
 }
 public class PlayerEventArgs : GameEventArgs
 {
