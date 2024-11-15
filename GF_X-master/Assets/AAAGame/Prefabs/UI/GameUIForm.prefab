@@ -585,6 +585,10 @@ MonoBehaviour:
   varNodProcess: {fileID: 504654531675060754}
   varProcessBar: {fileID: 8750185074555723447}
   varKongjieBar: {fileID: 5518318783962523887}
+  varBoom1Btn: {fileID: 1479627624388732933}
+  varNodboom1: {fileID: 902082174184393899}
+  varBoom2Btn: {fileID: 4597122901177842962}
+  varNodboom2: {fileID: 5625988581216803209}
 --- !u!1 &1723033201729535970
 GameObject:
   m_ObjectHideFlags: 0
