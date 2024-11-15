@@ -49,9 +49,9 @@ public partial class GameUIForm : UIFormBase
         {
             varTimeBar.fillAmount = LvTimerV / LvTimer;
             //LvTimerV -= realElapseSeconds;
-            if (LvTimerV < 0 || Kongjie > 0)
+            if ( Kongjie > 0)
             {
-                LvTimerV = -1;
+                Kongjie = 0;
                 var curProcedure = GF.Procedure.CurrentProcedure;
                 if (curProcedure is GameProcedure)
                 {
@@ -94,9 +94,10 @@ public partial class GameUIForm : UIFormBase
                 if (data2 != null && data2.ContainsKey("value"))
                 {
                     varNodProcess.gameObject.SetActive(true);
-                    varProcessBar.fillAmount = (float)(int)data2["value"] / 200;
-                    kongbu = (float)(int)data2["value"];
-                    coinNumText.text = kongbu.ToString();
+                    varKongjieBar.fillAmount = (float)data2["value"] / 2000;
+                    kongbu = (float)data2["value"];
+                    //去掉小数
+                    coinNumText.text = Mathf.Floor(kongbu).ToString();
                 }
 
                 break;
@@ -104,7 +105,7 @@ public partial class GameUIForm : UIFormBase
                 var data3 = args.EventData as Dictionary<string, object>;
                 if (data3 != null && data3.ContainsKey("value"))
                 {
-                    varKongjieBar.fillAmount = (float)(int)data3["value"] / 100;
+                    //varKongjieBar.fillAmount = (float)(int)data3["value"] / 100;
                     Kongjie = (float)(int)data3["value"];
                 }
 

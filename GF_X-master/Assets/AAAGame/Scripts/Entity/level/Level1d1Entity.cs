@@ -11,6 +11,8 @@ public class Level1d1Entity : LevelBase
     public bool IsAllReady { get; private set; }
     private Transform playerSpawnPoint;
     private Transform KongjieSpawnPoint;
+    private Transform WindowSpawnPoint;
+    private Transform DoorSpawnPoint;
     List<int> loadEntityTaskList;
     int mPlayerId;
     int mKongjieId;
@@ -26,6 +28,8 @@ public class Level1d1Entity : LevelBase
         enemyList = new List<int>();
         playerSpawnPoint = transform.Find("PlayerSpawnPoint");
         KongjieSpawnPoint = transform.Find("KongjieSpawnPoint");
+        WindowSpawnPoint = transform.Find("WindowSpawnPoint");
+        DoorSpawnPoint = transform.Find("DoorSpawnPoint");
         m_Item = GameObject.Find(("Item"));
         m_Item.SetActive(false);
     }
@@ -55,8 +59,10 @@ public class Level1d1Entity : LevelBase
 
         mPlayerId = GF.Entity.ShowEntity<KongbuEntity>("Player", Const.EntityGroup.Player, playerParams);
         loadEntityTaskList.Add(mPlayerId);
-        
-       
+
+
+        CreateKongjie();
+        CreateDoorMan();
     }
     public void StartGame()
     {
@@ -133,6 +139,14 @@ public class Level1d1Entity : LevelBase
         var kongjieParams = EntityParams.Create(KongjieSpawnPoint.position, KongjieSpawnPoint.eulerAngles, KongjieSpawnPoint.localScale);
 
         mKongjieId = GF.Entity.ShowEntity<KongjieEntity>("Kongjie", Const.EntityGroup.Player, kongjieParams);
+        loadEntityTaskList.Add(mKongjieId);
+        m_Item.SetActive(true);
+    }
+
+    internal void CreateDoorMan()
+    {
+        var doorManParams = EntityParams.Create(DoorSpawnPoint.position, DoorSpawnPoint.eulerAngles, DoorSpawnPoint.localScale);
+        mKongjieId = GF.Entity.ShowEntity<DoorManEntity>("DoorMan", Const.EntityGroup.Player, doorManParams);
         loadEntityTaskList.Add(mKongjieId);
         m_Item.SetActive(true);
     }

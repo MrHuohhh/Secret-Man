@@ -6,7 +6,7 @@ using QFramework;
 using UnityEngine;
 using Log = UnityGameFramework.Runtime.Log;
 
-public class KongjieEntity : SampleEntity
+public class DoorManEntity : SampleEntity
 {
     public virtual bool IsAIPlayer
     {
@@ -61,22 +61,29 @@ public class KongjieEntity : SampleEntity
 
             if (shouldRotate)
             {
-                // 旋转180度并设置mIsSee为false
-                timer = 2; // 下一次旋转的间隔时间
+                // mIsSee为false
+                timer = 5; // 下一次旋转的间隔时间
                 ActionKit.Sequence()
-                    .Callback(() => m_transform.DOLocalRotate(new Vector3(0, 0, 90), 0.5f, RotateMode.Fast))
+                    .Callback(() =>   //x轴从初始位置0到-6停下,震动,增量移动
+                        m_transform.DOMove(new Vector3(50, -40,-1), 0.2f).SetEase(Ease.InOutSine))
                     .Delay(0.2f)
-                    .Callback(() => mIsSee = false)
+                    .Callback(() =>    m_transform.DOShakePosition(2f, new Vector3(5f, 5f, 0), 10, 90, false, true))
+                    .Delay(2f)
+                    .Callback(() =>   //x轴从初始位置0到-6停下,震动
+                        m_transform.DOMove(new Vector3(16, -24, -1), 0.5f).SetEase(Ease.InOutSine))
+                    .Delay(0.2f)
+                    .Callback(() => mIsSee = true)
                     .Start(this);
+              
             }
             else
             {
                 // 旋转回初始状态并设置mIsSee为true
-                timer = 1; // 下一次检查的间隔时间
+                timer = 3; // 下一次检查的间隔时间
                 ActionKit.Sequence()
-                    .Callback(() => m_transform.DOLocalRotate(new Vector3(0, 0, -90), 0.5f, RotateMode.Fast))
-                    .Delay(0.5f)
-                    .Callback(() => mIsSee = true)
+                    .Callback(() =>  m_transform.DOMove(new Vector3(56, -40,-1), 0.5f).SetEase(Ease.InOutSine))
+                    .Delay(0.2f)
+                    .Callback(() => mIsSee = false)
                     .Start(this);
             }
         }

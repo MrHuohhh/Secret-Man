@@ -36,9 +36,9 @@ public class PlayerEntity : SampleEntity
         if (!Ctrlable) return;
         isGrounded = characterCtrl.isGrounded;
 
-        Move();//ÒÆ¶¯
+        Move();//???
         Fire();
-        Jump();//ÌøÔ¾
+        Jump();//???
     }
     private void Fire()
     {
