@@ -15,6 +15,7 @@ MonoBehaviour:
   mDataTables:
   - CameraViewTable
   - ColorTable
+  - Level1SettingTable
   - LevelTable
   - Core/EntityGroupTable
   - Core/LanguagesTable
