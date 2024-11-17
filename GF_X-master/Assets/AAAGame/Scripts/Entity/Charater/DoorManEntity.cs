@@ -105,7 +105,7 @@ public class DoorManEntity : SampleEntity
             m_transform.DOKill();
             ActionKit.Sequence()
                 .Callback(() =>
-                    m_transform.DOMove(new Vector3(-16, 7, -5), 0.5f).SetEase(Ease.InOutSine))
+                    m_transform.DOMove(new Vector3(-50, -6, -5), 0.5f).SetEase(Ease.InOutSine))
                 .Delay(0.5f)
                 .Callback(() => mIsSee = true)
                 .Delay(UnityEngine.Random.Range(2, 4))
