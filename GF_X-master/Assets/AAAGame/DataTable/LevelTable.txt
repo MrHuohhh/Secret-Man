@@ -1,5 +1,5 @@
 ﻿#	关卡表						i18n		
-#	ID		LvPfbName	LvLogicName	InitMoney	MoneyColorId	LvDisplayName	LvTimer	globNum
+#	ID		LvPfbName	LvLogicName	InitMoney	MoneyColorId	LvDisplayName	LvTimer	GlobNum
 #	int		string	string	int	int	string	int	float[]
 #		备注	关卡prefab名	关卡脚本名	玩家初始钱数	取值1-6	关卡显示名(多语言)	关卡时间秒	固定值
 	1		Lv_1-1	Level1d1Entity	200	1	Level.DisplayName1	10	1,2,2

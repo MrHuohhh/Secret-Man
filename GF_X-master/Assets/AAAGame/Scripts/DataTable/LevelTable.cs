@@ -81,6 +81,15 @@ public class LevelTable : DataRowBase
             private set;
         }
 
+        /// <summary>
+        /// 固定值
+        /// </summary>
+        public float[] GlobNum
+        {
+            get;
+            private set;
+        }
+
         public override bool ParseDataRow(string dataRowString, object userData)
         {
             string[] columnStrings = dataRowString.Split(DataTableExtension.DataSplitSeparators);
@@ -99,6 +108,7 @@ public class LevelTable : DataRowBase
             MoneyColorId = int.Parse(columnStrings[index++]);
             LvDisplayName = columnStrings[index++];
             LvTimer = int.Parse(columnStrings[index++]);
+            GlobNum = DataTableExtension.ParseArray<float>(columnStrings[index++]);
 
             return true;
         }
@@ -116,6 +126,7 @@ public class LevelTable : DataRowBase
                     MoneyColorId = binaryReader.Read7BitEncodedInt32();
                     LvDisplayName = binaryReader.ReadString();
                     LvTimer = binaryReader.Read7BitEncodedInt32();
+                    GlobNum = DataTableExtension.ParseArray<float>(binaryReader.ReadString());
                 }
             }
 
