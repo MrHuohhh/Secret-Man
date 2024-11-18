@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using DG.Tweening;
 using GameFramework;
+using GameFramework.DataTable;
 using QFramework;
 using UnityEngine;
 using UnityGameFramework.Runtime;
@@ -35,6 +36,8 @@ public class KongbuEntity : SampleEntity
 
     private Transform m_transform;
 
+    private IDataTable<Level1SettingTable> lvSettingTb;
+    private PlayerDataModel playerDm;
 
     public bool Ctrlable
     {
@@ -51,6 +54,8 @@ public class KongbuEntity : SampleEntity
         base.OnInit(userData);
         boxClick = GetComponent<BoxCollider2D>();
         m_transform = GetComponent<Transform>();
+        playerDm = GF.DataModel.GetOrCreate<PlayerDataModel>();
+        lvSettingTb = GF.DataTable.GetDataTable<Level1SettingTable>();
     }
 
     protected override void OnUpdate(float elapseSeconds, float realElapseSeconds)
@@ -58,7 +63,7 @@ public class KongbuEntity : SampleEntity
         base.OnUpdate(elapseSeconds, realElapseSeconds);
         if (!isDragging && BuValue > 0)
         {
-            BuValue = BuValue - 0.2f;
+            BuValue = BuValue - lvSettingTb[playerDm.LEVEL_STAGE].ScoreLost;
             GF.Event.Fire(this, ReferencePool.Acquire<PlayerEventArgs>().Fill(PlayerEventType.DragBtnKongbu,
                 new Dictionary<string, object>
                 {
@@ -95,6 +100,7 @@ public class KongbuEntity : SampleEntity
         {
             mIsOverSee = DoorManEntity.GetComponent<DoorManEntity>().IsOverSee;
         }
+
         if ((!isDragging || (!mIsSee1 || mIsOverSee)) && JieValue > 0)
         {
             JieValue = 0;
@@ -111,43 +117,25 @@ public class KongbuEntity : SampleEntity
     {
         Debug.Log("Object clicked!");
         isDragging = true;
-        // if (!mNextLevel)
-        // {
-        //     GF.Event.Fire(this, ReferencePool.Acquire<PlayerEventArgs>().Fill(PlayerEventType.RefreshTimer,
-        //         new Dictionary<string, object>
-        //         {
-        //             ["Timer"] = 10,
-        //         }));
-        //
-        //     //掉物品
-        //     GF.Event.Fire(this, ReferencePool.Acquire<PlayerEventArgs>().Fill(PlayerEventType.CreateKongjie,
-        //         new Dictionary<string, Action>
-        //         {
-        //         }));
-        //     mNextLevel = true;
-        // }
-        // else
-        // {
-        //dotween旋转
+       
         m_transform.DOLocalRotate(new Vector3(0, 0, 80), 1f, RotateMode.Fast);
         //}
     }
-    
+
 
     //持续
     void OnMouseDrag()
     {
         if (isDragging)
         {
-            BuValue++;
+            BuValue = BuValue + lvSettingTb[playerDm.LEVEL_STAGE].TapScore;
             GF.Event.Fire(this, ReferencePool.Acquire<PlayerEventArgs>().Fill(PlayerEventType.DragBtnKongbu,
                 new Dictionary<string, object>
                 {
                     ["value"] = BuValue,
                 }));
-            Debug.Log("Value increased: " + BuValue);
 
-            //老板/空姐的盯着
+            //老板的盯着
             if (!KongjieEntity)
             {
                 if (!GF.Entity.HasEntity("Assets/AAAGame/Prefabs/Entity/Kongjie.prefab")) return;

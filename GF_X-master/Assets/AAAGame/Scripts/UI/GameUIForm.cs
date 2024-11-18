@@ -7,6 +7,7 @@ using GameFramework.Event;
 using UnityEngine.EventSystems;
 using DG.Tweening;
 using System;
+using GameFramework.DataTable;
 using QFramework;
 using UnityGameFramework.Runtime;
 using TMPro;
@@ -16,13 +17,15 @@ public partial class GameUIForm : UIFormBase
 {
     private float LvTimer = 0;
     private float LvTimerV = 0;
-    private float Kongjie = 0;
-    private float kongbu = 0;
+    private float bossNum = 0;
+    private float loveNum = 0;
     private bool isDragging1 = true;
     private bool isDragging2 = true;
     private bool boom1 = false;
     private bool boom2 = false;
     private bool isCd = false;
+    private IDataTable<Level1SettingTable> lvSettingTb;
+    private PlayerDataModel playerDm;
 
     protected override void OnOpen(object userData)
     {
@@ -32,7 +35,7 @@ public partial class GameUIForm : UIFormBase
 
         RefreshCoinsText();
         var lvTb = GF.DataTable.GetDataTable<LevelTable>();
-        var playerDm = GF.DataModel.GetOrCreate<PlayerDataModel>();
+        playerDm = GF.DataModel.GetOrCreate<PlayerDataModel>();
         var lvId = playerDm.GAME_LEVEL;
         LvTimer = lvTb[lvId].LvTimer;
         LvTimerV = LvTimer;
@@ -40,6 +43,9 @@ public partial class GameUIForm : UIFormBase
 
         varKongjieBar.fillAmount = 0;
         varNodProcess.gameObject.SetActive(false);
+
+        lvSettingTb = GF.DataTable.GetDataTable<Level1SettingTable>();
+        varLoveStage.text = playerDm.LEVEL_STAGE.ToString();
     }
 
     private void RefreshCoinsText()
@@ -55,9 +61,9 @@ public partial class GameUIForm : UIFormBase
         {
             varTimeBar.fillAmount = LvTimerV / LvTimer;
             //LvTimerV -= realElapseSeconds;
-            if (Kongjie > 0)
+            if (bossNum > 0)
             {
-                Kongjie = 0;
+                bossNum = 0;
                 var curProcedure = GF.Procedure.CurrentProcedure;
                 if (curProcedure is GameProcedure)
                 {
@@ -66,109 +72,14 @@ public partial class GameUIForm : UIFormBase
                 }
             }
 
-            if (kongbu > 1)
+            if (loveNum >= lvSettingTb[playerDm.LEVEL_STAGE].Target)
             {
-                // var curProcedure = GF.Procedure.CurrentProcedure;
-                // if (curProcedure is GameProcedure)
-                // {
-                //     var gameProcedure = curProcedure as GameProcedure;
-                //     gameProcedure.OnGameOver(true);
-                // }
-                // LvTimerV = -1;
-                // GF.UI.OpenUIForm(UIViews.Lv2d1UIForm);
+                playerDm.LEVEL_STAGE++;
+                varLoveStage.text = playerDm.LEVEL_STAGE.ToString();
+                loveNum = 0;
+                //todo 判断是否完成关卡
             }
         }
-
-
-        #region //电话
-
-        UpdatePhone();
-        //检测旋转varNodboom1.gameObject.transform.rotation.z是否在0-10，170-190，350-360之间
-        if (
-            varNodboom1.gameObject.transform.eulerAngles.z >= 0 &&
-            varNodboom1.gameObject.transform.eulerAngles.z <= 10 ||
-            varNodboom1.gameObject.transform.eulerAngles.z >= 170 &&
-            varNodboom1.gameObject.transform.eulerAngles.z <= 190 ||
-            varNodboom1.gameObject.transform.eulerAngles.z >= 350 &&
-            varNodboom1.gameObject.transform.eulerAngles.z <= 360)
-        {
-            boom1 = true;
-            varNodboom1.color = Color.yellow;
-        }
-        else
-        {
-            boom1 = false;
-            varNodboom1.color = Color.blue;
-        }
-
-        if (
-            varNodboom2.gameObject.transform.eulerAngles.z >= 0 &&
-            varNodboom2.gameObject.transform.eulerAngles.z <= 10 ||
-            varNodboom2.gameObject.transform.eulerAngles.z >= 170 &&
-            varNodboom2.gameObject.transform.eulerAngles.z <= 190 ||
-            varNodboom2.gameObject.transform.eulerAngles.z >= 350 &&
-            varNodboom2.gameObject.transform.eulerAngles.z <= 360)
-        {
-            boom2 = true;
-            varNodboom2.color = Color.yellow;
-        }
-        else
-        {
-            boom2 = false;
-            varNodboom2.color = Color.blue;
-        }
-
-
-        //开启下一关
-        if (boom1 && boom2 && !isDragging1 && !isDragging2 && !isCd)
-        {
-            ActionKit.Sequence()
-                .Callback(() => GF.Event.Fire(this, ReferencePool.Acquire<PlayerEventArgs>().Fill(
-                    PlayerEventType.PhoneCall,
-                    null)))
-                .Callback(() => isCd = true)
-                .Delay(6f)
-                .Callback(PhoneCall)
-                .Start(this);
-        }
-
-        #endregion
-    }
-
-    private void UpdatePhone()
-    {
-        if (isDragging1)
-        {
-            //增量旋转
-            varNodboom1.gameObject.transform.DOLocalRotate(new Vector3(0, 0, 1), 0.1f, RotateMode.LocalAxisAdd);
-            if (varNodboom1.gameObject.transform.localRotation.z >= 360)
-            {
-                varNodboom1.gameObject.transform.localRotation = Quaternion.Euler(0, 0, 0);
-            }
-        }
-
-        if (isDragging2)
-        {
-            //增量旋转
-            varNodboom2.gameObject.transform.DOLocalRotate(new Vector3(0, 0, 1), 0.1f, RotateMode.LocalAxisAdd);
-            if (varNodboom2.gameObject.transform.localRotation.z >= 360)
-            {
-                varNodboom2.gameObject.transform.localRotation = Quaternion.Euler(0, 0, 0);
-            }
-        }
-    }
-
-    //打电话
-    private void PhoneCall()
-    {
-        //随机角度
-        isCd = false;
-        boom1 = false;
-        boom2 = false;
-        isDragging1 = true;
-        isDragging2 = true;
-        varNodboom1.gameObject.transform.eulerAngles = new Vector3(0, 0, UnityEngine.Random.Range(0, 360));
-        varNodboom2.gameObject.transform.eulerAngles = new Vector3(0, 0, UnityEngine.Random.Range(0, 360));
     }
 
     private void OnPlayerEvent(object sender, GameEventArgs e)
@@ -191,10 +102,11 @@ public partial class GameUIForm : UIFormBase
                 if (data2 != null && data2.ContainsKey("value"))
                 {
                     varNodProcess.gameObject.SetActive(true);
-                    varKongjieBar.fillAmount = (float)data2["value"] / 2000;
-                    kongbu = (float)data2["value"];
+                    var stageScore = lvSettingTb[playerDm.LEVEL_STAGE].Target;
+                    varKongjieBar.fillAmount = (float)data2["value"] / stageScore;
+                    loveNum = (float)data2["value"];
                     //去掉小数
-                    coinNumText.text = Mathf.Floor(kongbu).ToString();
+                    coinNumText.text = Mathf.Floor(loveNum).ToString();
                 }
 
                 break;
@@ -203,9 +115,8 @@ public partial class GameUIForm : UIFormBase
                 if (data3 != null && data3.ContainsKey("value"))
                 {
                     //varKongjieBar.fillAmount = (float)(int)data3["value"] / 100;
-                    Kongjie = (float)(int)data3["value"];
+                    bossNum = (float)(int)data3["value"];
                 }
-
                 break;
 
             //varNodProcess
@@ -219,30 +130,10 @@ public partial class GameUIForm : UIFormBase
         {
             return;
         }
+
         switch (btId)
         {
-            case "boom1Btn":
-                if (!isDragging1)
-                {
-                    isDragging1 = true;
-                }
-                else
-                {
-                    isDragging1 = false;
-                }
-
-                break;
-            case "boom2Btn":
-                if (!isDragging2)
-                {
-                    isDragging2 = true;
-                }
-                else
-                {
-                    isDragging2 = false;
-                }
-
-                break;
+         
         }
     }
 

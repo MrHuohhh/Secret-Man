@@ -50,6 +50,7 @@ public partial class MenuUIForm : UIFormBase
             case "ClearLevelData":
                 var playerDm = GF.DataModel.GetOrCreate<PlayerDataModel>();
                 playerDm.GAME_LEVEL = 1;
+                playerDm.LEVEL_STAGE = 1;
                 break;
         }
 

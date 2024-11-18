@@ -1,6 +1,6 @@
 //---------------------------------
 //此文件由工具自动生成,请勿手动修改
-//更新自:DESKTOP-40TL4RE
+//更新自:CHINAMI-0TE8NQN
 //---------------------------------
 using UnityEngine;
 using TMPro;
@@ -18,4 +18,5 @@ public partial class GameUIForm
 	[SerializeField] private Image varNodboom1 = null;
 	[SerializeField] private Button varBoom2Btn = null;
 	[SerializeField] private Image varNodboom2 = null;
+	[SerializeField] private TextMeshProUGUI varLoveStage = null;
 }

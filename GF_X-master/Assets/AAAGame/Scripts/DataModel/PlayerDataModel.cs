@@ -36,6 +36,20 @@ public class PlayerDataModel : DataModelBase
             FireUserDataChanged(UserDataType.GAME_LEVEL, preLvId, nextLvId);
         }
     }
+    
+    public int LEVEL_STAGE
+    {
+        get { return GF.Setting.GetInt(Const.UserData.LEVEL_STAGE, 1); }
+        set
+        {
+            var lvTb = GF.DataTable.GetDataTable<Level1SettingTable>();
+            int preLvId = LEVEL_STAGE;
+
+            int nextLvId = false ? value : Mathf.Clamp(value, lvTb.MinIdDataRow.Id, lvTb.MaxIdDataRow.Id);
+            GF.Setting.SetInt(Const.UserData.LEVEL_STAGE, nextLvId);
+            FireUserDataChanged(UserDataType.LEVEL_STAGE, preLvId, nextLvId);
+        }
+    }
 
     public int GetCurrentLevelId()
     {

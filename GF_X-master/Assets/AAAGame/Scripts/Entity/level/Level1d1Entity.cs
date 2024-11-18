@@ -43,6 +43,11 @@ public class Level1d1Entity : LevelBase
         loadEntityTaskList?.Clear();
         enemyList?.Clear();
         SpawnAllEntity();
+        
+        //初始化数据
+        var lvSettingTb = GF.DataTable.GetDataTable<Level1SettingTable>();
+        var playerDm = GF.DataModel.GetOrCreate<PlayerDataModel>();
+        playerDm.LEVEL_STAGE = 1;
     }
     protected override void OnHide(bool isShutdown, object userData)
     {
@@ -104,36 +109,6 @@ public class Level1d1Entity : LevelBase
         
     }
 
-    internal void AddEnemies(int v)
-    {
-        var player = GF.Entity.GetEntity<PlayerEntity>(mPlayerId);
-        int spawnCount = v;
-        for (int i = 0; i < spawnCount; i++)
-        {
-            var randomPos = UnityEngine.Random.insideUnitCircle * 5;
-            var enemyParams = EntityParams.Create();
-            enemyParams.position = player.transform.position + new Vector3(randomPos.x, 0, randomPos.y);
-            enemyParams.eulerAngles = Vector3.up * UnityEngine.Random.value * 360f;
-            var enemyId = GF.Entity.ShowEntity<SampleEntity>("MyPlayer", Const.EntityGroup.Player, enemyParams);
-            enemyList.Add(enemyId);
-        }
-    }
-
-    internal void RemoveEnemies(int v)
-    {
-        for (int i = 0; i < v; i++)
-        {
-            if (enemyList.Count <= 0)
-            {
-                break;
-            }
-            int eId = enemyList[0];
-            GF.Entity.HideEntitySafe(eId);
-            enemyList.RemoveAt(0);
-        }
-    }
-    
-    
     internal void CreateKongjie()
     {
         var kongjieParams = EntityParams.Create(KongjieSpawnPoint.position, KongjieSpawnPoint.eulerAngles, KongjieSpawnPoint.localScale);

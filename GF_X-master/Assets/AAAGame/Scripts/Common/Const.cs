@@ -19,6 +19,8 @@ public static partial class Const
 
         internal static readonly string SHOW_RATING_COUNT = "UserData.SHOW_RATING_COUNT";
         internal static readonly string GAME_LEVEL = "UserData.GAME_LEVEL";
+        
+        internal static readonly string LEVEL_STAGE = "UserData.LEVEL_STAGE";
         internal static readonly string CAR_SKIN_ID = "UserData.CAR_SKIN_ID";
 
         internal static readonly string USER_SPAWN_POINT_TYPE = "UserData.USER_SPAWN_POINT_TYPE";

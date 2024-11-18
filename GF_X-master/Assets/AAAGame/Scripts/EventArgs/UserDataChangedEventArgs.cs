@@ -7,6 +7,7 @@ public enum UserDataType
     MONEY = 1,
     ADD_EFFECT,
     GAME_LEVEL,
+    LEVEL_STAGE,
     AD2MONEY_LV,
     FOLLOWER_NUM_CHANGED,
     Removed_ADS
