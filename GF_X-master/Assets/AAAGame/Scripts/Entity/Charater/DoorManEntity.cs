@@ -26,6 +26,7 @@ public class DoorManEntity : SampleEntity
     Transform m_transform;
 
     private IDataTable<Level1SettingTable> lvSettingTb;
+    private IDataTable<LevelTable> lvTb;
     private PlayerDataModel playerDm;
 
     public bool Ctrlable
@@ -56,6 +57,7 @@ public class DoorManEntity : SampleEntity
         playerDm = GF.DataModel.GetOrCreate<PlayerDataModel>();
         lvSettingTb = GF.DataTable.GetDataTable<Level1SettingTable>();
         timer = lvSettingTb[playerDm.LEVEL_STAGE].Event_Door_OpenCD;
+        lvTb = GF.DataTable.GetDataTable<LevelTable>();
     }
 
     protected override void OnUpdate(float elapseSeconds, float realElapseSeconds)
@@ -69,27 +71,6 @@ public class DoorManEntity : SampleEntity
             timer = lvSettingTb[playerDm.LEVEL_STAGE].Event_Door_OpenCD;
             //进入看不见状态概率
             int OpenProp = lvSettingTb[playerDm.LEVEL_STAGE].Event_Door_OpenProp; //0-100
-
-            var preTime = 2f;
-            var preTimeArr = lvSettingTb[playerDm.LEVEL_STAGE].Event_Door_PreTime; // 二维浮点数数组
-            // 解析数组
-            var timeWeightPairs = preTimeArr.Select(pair => new { Timer = pair[0], Weight = pair[1] }).ToList();
-            // 计算总权重
-            float totalWeight = timeWeightPairs.Sum(pair => pair.Weight);
-            // 生成随机数
-            var random = UnityEngine.Random.Range(0, totalWeight);
-            // 根据随机数选择时间
-            float cumulativeWeight = 0f;
-            foreach (var pair in timeWeightPairs)
-            {
-                cumulativeWeight += pair.Weight;
-                if (random < cumulativeWeight)
-                {
-                    preTime = pair.Timer;
-                    break;
-                }
-            }
-
             if (UnityEngine.Random.Range(0, 100) < OpenProp && !misBeginNext)
             {
                 // mIsSee为false
@@ -101,11 +82,36 @@ public class DoorManEntity : SampleEntity
                     .Delay(0.3f)
                     .Callback(() => m_transform.DOShakePosition(2f, new Vector3(5f, 5f, 0), 10, 90, false, true))
                     .Callback(() => mIsCanCilck = true)
-                    .Delay(preTime)
+                    .Delay(preTimeGet())
                     .Callback(getOut)
                     .Start(this);
             }
         }
+    }
+    
+    //加权计算本次随机的预告时间
+    private float preTimeGet()
+    {
+        var preTime = 2f;
+        var preTimeArr = lvSettingTb[playerDm.LEVEL_STAGE].Event_Door_PreTime; // 二维浮点数数组
+        // 解析数组
+        var timeWeightPairs = preTimeArr.Select(pair => new { Timer = pair[0], Weight = pair[1] }).ToList();
+        // 计算总权重
+        float totalWeight = timeWeightPairs.Sum(pair => pair.Weight);
+        // 生成随机数
+        var random = UnityEngine.Random.Range(0, totalWeight);
+        // 根据随机数选择时间
+        float cumulativeWeight = 0f;
+        foreach (var pair in timeWeightPairs)
+        {
+            cumulativeWeight += pair.Weight;
+            if (random < cumulativeWeight)
+            {
+                preTime = pair.Timer;
+                break;
+            }
+        }
+        return  preTime;
     }
 
     private void getOut()
@@ -129,6 +135,7 @@ public class DoorManEntity : SampleEntity
             misBeginNext = true;
             mIsCanCilck = false;
             //停止m_transform.DOShakePosition
+            var lvRow = lvTb.GetDataRow(playerDm.GAME_LEVEL);
             m_transform.DOKill();
             ActionKit.Sequence()
                 .Callback(() =>
@@ -136,8 +143,8 @@ public class DoorManEntity : SampleEntity
                 .Delay(0.5f)
                 .Callback(() => mIsSee = true)
                 .Delay(UnityEngine.Random.Range(2, 4))
-                .Callback(() => m_transform.DOShakePosition(1f, new Vector3(2f, 2f, 0), 10, 90, false, true))
-                .Delay(1f)
+                .Callback(() => m_transform.DOShakePosition(lvRow.GlobNum[2], new Vector3(2f, 2f, 0), 10, 90, false, true))
+                .Delay(lvRow.GlobNum[2])
                 .Callback(() => misBeginNext = false)
                 .Callback(getOut)
                 .Start(this);
