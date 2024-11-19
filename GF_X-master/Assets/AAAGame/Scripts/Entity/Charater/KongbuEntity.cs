@@ -38,6 +38,7 @@ public class KongbuEntity : SampleEntity
 
     private IDataTable<Level1SettingTable> lvSettingTb;
     private PlayerDataModel playerDm;
+    private int Stage;
 
     public bool Ctrlable
     {
@@ -56,11 +57,20 @@ public class KongbuEntity : SampleEntity
         m_transform = GetComponent<Transform>();
         playerDm = GF.DataModel.GetOrCreate<PlayerDataModel>();
         lvSettingTb = GF.DataTable.GetDataTable<Level1SettingTable>();
+        Stage = playerDm.LEVEL_STAGE;
     }
 
     protected override void OnUpdate(float elapseSeconds, float realElapseSeconds)
     {
         base.OnUpdate(elapseSeconds, realElapseSeconds);
+        //阶段清空
+        if (Stage != playerDm.LEVEL_STAGE)
+        {
+            BuValue = 0;
+            Stage = playerDm.LEVEL_STAGE;
+        }
+        
+        //不操作扣分
         if (!isDragging && BuValue > 0)
         {
             BuValue = BuValue - lvSettingTb[playerDm.LEVEL_STAGE].ScoreLost;
