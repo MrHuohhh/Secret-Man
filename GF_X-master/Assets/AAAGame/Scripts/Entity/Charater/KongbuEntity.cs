@@ -120,6 +120,14 @@ public class KongbuEntity : SampleEntity
        
         m_transform.DOLocalRotate(new Vector3(0, 0, 80), 1f, RotateMode.Fast);
         //}
+        
+        BuValue = BuValue + lvSettingTb[playerDm.LEVEL_STAGE].ClickScore;
+        GF.Event.Fire(this, ReferencePool.Acquire<PlayerEventArgs>().Fill(PlayerEventType.DragBtnKongbu,
+            new Dictionary<string, object>
+            {
+                ["value"] = BuValue,
+            }));
+
     }
 
 
