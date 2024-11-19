@@ -37,7 +37,7 @@ public class Level1SettingTable : DataRowBase
         }
 
         /// <summary>
-        /// 
+        /// 点击分数/点击
         /// </summary>
         public int ClickScore
         {
@@ -46,7 +46,7 @@ public class Level1SettingTable : DataRowBase
         }
 
         /// <summary>
-        /// 
+        /// 长按分数/帧
         /// </summary>
         public int TapScore
         {
@@ -55,7 +55,7 @@ public class Level1SettingTable : DataRowBase
         }
 
         /// <summary>
-        /// 
+        /// 损失分数/帧
         /// </summary>
         public int ScoreLost
         {
@@ -64,7 +64,7 @@ public class Level1SettingTable : DataRowBase
         }
 
         /// <summary>
-        /// 
+        /// 来电固定间隔时间判定来电间隔判定概率
         /// </summary>
         public int Event_Boss_OpenCD
         {
@@ -82,7 +82,7 @@ public class Level1SettingTable : DataRowBase
         }
 
         /// <summary>
-        /// 
+        /// 挂断固定间隔时间判定挂断电话判定概率
         /// </summary>
         public int Event_Boss_CloseCD
         {
@@ -100,7 +100,7 @@ public class Level1SettingTable : DataRowBase
         }
 
         /// <summary>
-        /// 
+        /// 敲门判定间隔时间
         /// </summary>
         public int Event_Door_OpenCD
         {
@@ -109,7 +109,7 @@ public class Level1SettingTable : DataRowBase
         }
 
         /// <summary>
-        /// 
+        /// 触发敲门判定概率
         /// </summary>
         public int Event_Door_OpenProp
         {
@@ -118,7 +118,7 @@ public class Level1SettingTable : DataRowBase
         }
 
         /// <summary>
-        /// 
+        /// 撤离预告时间与概率
         /// </summary>
         public float[][] Event_Door_PreTime
         {
@@ -127,7 +127,7 @@ public class Level1SettingTable : DataRowBase
         }
 
         /// <summary>
-        /// 
+        /// 开门事件概率
         /// </summary>
         public int Event_Door_TypeProp
         {
@@ -136,7 +136,7 @@ public class Level1SettingTable : DataRowBase
         }
 
         /// <summary>
-        /// 
+        /// 敌人生命值
         /// </summary>
         public int EnemyLives
         {
@@ -145,7 +145,7 @@ public class Level1SettingTable : DataRowBase
         }
 
         /// <summary>
-        /// 
+        /// 敌人移动时间
         /// </summary>
         public int EnemyMoveTime
         {
@@ -154,7 +154,7 @@ public class Level1SettingTable : DataRowBase
         }
 
         /// <summary>
-        /// 
+        /// 敌人伤害
         /// </summary>
         public int Damage
         {
@@ -163,7 +163,7 @@ public class Level1SettingTable : DataRowBase
         }
 
         /// <summary>
-        /// 
+        /// 间隔判定时间
         /// </summary>
         public int Event_Windows_OpenCD
         {
@@ -172,7 +172,7 @@ public class Level1SettingTable : DataRowBase
         }
 
         /// <summary>
-        /// 
+        /// 触发概率
         /// </summary>
         public int Event_Windows_OpenProp
         {
@@ -181,7 +181,7 @@ public class Level1SettingTable : DataRowBase
         }
 
         /// <summary>
-        /// 
+        /// 关窗判定时间
         /// </summary>
         public int Event_Windows_CloseCD
         {
@@ -190,7 +190,7 @@ public class Level1SettingTable : DataRowBase
         }
 
         /// <summary>
-        /// 
+        /// 关窗触发概率
         /// </summary>
         public int Event_Windows_CloseProp
         {
