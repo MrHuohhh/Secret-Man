@@ -61,7 +61,7 @@ public class DoorManEntity : SampleEntity
             mHansonClick.enabled = true;
         }
 
-        m_transform = mStaff.GetComponent<Transform>();
+        m_transform = mDoor.GetComponent<Transform>();
         playerDm = GF.DataModel.GetOrCreate<PlayerDataModel>();
         lvSettingTb = GF.DataTable.GetDataTable<Level1SettingTable>();
         timer = lvSettingTb[playerDm.LEVEL_STAGE].Event_Door_OpenCD;
