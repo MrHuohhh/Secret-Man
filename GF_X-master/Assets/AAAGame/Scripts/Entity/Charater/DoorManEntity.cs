@@ -15,11 +15,15 @@ public class DoorManEntity : SampleEntity
         get => false;
     }
 
-    private bool mCtrlable;
-    public int JieValue = 0;
-    private bool mIsSee = false;
+    private bool mIsSee = false; //是否能挡住boss
     private bool mIsCanCilck = false;
     private bool misBeginNext = false;
+    private bool mIsEnemy = false;
+    private GameObject mStaff;
+    private GameObject mHanson;
+    private GameObject mDoor;
+    private BoxCollider2D mDoorClick;
+    private BoxCollider2D mHansonClick;
 
 
     private float timer = 3;
@@ -29,31 +33,35 @@ public class DoorManEntity : SampleEntity
     private IDataTable<LevelTable> lvTb;
     private PlayerDataModel playerDm;
 
-    public bool Ctrlable
-    {
-        get => mCtrlable;
-        set
-        {
-            mCtrlable = value;
-            // if (!IsAIPlayer) GF.StaticUI.JoystickEnable = mCtrlable;
-        }
-    }
-
     public bool IsOverSee
     {
         get => mIsSee;
-        set
-        {
-            mIsSee = value;
-            // if (!IsAIPlayer) GF.StaticUI.JoystickEnable = mCtrlable;
-        }
+        set { mIsSee = value; }
     }
 
 
     protected override void OnInit(object userData)
     {
         base.OnInit(userData);
-        m_transform = GetComponent<Transform>();
+        mStaff = transform.Find("Staff").gameObject;
+        mHanson = transform.Find("Hanson").gameObject;
+        mDoor = transform.Find("Door").gameObject;
+        mStaff.SetActive(false);
+        mHanson.SetActive(false);
+        mDoorClick = mDoor.GetComponent<BoxCollider2D>();
+        mHansonClick = mHanson.GetComponent<BoxCollider2D>();
+        // 确保碰撞器启用
+        if (mDoorClick != null)
+        {
+            mDoorClick.enabled = true;
+        }
+
+        if (mHansonClick != null)
+        {
+            mHansonClick.enabled = true;
+        }
+
+        m_transform = mStaff.GetComponent<Transform>();
         playerDm = GF.DataModel.GetOrCreate<PlayerDataModel>();
         lvSettingTb = GF.DataTable.GetDataTable<Level1SettingTable>();
         timer = lvSettingTb[playerDm.LEVEL_STAGE].Event_Door_OpenCD;
@@ -73,6 +81,7 @@ public class DoorManEntity : SampleEntity
             int OpenProp = lvSettingTb[playerDm.LEVEL_STAGE].Event_Door_OpenProp; //0-100
             if (UnityEngine.Random.Range(0, 100) < OpenProp && !misBeginNext)
             {
+                //todo 先关闭门
                 // mIsSee为false
                 ActionKit.Sequence()
                     .Callback(() => //x轴从初始位置0到-6停下,震动,增量移动
@@ -88,7 +97,7 @@ public class DoorManEntity : SampleEntity
             }
         }
     }
-    
+
     //加权计算本次随机的预告时间
     private float preTimeGet()
     {
@@ -111,14 +120,16 @@ public class DoorManEntity : SampleEntity
                 break;
             }
         }
-        return  preTime;
+
+        return preTime;
     }
 
     private void getOut()
     {
         if (!misBeginNext)
         {
-            m_transform.DOMove(new Vector3(56, -40, -1), 0.5f).SetEase(Ease.InOutSine);
+            mStaff.transform.DOMove(new Vector3(56, -40, -1), 0.5f).SetEase(Ease.InOutSine).SetEase(Ease.InOutSine)
+                .OnComplete(() => { mStaff.SetActive(false); });
             mIsSee = false;
             mIsCanCilck = false;
             misBeginNext = false;
@@ -128,7 +139,28 @@ public class DoorManEntity : SampleEntity
 
     void OnMouseDown()
     {
+        Vector2 mousePosition = Camera.main.ScreenToWorldPoint(Input.mousePosition);
+        RaycastHit2D hit = Physics2D.Raycast(mousePosition, Vector2.zero);
+
+        if (hit.collider != null)
+        {
+            if (hit.collider == mDoorClick)
+            {
+                OnMouseDownDoor();
+            }
+            else if (hit.collider == mHansonClick)
+            {
+                OnMouseDownHanson();
+            }
+        }
+    }
+
+    //点击mDoorClick
+    private void OnMouseDownDoor()
+    {
         //todo Event_Door_TypeProp类型1,正常/2.敌人
+        int TypeProp = lvSettingTb[playerDm.LEVEL_STAGE].Event_Door_TypeProp;
+
         Debug.Log("Object clicked!");
         if (mIsCanCilck)
         {
@@ -136,18 +168,42 @@ public class DoorManEntity : SampleEntity
             mIsCanCilck = false;
             //停止m_transform.DOShakePosition
             var lvRow = lvTb.GetDataRow(playerDm.GAME_LEVEL);
-            m_transform.DOKill();
-            ActionKit.Sequence()
-                .Callback(() =>
-                    m_transform.DOMove(new Vector3(-50, -6, -5), 0.5f).SetEase(Ease.InOutSine))
-                .Delay(0.5f)
-                .Callback(() => mIsSee = true)
-                .Delay(UnityEngine.Random.Range(2, 4))
-                .Callback(() => m_transform.DOShakePosition(lvRow.GlobNum[2], new Vector3(2f, 2f, 0), 10, 90, false, true))
-                .Delay(lvRow.GlobNum[2])
-                .Callback(() => misBeginNext = false)
-                .Callback(getOut)
-                .Start(this);
+            m_transform.DOKill(); //todo 开门
+            if (UnityEngine.Random.Range(0, 100) < TypeProp)
+            {
+                mStaff.SetActive(true);
+                //普通员工
+                ActionKit.Sequence()
+                    .Callback(() =>
+                        mStaff.transform.DOMove(new Vector3(-50, -6, -5), 0.5f).SetEase(Ease.InOutSine))
+                    .Delay(0.5f)
+                    .Callback(() => mIsSee = true)
+                    .Delay(UnityEngine.Random.Range(2, 4))
+                    .Callback(() =>
+                        mStaff.transform.DOShakePosition(lvRow.GlobNum[2], new Vector3(2f, 2f, 0), 10, 90, false, true))
+                    .Delay(lvRow.GlobNum[2])
+                    .Callback(() => misBeginNext = false)
+                    .Callback(getOut)
+                    .Start(this);
+            }
+            else
+            {
+                //帅锅
+                mHanson.SetActive(true);
+                ActionKit.Sequence()
+                    .Delay(1f)
+                    .Callback(() =>  mHanson.SetActive(false))
+                    .Start(this);
+            }
         }
+        else
+        {
+            //todo 开空门
+        }
+    }
+
+    private void OnMouseDownHanson()
+    {
+        Log.Error("点击帅锅");
     }
 }
