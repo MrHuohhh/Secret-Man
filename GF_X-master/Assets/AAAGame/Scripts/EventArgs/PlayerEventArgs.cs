@@ -20,6 +20,7 @@ public enum PlayerEventType
     RefreshTimer, // 刷新倒计时
     CreateKongjie,//创造空姐
     DragBtnKongbu,//恐怖分子积累
+    LoseLove,
     DragBtnKongjie,//空姐警戒积累
     
     PhoneCall,//电话接通

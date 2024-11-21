@@ -22,8 +22,6 @@ public class KongbuEntity : SampleEntity
 
     private bool isDragging = false;
 
-    public float BuValue = 0;
-
     public int JieValue = 0;
 
     private bool mIsSee1 = false;
@@ -63,12 +61,6 @@ public class KongbuEntity : SampleEntity
     protected override void OnUpdate(float elapseSeconds, float realElapseSeconds)
     {
         base.OnUpdate(elapseSeconds, realElapseSeconds);
-        //阶段清空
-        if (Stage != playerDm.LEVEL_STAGE)
-        {
-            BuValue = 0;
-            Stage = playerDm.LEVEL_STAGE;
-        }
 
         RefreshMouseOver();//不操作扣分和还原警戒值
     }
@@ -82,11 +74,10 @@ public class KongbuEntity : SampleEntity
         m_transform.DOLocalRotate(new Vector3(0, 0, 80), 1f, RotateMode.Fast);
         //}
         
-        BuValue = BuValue + lvSettingTb[playerDm.LEVEL_STAGE].ClickScore;
         GF.Event.Fire(this, ReferencePool.Acquire<PlayerEventArgs>().Fill(PlayerEventType.DragBtnKongbu,
             new Dictionary<string, object>
             {
-                ["value"] = BuValue,
+                ["value"] =lvSettingTb[playerDm.LEVEL_STAGE].ClickScore,
             }));
 
     }
@@ -96,11 +87,10 @@ public class KongbuEntity : SampleEntity
     {
         if (isDragging)
         {
-            BuValue = BuValue + lvSettingTb[playerDm.LEVEL_STAGE].TapScore;
             GF.Event.Fire(this, ReferencePool.Acquire<PlayerEventArgs>().Fill(PlayerEventType.DragBtnKongbu,
                 new Dictionary<string, object>
                 {
-                    ["value"] = BuValue,
+                    ["value"] = lvSettingTb[playerDm.LEVEL_STAGE].TapScore,
                 }));
 
             //老板的盯着
@@ -149,13 +139,12 @@ public class KongbuEntity : SampleEntity
     //不操作扣分和还原警戒值
     private  void RefreshMouseOver()
     {
-        if (!isDragging && BuValue > 0)
+        if (!isDragging )
         {
-            BuValue = BuValue - lvSettingTb[playerDm.LEVEL_STAGE].ScoreLost;
-            GF.Event.Fire(this, ReferencePool.Acquire<PlayerEventArgs>().Fill(PlayerEventType.DragBtnKongbu,
+            GF.Event.Fire(this, ReferencePool.Acquire<PlayerEventArgs>().Fill(PlayerEventType.LoseLove,
                 new Dictionary<string, object>
                 {
-                    ["value"] = BuValue,
+                    ["value"] = lvSettingTb[playerDm.LEVEL_STAGE].ScoreLost,
                 }));
         }
 

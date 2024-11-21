@@ -6,6 +6,7 @@ using GameFramework;
 using GameFramework.DataTable;
 using QFramework;
 using UnityEngine;
+using UnityGameFramework.Runtime;
 using Log = UnityGameFramework.Runtime.Log;
 
 public class DoorManEntity : SampleEntity
@@ -20,10 +21,8 @@ public class DoorManEntity : SampleEntity
     private bool misBeginNext = false;
     private bool mIsEnemy = false;
     private GameObject mStaff;
-    private GameObject mHanson;
     private GameObject mDoor;
-    private BoxCollider2D mDoorClick;
-    private BoxCollider2D mHansonClick;
+    private Entity HandsomeEntity;
 
 
     private float timer = 3;
@@ -44,24 +43,9 @@ public class DoorManEntity : SampleEntity
     {
         base.OnInit(userData);
         mStaff = transform.Find("Staff").gameObject;
-        mHanson = transform.Find("Hanson").gameObject;
         mDoor = transform.Find("Door").gameObject;
         mStaff.SetActive(false);
-        mHanson.SetActive(false);
-        mDoorClick = mDoor.GetComponent<BoxCollider2D>();
-        mHansonClick = mHanson.GetComponent<BoxCollider2D>();
-        // 确保碰撞器启用
-        if (mDoorClick != null)
-        {
-            mDoorClick.enabled = true;
-        }
-
-        if (mHansonClick != null)
-        {
-            mHansonClick.enabled = true;
-        }
-
-        m_transform = mDoor.GetComponent<Transform>();
+        m_transform = GetComponent<Transform>();
         playerDm = GF.DataModel.GetOrCreate<PlayerDataModel>();
         lvSettingTb = GF.DataTable.GetDataTable<Level1SettingTable>();
         timer = lvSettingTb[playerDm.LEVEL_STAGE].Event_Door_OpenCD;
@@ -139,26 +123,12 @@ public class DoorManEntity : SampleEntity
 
     void OnMouseDown()
     {
-        Vector2 mousePosition = Camera.main.ScreenToWorldPoint(Input.mousePosition);
-        RaycastHit2D hit = Physics2D.Raycast(mousePosition, Vector2.zero);
-
-        if (hit.collider != null)
-        {
-            if (hit.collider == mDoorClick)
-            {
-                OnMouseDownDoor();
-            }
-            else if (hit.collider == mHansonClick)
-            {
-                OnMouseDownHanson();
-            }
-        }
+        OnMouseDownDoor();
     }
 
     //点击mDoorClick
     private void OnMouseDownDoor()
     {
-        //todo Event_Door_TypeProp类型1,正常/2.敌人
         int TypeProp = lvSettingTb[playerDm.LEVEL_STAGE].Event_Door_TypeProp;
 
         Debug.Log("Object clicked!");
@@ -169,7 +139,7 @@ public class DoorManEntity : SampleEntity
             //停止m_transform.DOShakePosition
             var lvRow = lvTb.GetDataRow(playerDm.GAME_LEVEL);
             m_transform.DOKill(); //todo 开门
-            if (UnityEngine.Random.Range(0, 100) < TypeProp)
+            if (UnityEngine.Random.Range(0, 100) < TypeProp)        //Event_Door_TypeProp类型1,正常/2.敌人
             {
                 mStaff.SetActive(true);
                 //普通员工
@@ -188,22 +158,16 @@ public class DoorManEntity : SampleEntity
             }
             else
             {
-                //帅锅
-                mHanson.SetActive(true);
-                ActionKit.Sequence()
-                    .Delay(1f)
-                    .Callback(() =>  mHanson.SetActive(false))
-                    .Start(this);
+                if (!GF.Entity.HasEntity("Assets/AAAGame/Prefabs/Entity/Handsome.prefab")) return;
+                HandsomeEntity = GF.Entity.GetEntity("Assets/AAAGame/Prefabs/Entity/Handsome.prefab");
+                //初始化和显示
+                HandsomeEntity.GetComponent<HandsomeEntity>().onStartAtt();
+                  misBeginNext = false;
             }
         }
         else
         {
             //todo 开空门
         }
-    }
-
-    private void OnMouseDownHanson()
-    {
-        Log.Error("点击帅锅");
     }
 }

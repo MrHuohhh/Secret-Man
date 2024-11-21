@@ -103,20 +103,41 @@ public partial class GameUIForm : UIFormBase
                 {
                     varNodProcess.gameObject.SetActive(true);
                     var stageScore = lvSettingTb[playerDm.LEVEL_STAGE].Target;
-                    varKongjieBar.fillAmount = (float)data2["value"] / stageScore;
-                    loveNum = (float)data2["value"];
+                    loveNum += (float)(int)data2["value"];
+                    varKongjieBar.fillAmount = loveNum / stageScore;
+                    //去掉小数
+                    coinNumText.text = Mathf.Floor(loveNum).ToString();
+                }
+
+                break;
+            case PlayerEventType.LoseLove:
+                var data3 = args.EventData as Dictionary<string, object>;
+                if (data3 != null && data3.ContainsKey("value"))
+                {
+                    varNodProcess.gameObject.SetActive(true);
+                    var stageScore = lvSettingTb[playerDm.LEVEL_STAGE].Target;
+                    if (loveNum > 0)
+                    {
+                        loveNum -= (float)(int)data3["value"];
+                        if (loveNum < 0)
+                        {
+                            loveNum = 0;
+                        }
+                    }
+                    varKongjieBar.fillAmount = loveNum / stageScore;
                     //去掉小数
                     coinNumText.text = Mathf.Floor(loveNum).ToString();
                 }
 
                 break;
             case PlayerEventType.DragBtnKongjie:
-                var data3 = args.EventData as Dictionary<string, object>;
-                if (data3 != null && data3.ContainsKey("value"))
+                var data4 = args.EventData as Dictionary<string, object>;
+                if (data4 != null && data4.ContainsKey("value"))
                 {
                     //varKongjieBar.fillAmount = (float)(int)data3["value"] / 100;
-                    bossNum = (float)(int)data3["value"];
+                    bossNum = (float)(int)data4["value"];
                 }
+
                 break;
 
             //varNodProcess
@@ -133,7 +154,6 @@ public partial class GameUIForm : UIFormBase
 
         switch (btId)
         {
-         
         }
     }
 
