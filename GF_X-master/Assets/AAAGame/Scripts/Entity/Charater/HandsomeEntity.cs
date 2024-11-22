@@ -99,7 +99,6 @@ public class HandsomeEntity : SampleEntity
 
     private void OnMouseDownHanson()
     {
-        Log.Error("点击帅锅");
         if (mIsCanCilck && mIsStart)
         {
             //受击抖动
