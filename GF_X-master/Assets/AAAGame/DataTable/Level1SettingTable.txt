@@ -2,8 +2,8 @@
 #	ID		Target	ClickScore	TapScore	ScoreLost	Event_Boss_OpenCD	Event_Boss_OpenProp	Event_Boss_CloseCD	Event_Boss_CloseProp	Event_Door_OpenCD	Event_Door_OpenProp	Event_Door_PreTime	Event_Door_TypeProp	EnemyLives	EnemyMoveTime	Damage	Event_Windows_OpenCD	Event_Windows_OpenProp	Event_Windows_CloseCD	Event_Windows_CloseProp	
 #	int		int	int	int	int	int	int	int	int	int	int	float[][]	int	int	int	int	int	int	int	int	int
 #	阶段	备注	阶段分数	点击分数/点击	长按分数/帧	损失分数/帧	来电固定间隔时间判定来电间隔判定概率		挂断固定间隔时间判定挂断电话判定概率		敲门判定间隔时间	触发敲门判定概率	撤离预告时间与概率	开门事件概率	敌人生命值	敌人移动时间	敌人伤害	间隔判定时间	触发概率	关窗判定时间	关窗触发概率	
-	1		2400	10	2	0	2	50	2	60	2	100	[1,50],[0.5,25],[2,25]	0	10	5	1000	0	0	0	0	
-	2		4800	20	4	1	2	50	2	60	2	100	[1,50],[0.5,25],[2,26]	100	0	0	2000	0	0	0	0	
+	1		2400	10	2	0	2	50	2	60	2	0	[1,50],[0.5,25],[2,25]	100	0	0	1000	0	0	0	0	
+	2		4800	20	4	1	2	50	2	60	2	50	[1,50],[0.5,25],[2,26]	100	0	0	2000	0	0	0	0	
 	3		9600	40	6	2	2	50	2	60	2	50	[1,50],[0.5,25],[2,27]	50	10	2	4000	2	50	2	50	
 	4		19200	80	8	3	2	50	2	60	2	50	[1,50],[0.5,25],[2,28]	50	20	3	8000	2	50	2	50	
 	5		38400	160	10	4	2	50	2	60	2	50	[1,50],[0.5,25],[2,29]	50	30	4	16000	2	50	2	50	

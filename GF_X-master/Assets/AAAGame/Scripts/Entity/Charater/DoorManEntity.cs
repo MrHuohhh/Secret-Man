@@ -65,6 +65,7 @@ public class DoorManEntity : SampleEntity
             int OpenProp = lvSettingTb[playerDm.LEVEL_STAGE].Event_Door_OpenProp; //0-100
             if (UnityEngine.Random.Range(0, 100) < OpenProp && !misBeginNext)
             {
+                var timePre = preTimeGet();
                 //todo 先关闭门
                 // mIsSee为false
                 ActionKit.Sequence()
@@ -73,9 +74,9 @@ public class DoorManEntity : SampleEntity
                     .Callback(() => mIsCanCilck = false)
                     //  m_transform.position = new Vector3(50, -40, -1))
                     .Delay(0.3f)
-                    .Callback(() => m_transform.DOShakePosition(2f, new Vector3(5f, 5f, 0), 10, 90, false, true))
+                    .Callback(() => m_transform.DOShakePosition(timePre, new Vector3(5,5,0)))
                     .Callback(() => mIsCanCilck = true)
-                    .Delay(preTimeGet())
+                    .Delay(timePre)
                     .Callback(getOut)
                     .Start(this);
             }
@@ -130,16 +131,14 @@ public class DoorManEntity : SampleEntity
     private void OnMouseDownDoor()
     {
         int TypeProp = lvSettingTb[playerDm.LEVEL_STAGE].Event_Door_TypeProp;
-
-        Debug.Log("Object clicked!");
+        misBeginNext = true;
         if (mIsCanCilck)
         {
-            misBeginNext = true;
             mIsCanCilck = false;
             //停止m_transform.DOShakePosition
             var lvRow = lvTb.GetDataRow(playerDm.GAME_LEVEL);
             m_transform.DOKill(); //todo 开门
-            if (UnityEngine.Random.Range(0, 100) < TypeProp)        //Event_Door_TypeProp类型1,正常/2.敌人
+            if (UnityEngine.Random.Range(0, 100) < TypeProp) //Event_Door_TypeProp类型1,正常/2.敌人
             {
                 mStaff.SetActive(true);
                 //普通员工
@@ -150,7 +149,7 @@ public class DoorManEntity : SampleEntity
                     .Callback(() => mIsSee = true)
                     .Delay(UnityEngine.Random.Range(2, 4))
                     .Callback(() =>
-                        mStaff.transform.DOShakePosition(lvRow.GlobNum[2], new Vector3(2f, 2f, 0), 10, 90, false, true))
+                        mStaff.transform.DOShakePosition(lvRow.GlobNum[2],new Vector3(5,5,0)))
                     .Delay(lvRow.GlobNum[2])
                     .Callback(() => misBeginNext = false)
                     .Callback(getOut)
@@ -158,16 +157,26 @@ public class DoorManEntity : SampleEntity
             }
             else
             {
+                //帅锅
                 if (!GF.Entity.HasEntity("Assets/AAAGame/Prefabs/Entity/Handsome.prefab")) return;
                 HandsomeEntity = GF.Entity.GetEntity("Assets/AAAGame/Prefabs/Entity/Handsome.prefab");
                 //初始化和显示
                 HandsomeEntity.GetComponent<HandsomeEntity>().onStartAtt();
-                  misBeginNext = false;
+                ActionKit.Sequence()
+                    .Delay(lvSettingTb[playerDm.LEVEL_STAGE].EnemyMoveTime)
+                    .Callback(() => misBeginNext = false)
+                    .Start(this);
             }
         }
         else
         {
+            mIsCanCilck = false;
             //todo 开空门
+            ActionKit.Sequence()
+                .Callback(() =>  m_transform.DOShakePosition(1f,new Vector3(2,2,0)))
+                .Delay(1f)
+                .Callback(() => misBeginNext = false)
+                .Start(this);
         }
     }
 }

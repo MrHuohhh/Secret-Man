@@ -21,6 +21,7 @@ public class HandsomeEntity : SampleEntity
     private int mHealth = 0;
     private GameObject mHanson;
     private Vector3 mStartPos;
+    private BoxCollider2D mCollider;
 
     private float timer = 3;
     Transform m_transform;
@@ -32,12 +33,15 @@ public class HandsomeEntity : SampleEntity
     {
         base.OnInit(userData);
         mHanson = transform.Find("Hanson").gameObject;
-        mHanson.SetActive(false);
-        mStartPos = new Vector3(65, -31, -1);
         m_transform = GetComponent<Transform>();
+        mCollider = GetComponent<BoxCollider2D>();
         playerDm = GF.DataModel.GetOrCreate<PlayerDataModel>();
         lvSettingTb = GF.DataTable.GetDataTable<Level1SettingTable>();
+        
+        mHanson.SetActive(false);
+        mStartPos = new Vector3(65, -31, -1);
         mIsStart = false;
+        mCollider.enabled = false;
     }
 
     protected override void OnUpdate(float elapseSeconds, float realElapseSeconds)
@@ -47,11 +51,12 @@ public class HandsomeEntity : SampleEntity
 
     public void onStartAtt()
     {
+        mCollider.enabled = true;
         misDie = false;
         mIsStart = true;
         mHanson.SetActive(true);
         mIsCanCilck = true;
-        m_transform.position =mStartPos;
+        m_transform.position = mStartPos;
         timer = lvSettingTb[playerDm.LEVEL_STAGE].EnemyMoveTime;
         mHealth = lvSettingTb[playerDm.LEVEL_STAGE].EnemyLives;
         ActionKit.Sequence()
@@ -60,7 +65,7 @@ public class HandsomeEntity : SampleEntity
             .Delay(timer)
             .Callback(Finish)
             .Delay(timer) //todo 动画时间?
-            .Callback(() => m_transform.position =mStartPos) //设置位置回到初始位置mStartPos
+            .Callback(() => m_transform.position = mStartPos) //设置位置回到初始位置mStartPos
             .Start(this);
     }
 
@@ -73,6 +78,8 @@ public class HandsomeEntity : SampleEntity
             mIsCanCilck = false;
             mIsStart = false;
             mHanson.SetActive(false);
+            mCollider.enabled = false;
+
 
             //todo 播放动画
 
@@ -106,6 +113,7 @@ public class HandsomeEntity : SampleEntity
                 DOTween.Pause(m_transform);
                 mHanson.SetActive(false);
                 m_transform.position = mStartPos;
+                mCollider.enabled = false;
             }
         }
     }
