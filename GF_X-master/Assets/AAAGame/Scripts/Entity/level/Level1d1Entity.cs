@@ -69,6 +69,8 @@ public class Level1d1Entity : LevelBase
         CreateKongjie();
         CreateDoorMan();
         CreateHandsome();
+        CreateWindow();
+        CreateHandsomeWin();
     }
     public void StartGame()
     {
@@ -132,5 +134,17 @@ public class Level1d1Entity : LevelBase
         mKongjieId = GF.Entity.ShowEntity<HandsomeEntity>("Handsome", Const.EntityGroup.Player, doorManParams);
         loadEntityTaskList.Add(mKongjieId);
         m_Item.SetActive(true);
+    }
+    internal void CreateWindow()
+    {
+        var doorManParams = EntityParams.Create(WindowSpawnPoint.position, WindowSpawnPoint.eulerAngles, WindowSpawnPoint.localScale);
+        mKongjieId = GF.Entity.ShowEntity<WindowEntity>("WindowMan", Const.EntityGroup.Player, doorManParams);
+        loadEntityTaskList.Add(mKongjieId);
+    }
+    internal void CreateHandsomeWin()
+    {
+        var doorManParams = EntityParams.Create(WindowSpawnPoint.position, WindowSpawnPoint.eulerAngles, WindowSpawnPoint.localScale);
+        mKongjieId = GF.Entity.ShowEntity<HandsomeWinEntity>("HandsomeWindow", Const.EntityGroup.Player, doorManParams);
+        loadEntityTaskList.Add(mKongjieId);
     }
 }

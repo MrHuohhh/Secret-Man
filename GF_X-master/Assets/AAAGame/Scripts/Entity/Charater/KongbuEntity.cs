@@ -25,11 +25,15 @@ public class KongbuEntity : SampleEntity
     public int JieValue = 0;
 
     private bool mIsSee1 = false;
-    private bool mIsOverSee = false;
+    private bool mIsOverSeeDoor = false;
+    private bool mIsOverSeeWindow = false;
+
 
     private Entity KongjieEntity;
 
     private Entity DoorManEntity;
+
+    private Entity WindowEntity;
 
 
     private Transform m_transform;
@@ -62,7 +66,7 @@ public class KongbuEntity : SampleEntity
     {
         base.OnUpdate(elapseSeconds, realElapseSeconds);
 
-        RefreshMouseOver();//不操作扣分和还原警戒值
+        RefreshMouseOver(); //不操作扣分和还原警戒值
     }
 
     //按下
@@ -70,16 +74,15 @@ public class KongbuEntity : SampleEntity
     {
         Debug.Log("Object clicked!");
         isDragging = true;
-       
+
         m_transform.DOLocalRotate(new Vector3(0, 0, 80), 1f, RotateMode.Fast);
         //}
-        
+
         GF.Event.Fire(this, ReferencePool.Acquire<PlayerEventArgs>().Fill(PlayerEventType.DragBtnKongbu,
             new Dictionary<string, object>
             {
-                ["value"] =lvSettingTb[playerDm.LEVEL_STAGE].ClickScore,
+                ["value"] = lvSettingTb[playerDm.LEVEL_STAGE].ClickScore,
             }));
-
     }
 
     //持续
@@ -109,9 +112,18 @@ public class KongbuEntity : SampleEntity
                 DoorManEntity = GF.Entity.GetEntity("Assets/AAAGame/Prefabs/Entity/DoorMan.prefab");
             }
 
-            bool mIsOverSee = DoorManEntity.GetComponent<DoorManEntity>().IsOverSee;
+            mIsOverSeeDoor = DoorManEntity.GetComponent<DoorManEntity>().IsOverSeeDoor;
 
-            if (mIsSee1 && !mIsOverSee)
+            //窗户
+            if (!WindowEntity)
+            {
+                if (!GF.Entity.HasEntity("Assets/AAAGame/Prefabs/Entity/WindowMan.prefab")) return;
+                WindowEntity = GF.Entity.GetEntity("Assets/AAAGame/Prefabs/Entity/WindowMan.prefab");
+            }
+
+            mIsOverSeeWindow = WindowEntity.GetComponent<WindowEntity>().IsOverSeeWindow;
+
+            if (mIsSee1 && !mIsOverSeeDoor && !mIsOverSeeWindow)
             {
                 JieValue++;
                 GF.Event.Fire(this, ReferencePool.Acquire<PlayerEventArgs>().Fill(PlayerEventType.DragBtnKongjie,
@@ -135,11 +147,11 @@ public class KongbuEntity : SampleEntity
             isDragging = false;
         }
     }
-    
+
     //不操作扣分和还原警戒值
-    private  void RefreshMouseOver()
+    private void RefreshMouseOver()
     {
-        if (!isDragging )
+        if (!isDragging)
         {
             GF.Event.Fire(this, ReferencePool.Acquire<PlayerEventArgs>().Fill(PlayerEventType.LoseLove,
                 new Dictionary<string, object>
@@ -175,10 +187,25 @@ public class KongbuEntity : SampleEntity
         }
         else
         {
-            mIsOverSee = DoorManEntity.GetComponent<DoorManEntity>().IsOverSee;
+            mIsOverSeeDoor = DoorManEntity.GetComponent<DoorManEntity>().IsOverSeeDoor;
         }
 
-        if ((!isDragging || (!mIsSee1 || mIsOverSee)) && JieValue > 0)
+        if (!WindowEntity)
+        {
+            if (!GF.Entity.HasEntity("Assets/AAAGame/Prefabs/Entity/WindowMan.prefab"))
+            {
+            }
+            else
+            {
+                WindowEntity = GF.Entity.GetEntity("Assets/AAAGame/Prefabs/Entity/WindowMan.prefab");
+            }
+        }
+        else
+        {
+            mIsOverSeeWindow = WindowEntity.GetComponent<WindowEntity>().IsOverSeeWindow;
+        }
+
+        if ((!isDragging || (!mIsSee1 || mIsOverSeeDoor || mIsOverSeeWindow)) && JieValue > 0)
         {
             JieValue = 0;
             GF.Event.Fire(this, ReferencePool.Acquire<PlayerEventArgs>().Fill(PlayerEventType.DragBtnKongjie,

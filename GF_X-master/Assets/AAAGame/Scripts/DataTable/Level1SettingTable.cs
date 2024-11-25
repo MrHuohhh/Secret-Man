@@ -118,6 +118,15 @@ public class Level1SettingTable : DataRowBase
         }
 
         /// <summary>
+        /// 持续时间与概率
+        /// </summary>
+        public float[][] Event_Door_Time
+        {
+            get;
+            private set;
+        }
+
+        /// <summary>
         /// 撤离预告时间与概率
         /// </summary>
         public float[][] Event_Door_PreTime
@@ -181,18 +190,27 @@ public class Level1SettingTable : DataRowBase
         }
 
         /// <summary>
-        /// 关窗判定时间
+        /// 持续时间与概率
         /// </summary>
-        public int Event_Windows_CloseCD
+        public float[][] Event_Window_Time
         {
             get;
             private set;
         }
 
         /// <summary>
-        /// 关窗触发概率
+        /// 撤离预告时间与概率
         /// </summary>
-        public int Event_Windows_CloseProp
+        public float[][] Event_Window_PreTime
+        {
+            get;
+            private set;
+        }
+
+        /// <summary>
+        /// 开窗事件概率
+        /// </summary>
+        public int Event_Window_TypeProp
         {
             get;
             private set;
@@ -220,6 +238,7 @@ public class Level1SettingTable : DataRowBase
             Event_Boss_CloseProp = int.Parse(columnStrings[index++]);
             Event_Door_OpenCD = int.Parse(columnStrings[index++]);
             Event_Door_OpenProp = int.Parse(columnStrings[index++]);
+            Event_Door_Time = DataTableExtension.Parse2DArray<float>(columnStrings[index++]);
             Event_Door_PreTime = DataTableExtension.Parse2DArray<float>(columnStrings[index++]);
             Event_Door_TypeProp = int.Parse(columnStrings[index++]);
             EnemyLives = int.Parse(columnStrings[index++]);
@@ -227,9 +246,9 @@ public class Level1SettingTable : DataRowBase
             Damage = int.Parse(columnStrings[index++]);
             Event_Windows_OpenCD = int.Parse(columnStrings[index++]);
             Event_Windows_OpenProp = int.Parse(columnStrings[index++]);
-            Event_Windows_CloseCD = int.Parse(columnStrings[index++]);
-            Event_Windows_CloseProp = int.Parse(columnStrings[index++]);
-            index++;
+            Event_Window_Time = DataTableExtension.Parse2DArray<float>(columnStrings[index++]);
+            Event_Window_PreTime = DataTableExtension.Parse2DArray<float>(columnStrings[index++]);
+            Event_Window_TypeProp = int.Parse(columnStrings[index++]);
 
             return true;
         }
@@ -251,6 +270,7 @@ public class Level1SettingTable : DataRowBase
                     Event_Boss_CloseProp = binaryReader.Read7BitEncodedInt32();
                     Event_Door_OpenCD = binaryReader.Read7BitEncodedInt32();
                     Event_Door_OpenProp = binaryReader.Read7BitEncodedInt32();
+                    Event_Door_Time = DataTableExtension.Parse2DArray<float>(binaryReader.ReadString());
                     Event_Door_PreTime = DataTableExtension.Parse2DArray<float>(binaryReader.ReadString());
                     Event_Door_TypeProp = binaryReader.Read7BitEncodedInt32();
                     EnemyLives = binaryReader.Read7BitEncodedInt32();
@@ -258,8 +278,9 @@ public class Level1SettingTable : DataRowBase
                     Damage = binaryReader.Read7BitEncodedInt32();
                     Event_Windows_OpenCD = binaryReader.Read7BitEncodedInt32();
                     Event_Windows_OpenProp = binaryReader.Read7BitEncodedInt32();
-                    Event_Windows_CloseCD = binaryReader.Read7BitEncodedInt32();
-                    Event_Windows_CloseProp = binaryReader.Read7BitEncodedInt32();
+                    Event_Window_Time = DataTableExtension.Parse2DArray<float>(binaryReader.ReadString());
+                    Event_Window_PreTime = DataTableExtension.Parse2DArray<float>(binaryReader.ReadString());
+                    Event_Window_TypeProp = binaryReader.Read7BitEncodedInt32();
                 }
             }
 

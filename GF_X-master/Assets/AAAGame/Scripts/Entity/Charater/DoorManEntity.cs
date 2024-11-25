@@ -26,13 +26,13 @@ public class DoorManEntity : SampleEntity
 
 
     private float timer = 3;
-    Transform m_transform;
+    private Transform m_transform;
 
     private IDataTable<Level1SettingTable> lvSettingTb;
     private IDataTable<LevelTable> lvTb;
     private PlayerDataModel playerDm;
 
-    public bool IsOverSee
+    public bool IsOverSeeDoor
     {
         get => mIsSee;
         set { mIsSee = value; }
@@ -74,13 +74,39 @@ public class DoorManEntity : SampleEntity
                     .Callback(() => mIsCanCilck = false)
                     //  m_transform.position = new Vector3(50, -40, -1))
                     .Delay(0.3f)
-                    .Callback(() => m_transform.DOShakePosition(timePre, new Vector3(5,5,0)))
+                    .Callback(() => m_transform.DOShakePosition(timePre, new Vector3(5, 5, 0)))
                     .Callback(() => mIsCanCilck = true)
                     .Delay(timePre)
                     .Callback(getOut)
                     .Start(this);
             }
         }
+    }
+
+    //加权计算本身随机的持续时间
+    private float timeGet()
+    {
+        var preTime = 2f;
+        var preTimeArr = lvSettingTb[playerDm.LEVEL_STAGE].Event_Door_Time; // 二维浮点数数组
+        // 解析数组
+        var timeWeightPairs = preTimeArr.Select(pair => new { Timer = pair[0], Weight = pair[1] }).ToList();
+        // 计算总权重
+        float totalWeight = timeWeightPairs.Sum(pair => pair.Weight);
+        // 生成随机数
+        var random = UnityEngine.Random.Range(0, totalWeight);
+        // 根据随机数选择时间
+        float cumulativeWeight = 0f;
+        foreach (var pair in timeWeightPairs)
+        {
+            cumulativeWeight += pair.Weight;
+            if (random < cumulativeWeight)
+            {
+                preTime = pair.Timer;
+                break;
+            }
+        }
+
+        return preTime;
     }
 
     //加权计算本次随机的预告时间
@@ -118,6 +144,7 @@ public class DoorManEntity : SampleEntity
             mIsSee = false;
             mIsCanCilck = false;
             misBeginNext = false;
+            timer = lvSettingTb[playerDm.LEVEL_STAGE].Event_Windows_OpenCD;
         }
     }
 
@@ -147,10 +174,10 @@ public class DoorManEntity : SampleEntity
                         mStaff.transform.DOMove(new Vector3(-50, -6, -5), 0.5f).SetEase(Ease.InOutSine))
                     .Delay(0.5f)
                     .Callback(() => mIsSee = true)
-                    .Delay(UnityEngine.Random.Range(2, 4))
+                    .Delay(timeGet())
                     .Callback(() =>
-                        mStaff.transform.DOShakePosition(lvRow.GlobNum[2],new Vector3(5,5,0)))
-                    .Delay(lvRow.GlobNum[2])
+                        mStaff.transform.DOShakePosition(lvRow.GlobNum[1], new Vector3(5, 5, 0)))
+                    .Delay(lvRow.GlobNum[1])
                     .Callback(() => misBeginNext = false)
                     .Callback(getOut)
                     .Start(this);
@@ -173,7 +200,7 @@ public class DoorManEntity : SampleEntity
             mIsCanCilck = false;
             //todo 开空门
             ActionKit.Sequence()
-                .Callback(() =>  m_transform.DOShakePosition(1f,new Vector3(2,2,0)))
+                .Callback(() => m_transform.DOShakePosition(1f, new Vector3(2, 2, 0)))
                 .Delay(1f)
                 .Callback(() => misBeginNext = false)
                 .Start(this);
