@@ -23,7 +23,7 @@ public class DoorManEntity : SampleEntity
     private GameObject mStaff;
     private GameObject mDoor;
     private Entity HandsomeEntity;
-
+    private BoxCollider2D m_Collider2D;
 
     private float timer = 3;
     private Transform m_transform;
@@ -45,6 +45,7 @@ public class DoorManEntity : SampleEntity
         mStaff = transform.Find("Staff").gameObject;
         mDoor = transform.Find("Door").gameObject;
         mStaff.SetActive(false);
+        m_Collider2D = GetComponent<BoxCollider2D>();
         m_transform = GetComponent<Transform>();
         playerDm = GF.DataModel.GetOrCreate<PlayerDataModel>();
         lvSettingTb = GF.DataTable.GetDataTable<Level1SettingTable>();
@@ -65,6 +66,7 @@ public class DoorManEntity : SampleEntity
             int OpenProp = lvSettingTb[playerDm.LEVEL_STAGE].Event_Door_OpenProp; //0-100
             if (UnityEngine.Random.Range(0, 100) < OpenProp && !misBeginNext)
             {
+                m_Collider2D.enabled = true;
                 var timePre = preTimeGet();
                 //todo 先关闭门
                 // mIsSee为false
@@ -145,6 +147,7 @@ public class DoorManEntity : SampleEntity
             mIsCanCilck = false;
             misBeginNext = false;
             timer = lvSettingTb[playerDm.LEVEL_STAGE].Event_Windows_OpenCD;
+            m_Collider2D.enabled = true;
         }
     }
 
@@ -157,10 +160,12 @@ public class DoorManEntity : SampleEntity
     //点击mDoorClick
     private void OnMouseDownDoor()
     {
+
         int TypeProp = lvSettingTb[playerDm.LEVEL_STAGE].Event_Door_TypeProp;
         misBeginNext = true;
         if (mIsCanCilck)
         {
+            m_Collider2D.enabled = false;
             mIsCanCilck = false;
             //停止m_transform.DOShakePosition
             var lvRow = lvTb.GetDataRow(playerDm.GAME_LEVEL);

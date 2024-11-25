@@ -83,9 +83,9 @@ public class WindowEntity : SampleEntity
                 mStaff.SetActive(false);
                 // mIsSee为false
                 ActionKit.Sequence()
+                    .Callback(() => mIsCanCilck = true)
                     .Callback(() => //x轴从初始位置停下
                         mShadowTrans.DOLocalMove(new Vector3(0, 0, 0), 0.5f).SetEase(Ease.InOutSine))
-                    .Callback(() => mIsCanCilck = true)
                     //  mShadowTrans.position = new Vector3(50, -40, -1))
                     .Delay(0.5f)
                     //.Callback(() => mIsCanCilck = true)
@@ -159,14 +159,16 @@ public class WindowEntity : SampleEntity
                 mStaff.SetActive(false);
                 mShadow.SetActive(true);
                 mShadowTrans.DOLocalMove(new Vector3(-60, 0, 0), 1f).SetEase(Ease.InOutSine).SetEase(Ease.InOutSine)
-                    .OnComplete(() => { mShadowTrans.localPosition = new Vector3(22, 0, 0); });
+                    .OnComplete(() =>
+                    {
+                        mShadowTrans.localPosition = new Vector3(22, 0, 0);
+                        m_Collider2D.enabled = true;
+                        mIsSee = false;
+                        mIsCanCilck = false;
+                        misBeginNext = false;
+                        timer = lvSettingTb[playerDm.LEVEL_STAGE].Event_Windows_OpenCD;
+                    });
             });
-
-            mIsSee = false;
-            mIsCanCilck = false;
-            misBeginNext = false;
-            timer = lvSettingTb[playerDm.LEVEL_STAGE].Event_Windows_OpenCD;
-            m_Collider2D.enabled = true;
         }
     }
 
