@@ -46,6 +46,7 @@ public partial class GameUIForm : UIFormBase
 
         lvSettingTb = GF.DataTable.GetDataTable<Level1SettingTable>();
         varLoveStage.text = playerDm.LEVEL_STAGE.ToString();
+        loveNum = 0;
     }
 
     private void RefreshCoinsText()
@@ -90,12 +91,11 @@ public partial class GameUIForm : UIFormBase
         {
             case PlayerEventType.RefreshTimer:
                 // 重置时间    
-                var data = args.EventData as Dictionary<string, object>;
-                if (data != null && data.ContainsKey("Timer"))
-                {
-                    LvTimerV = (int)data["Timer"];
-                }
-
+                // var data = args.EventData as Dictionary<string, object>;
+                // if (data != null && data.ContainsKey("Timer"))
+                // {
+                //     LvTimerV = (int)data["Timer"];
+                // }
                 break;
             case PlayerEventType.DragBtnKongbu:
                 var data2 = args.EventData as Dictionary<string, object>;
@@ -124,6 +124,7 @@ public partial class GameUIForm : UIFormBase
                             loveNum = 0;
                         }
                     }
+
                     varKongjieBar.fillAmount = loveNum / stageScore;
                     //去掉小数
                     coinNumText.text = Mathf.Floor(loveNum).ToString();

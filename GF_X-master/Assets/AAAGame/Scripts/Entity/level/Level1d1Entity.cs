@@ -48,6 +48,7 @@ public class Level1d1Entity : LevelBase
         var lvSettingTb = GF.DataTable.GetDataTable<Level1SettingTable>();
         var playerDm = GF.DataModel.GetOrCreate<PlayerDataModel>();
         playerDm.LEVEL_STAGE = 1;
+        playerDm.Coins = 0;
     }
     protected override void OnHide(bool isShutdown, object userData)
     {

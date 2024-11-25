@@ -24,6 +24,7 @@ public class WindowEntity : SampleEntity
     private GameObject mStaff;
     private GameObject mShadow;
     private Entity HandsomeEntity;
+    private BoxCollider2D m_Collider2D;
 
 
     private float timer = 3;
@@ -52,6 +53,8 @@ public class WindowEntity : SampleEntity
         mShadowTrans = mShadow.GetComponent<Transform>();
         mWindowTrans = mWindow.GetComponent<Transform>();
         mStaffTrans = mStaff.GetComponent<Transform>();
+        m_Collider2D = GetComponent<BoxCollider2D>();
+        m_Collider2D.enabled = true;
         playerDm = GF.DataModel.GetOrCreate<PlayerDataModel>();
         lvSettingTb = GF.DataTable.GetDataTable<Level1SettingTable>();
         timer = lvSettingTb[playerDm.LEVEL_STAGE].Event_Windows_OpenCD;
@@ -163,6 +166,7 @@ public class WindowEntity : SampleEntity
             mIsCanCilck = false;
             misBeginNext = false;
             timer = lvSettingTb[playerDm.LEVEL_STAGE].Event_Windows_OpenCD;
+            m_Collider2D.enabled = true;
         }
     }
 
@@ -179,6 +183,7 @@ public class WindowEntity : SampleEntity
         misBeginNext = true;
         if (mIsCanCilck)
         {
+            m_Collider2D.enabled = false;
             mIsCanCilck = false;
             //停止mShadowTrans.DOShakePosition
             var lvRow = lvTb.GetDataRow(playerDm.GAME_LEVEL);
@@ -215,6 +220,7 @@ public class WindowEntity : SampleEntity
                     .Delay(lvSettingTb[playerDm.LEVEL_STAGE].EnemyMoveTime)
                     .Callback(() => misBeginNext = false)
                     .Callback(getOut)
+                    .Callback(() => HandsomeEntity.GetComponent<HandsomeWinEntity>().Out())
                     .Start(this);
             }
         }

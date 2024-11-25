@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using DG.Tweening;
 using GameFramework;
 using GameFramework.DataTable;
+using GameFramework.Event;
 using QFramework;
 using UnityEngine;
 using UnityGameFramework.Runtime;
@@ -61,6 +62,7 @@ public class KongbuEntity : SampleEntity
         lvSettingTb = GF.DataTable.GetDataTable<Level1SettingTable>();
         Stage = playerDm.LEVEL_STAGE;
     }
+
 
     protected override void OnUpdate(float elapseSeconds, float realElapseSeconds)
     {

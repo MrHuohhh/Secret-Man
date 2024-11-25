@@ -20,6 +20,8 @@ public class HandsomeWinEntity : SampleEntity
     private bool misDie = false;
     private int mHealth = 0;
     private GameObject Love;
+    private GameObject Hanson;
+
     private BoxCollider2D mCollider;
 
     private float timer = 3;
@@ -33,13 +35,15 @@ public class HandsomeWinEntity : SampleEntity
     {
         base.OnInit(userData);
         Love = transform.Find("Love").gameObject;
+        Hanson = transform.Find("Hanson").gameObject;
         m_transform = GetComponent<Transform>();
         mLove = Love.transform;
         mCollider = GetComponent<BoxCollider2D>();
         playerDm = GF.DataModel.GetOrCreate<PlayerDataModel>();
         lvSettingTb = GF.DataTable.GetDataTable<Level1SettingTable>();
 
-        m_transform.gameObject.SetActive(false);
+        Hanson.SetActive(false);
+        Love.SetActive(false);
         mIsStart = false;
         mCollider.enabled = false;
     }
@@ -54,7 +58,10 @@ public class HandsomeWinEntity : SampleEntity
         mCollider.enabled = true;
         misDie = false;
         mIsStart = true;
-        m_transform.gameObject.SetActive(true);
+        Hanson.SetActive(true);
+        Love.SetActive(true);
+
+        Love.SetActive(true);
         mIsCanCilck = true;
         mLove.localPosition =  Vector3.zero;
         timer = lvSettingTb[playerDm.LEVEL_STAGE].EnemyMoveTime;
@@ -77,7 +84,8 @@ public class HandsomeWinEntity : SampleEntity
         {
             mIsCanCilck = false;
             mIsStart = false;
-            m_transform.gameObject.SetActive(false);
+            //m_transform.gameObject.SetActive(false);
+            Love.SetActive(false);
             mCollider.enabled = false;
 
 
@@ -107,13 +115,20 @@ public class HandsomeWinEntity : SampleEntity
             if (mHealth <= 0)
             {
                 misDie = true;
-                //todo 动画
+                //todo 挨打动画
                 //暂停动画
                 DOTween.Pause(m_transform);
-                m_transform.gameObject.SetActive(false);
+                //m_transform.gameObject.SetActive(false);
+                Love.SetActive(false);
                 mLove.localPosition =  Vector3.zero;
                 mCollider.enabled = false;
             }
         }
+    }
+
+    public void Out()
+    {
+        Hanson.SetActive(false);
+        Love.SetActive(false);
     }
 }
