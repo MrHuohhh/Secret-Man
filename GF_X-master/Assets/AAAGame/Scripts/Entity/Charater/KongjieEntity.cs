@@ -102,4 +102,9 @@ public class KongjieEntity : SampleEntity
     {
         Debug.Log("Object clicked!");
     }
+
+    public void onFind()
+    {
+        mBossAnimator.Play("BossAry");
+    }
 }

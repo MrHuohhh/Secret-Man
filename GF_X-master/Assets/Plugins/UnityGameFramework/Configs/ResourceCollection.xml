@@ -2,12 +2,58 @@
 <UnityGameFramework>
   <ResourceCollection>
     <Resources>
+      <Resource Name="Anim/AnimCtrl" LoadType="0" Packed="False" />
+      <Resource Name="Anim/lv1/2" LoadType="0" Packed="False" />
+      <Resource Name="Anim/lv1/boss1-1" LoadType="0" Packed="False" />
+      <Resource Name="Anim/lv1/BossAry" LoadType="0" Packed="False" />
+      <Resource Name="Anim/lv1/BossCall" LoadType="0" Packed="False" />
+      <Resource Name="Anim/lv1/BossCallOver" LoadType="0" Packed="False" />
+      <Resource Name="Anim/lv1/Boy" LoadType="0" Packed="False" />
+      <Resource Name="Anim/lv1/BoyAry" LoadType="0" Packed="False" />
+      <Resource Name="Anim/lv1/BoyKiss" LoadType="0" Packed="False" />
+      <Resource Name="Anim/lv1/door" LoadType="0" Packed="False" />
+      <Resource Name="Anim/lv1/door1" LoadType="0" Packed="False" />
+      <Resource Name="Anim/lv1/door2" LoadType="0" Packed="False" />
+      <Resource Name="Anim/lv1/door_1" LoadType="0" Packed="False" />
+      <Resource Name="Anim/lv1/Girl" LoadType="0" Packed="False" />
+      <Resource Name="Anim/lv1/girlflower" LoadType="0" Packed="False" />
+      <Resource Name="Anim/lv1/GirlFowller" LoadType="0" Packed="False" />
+      <Resource Name="Anim/lv1/GrilShy" LoadType="0" Packed="False" />
+      <Resource Name="Anim/lv1/HandsomeWin" LoadType="0" Packed="False" />
+      <Resource Name="Anim/lv1/Love" LoadType="0" Packed="False" />
+      <Resource Name="Anim/lv1/LoveBoom" LoadType="0" Packed="False" />
+      <Resource Name="Anim/lv1/mishu" LoadType="0" Packed="False" />
+      <Resource Name="Anim/lv1/mishuBoss" LoadType="0" Packed="False" />
+      <Resource Name="Anim/lv1/StarBoy" LoadType="0" Packed="False" />
+      <Resource Name="Anim/lv1/StarBoyYes" LoadType="0" Packed="False" />
+      <Resource Name="Anim/lv1/windowGirl" LoadType="0" Packed="False" />
+      <Resource Name="Anim/PlayerColorAnim" LoadType="0" Packed="False" />
+      <Resource Name="Anim/UI/WaitingRotateAnim" LoadType="0" Packed="False" />
+      <Resource Name="Audio/Resources/Attack_1" LoadType="0" Packed="False" />
+      <Resource Name="Audio/Resources/Attack_2" LoadType="0" Packed="False" />
+      <Resource Name="Audio/Resources/Attack_3" LoadType="0" Packed="False" />
+      <Resource Name="Audio/Resources/Attack_4" LoadType="0" Packed="False" />
+      <Resource Name="Audio/Resources/button_clicked" LoadType="0" Packed="False" />
+      <Resource Name="Audio/Resources/Door_Close" LoadType="0" Packed="False" />
+      <Resource Name="Audio/Resources/Door_Knock" LoadType="0" Packed="False" />
+      <Resource Name="Audio/Resources/Door_Open" LoadType="0" Packed="False" />
+      <Resource Name="Audio/Resources/Enemy_Success" LoadType="0" Packed="False" />
+      <Resource Name="Audio/Resources/game_bg" LoadType="0" Packed="False" />
+      <Resource Name="Audio/Resources/hero_hurt" LoadType="0" Packed="False" />
+      <Resource Name="Audio/Resources/home_bg" LoadType="0" Packed="False" />
+      <Resource Name="Audio/Resources/Kiss_1" LoadType="0" Packed="False" />
+      <Resource Name="Audio/Resources/Kiss_2" LoadType="0" Packed="False" />
+      <Resource Name="Audio/Resources/Phone_Hangup" LoadType="0" Packed="False" />
+      <Resource Name="Audio/Resources/Phone_Pickup" LoadType="0" Packed="False" />
+      <Resource Name="Audio/Resources/Phone_Ringing" LoadType="0" Packed="False" />
+      <Resource Name="Audio/Resources/Window_Close" LoadType="0" Packed="False" />
+      <Resource Name="Audio/Resources/Window_Open" LoadType="0" Packed="False" />
       <Resource Name="Config" LoadType="2" Packed="False" />
       <Resource Name="DataTable" LoadType="2" Packed="False" />
       <Resource Name="HotfixDlls" LoadType="2" Packed="False" />
       <Resource Name="Language" LoadType="2" Packed="False" />
+      <Resource Name="Prefabs/Core/GFExtension" LoadType="0" Packed="False" />
       <Resource Name="Prefabs/Entity" LoadType="2" Packed="False" />
-      <Resource Name="Prefabs/GFExtension" LoadType="2" Packed="False" />
       <Resource Name="Prefabs/UI" LoadType="2" Packed="False" />
       <Resource Name="Scene" LoadType="2" Packed="False" />
       <Resource Name="ScriptableAssets" LoadType="0" Packed="False" />
@@ -18,56 +64,117 @@
       <Asset Guid="034b209892546994d8037e72ca910089" ResourceName="Language" />
       <Asset Guid="07de51161fa888b40916039835c1070c" ResourceName="Prefabs/Entity" />
       <Asset Guid="0b69b108d75f47940881a60045f21976" ResourceName="Prefabs/UI" />
+      <Asset Guid="0de8f43e772fedf48a91adbecca96ed7" ResourceName="Anim/lv1/BoyAry" />
+      <Asset Guid="0fe0313841cf5b044a1a0ec0be738559" ResourceName="Anim/lv1/StarBoy" />
+      <Asset Guid="11f2148be2935f74fa846e518ed3d35d" ResourceName="Anim/lv1/windowGirl" />
       <Asset Guid="13b0b1255d7d6cf44a4d1987723460ef" ResourceName="ScriptableAssets" />
       <Asset Guid="1537dfcb62a570b469bd94533a8a7913" ResourceName="Prefabs/Entity" />
+      <Asset Guid="15a1039474f4e7541999e3cae4f3d8f9" ResourceName="Audio/Resources/Kiss_1" />
+      <Asset Guid="19aefa94f7a3f9b4db7cbae849f9878b" ResourceName="Anim/lv1/HandsomeWin" />
       <Asset Guid="1b586e20031d8b44a9495620988ad3dc" ResourceName="HotfixDlls" />
-      <Asset Guid="1caa4c6fdc3281642b46f7c82c497dc5" ResourceName="Prefabs/GFExtension" />
+      <Asset Guid="1caa4c6fdc3281642b46f7c82c497dc5" ResourceName="Prefabs/Core/GFExtension" />
+      <Asset Guid="1d2af2110cefaaa4ca3e34fb39d01c48" ResourceName="Audio/Resources/Door_Open" />
+      <Asset Guid="1fc15cfac613b9f43b4df804fe41bb30" ResourceName="Anim/lv1/windowGirl" />
+      <Asset Guid="2055ac1dbb350a14aa4b9a3c7a862dd1" ResourceName="Anim/lv1/Love" />
       <Asset Guid="230b0c809e3e6a647af26c803aa90467" ResourceName="SharedAssets" />
+      <Asset Guid="23841253e15be444fb12fef33a37bc12" ResourceName="SharedAssets" />
+      <Asset Guid="27282fcd857401044928c8b05ed4f919" ResourceName="Anim/lv1/StarBoyYes" />
+      <Asset Guid="2919a4e154f584245965373256b0d8b1" ResourceName="Audio/Resources/game_bg" />
       <Asset Guid="2cdf1b85fd520ef46b11f580e9443e78" ResourceName="Language" />
+      <Asset Guid="30100cbc760da4847b3f7fe640d4c49e" ResourceName="SharedAssets" />
+      <Asset Guid="3218f2e5adf2f68448aa42bcfbcaf6f2" ResourceName="Audio/Resources/Attack_2" />
       <Asset Guid="330efc2df3364404bae53e9c3bf35e82" ResourceName="DataTable" />
+      <Asset Guid="35e59058fd216f9459ae2e84e0102a1f" ResourceName="Anim/lv1/Boy" />
+      <Asset Guid="3a82c2bac28d30946be3dc03302935f6" ResourceName="SharedAssets" />
+      <Asset Guid="3b8946271d486436da26ba41111d85a1" ResourceName="Audio/Resources/button_clicked" />
+      <Asset Guid="3e8f69608580c9f4c93bbdde41eb039d" ResourceName="Anim/lv1/door1" />
+      <Asset Guid="3fc4c53f7065b9240a4befb6f8f6aaf8" ResourceName="Anim/lv1/Girl" />
       <Asset Guid="3fdcbb5b7d730f341bf585839b5502a5" ResourceName="Prefabs/UI" />
+      <Asset Guid="432f4021d82cece428d7b1765eebd8b0" ResourceName="Audio/Resources/Kiss_2" />
+      <Asset Guid="468df70f6ebf1de4a85cc9a83cd84588" ResourceName="Audio/Resources/hero_hurt" />
       <Asset Guid="48c612d9ed585b14189028312bc2f204" ResourceName="Prefabs/Entity" />
+      <Asset Guid="4c0bf781d0a6a1d4b8a5b12a93ac3100" ResourceName="Audio/Resources/Enemy_Success" />
+      <Asset Guid="4e4e8876e0d8ec048855ea82bc776f0f" ResourceName="SharedAssets" />
+      <Asset Guid="500edc9b29bb7b84e881169959bb7a38" ResourceName="Anim/lv1/mishuBoss" />
+      <Asset Guid="513ac343ae4d14f488e4d34db887fb02" ResourceName="Anim/lv1/2" />
+      <Asset Guid="51d6266e484b0c34281e88cc02e4c60d" ResourceName="Audio/Resources/Window_Close" />
       <Asset Guid="53b9781b792f33841a6a088ec392fbd8" ResourceName="SharedAssets" />
       <Asset Guid="588ff96c6882fb3448095d7a881bced3" ResourceName="SharedAssets" />
+      <Asset Guid="5913d821110a80742a58a71201d6ba8d" ResourceName="SharedAssets" />
+      <Asset Guid="5c80b2ccb247fa04eae900fb7473e014" ResourceName="SharedAssets" />
+      <Asset Guid="5ee25822cc2e5014ca0c5412a0f4ff78" ResourceName="Anim/UI/WaitingRotateAnim" />
       <Asset Guid="60088dd3b0214654ba9150c7fdda1a8d" ResourceName="DataTable" />
+      <Asset Guid="62bcb8066e3ffa7439708a0cbcd5bcd5" ResourceName="SharedAssets" />
       <Asset Guid="63f5f6812a8f9724cac670756d524631" ResourceName="DataTable" />
+      <Asset Guid="64283c1026e0d964e97436569e8a95f7" ResourceName="Anim/lv1/door_1" />
       <Asset Guid="66210d36a4cf7514e8d9e60ae298c2c4" ResourceName="DataTable" />
       <Asset Guid="6792e8ab386017841ab27626b9753bec" ResourceName="Prefabs/UI" />
       <Asset Guid="68e6db2ebdc24f95958faec2be5558d6" ResourceName="SharedAssets" />
       <Asset Guid="6a4e2eebc9726fd49952a02518d04a6b" ResourceName="Prefabs/UI" />
       <Asset Guid="6be38d7fc85a442489bc513d73291793" ResourceName="HotfixDlls" />
+      <Asset Guid="6d36948d8f437664799498d5cec545aa" ResourceName="SharedAssets" />
       <Asset Guid="6da5a876b48a9de47be114eed0191623" ResourceName="Prefabs/Entity" />
+      <Asset Guid="706c5a0d1ed6b124893ee5302a70169e" ResourceName="Audio/Resources/Phone_Ringing" />
       <Asset Guid="73d884ecdd851124aaca044feebbe87d" ResourceName="DataTable" />
       <Asset Guid="743d91e4e5cb9bc478f0ab99fbd8f7d1" ResourceName="Prefabs/UI" />
       <Asset Guid="74b06ad59906133448a2fe06366e4889" ResourceName="Language" />
+      <Asset Guid="7565d729fe6d2384bad88a7a843441bc" ResourceName="Anim/lv1/mishu" />
+      <Asset Guid="76a4a878b9f8777458f9bf319e9374ff" ResourceName="Anim/lv1/BossCall" />
+      <Asset Guid="776eadd4d4a287e4f9d3bae0d6c4a2f1" ResourceName="Audio/Resources/Attack_4" />
+      <Asset Guid="7a540b0b397dd2649bae46c84783257e" ResourceName="Anim/lv1/BossAry" />
+      <Asset Guid="7e3273d5a71abad4990e3a02fa7eec19" ResourceName="Audio/Resources/Phone_Pickup" />
       <Asset Guid="7fa753003c0b5b24faded9b639aabaef" ResourceName="Prefabs/UI" />
+      <Asset Guid="8128a056a17ce4c41b420c4c809eea1c" ResourceName="Audio/Resources/Attack_3" />
       <Asset Guid="81ed03a317f6d6a43aa694d24e6a8f64" ResourceName="DataTable" />
+      <Asset Guid="82bdf45af071e7440b588dab315d36d4" ResourceName="Anim/lv1/boss1-1" />
       <Asset Guid="83bdadb9e1d24a94e8498def13d4804c" ResourceName="Language" />
       <Asset Guid="84a6440c0fd8e974e8986ff4df2d489f" ResourceName="Language" />
       <Asset Guid="8a4e2875174034b4aabb43c9ca9028a1" ResourceName="SharedAssets" />
+      <Asset Guid="8e3295fec172e504cbc73aa0076099bd" ResourceName="Audio/Resources/Phone_Hangup" />
       <Asset Guid="92cb04501693359419a839b8d33aace7" ResourceName="Prefabs/UI" />
       <Asset Guid="94739f93a76406e4aa6b8c1058d60ba8" ResourceName="Prefabs/Entity" />
       <Asset Guid="98662c21c0b96bc48a6440a4fe486556" ResourceName="DataTable" />
       <Asset Guid="9f8375e22b5a1e3499c99ed3facbac63" ResourceName="Config" />
       <Asset Guid="a29db755b6ae1104a94df297de29cfc8" ResourceName="SharedAssets" />
       <Asset Guid="a8043c8d11e46d648bb702e4a3572406" ResourceName="Prefabs/Entity" />
+      <Asset Guid="ad81e44ec77e16449adb434b40b8e7a0" ResourceName="SharedAssets" />
+      <Asset Guid="aed80277ab824554ab54ef6c8196b879" ResourceName="Anim/lv1/BoyKiss" />
       <Asset Guid="af959909b2bedb44c85c65e572641265" ResourceName="Prefabs/UI" />
+      <Asset Guid="b4bd8385089114514ab9dc5c8b3b931d" ResourceName="Audio/Resources/home_bg" />
       <Asset Guid="b624c3b27b5d8c94caff545a44cb70d9" ResourceName="Prefabs/Entity" />
+      <Asset Guid="b6e2b4c1c73339d488513ed3a2c02e75" ResourceName="Anim/lv1/girlflower" />
+      <Asset Guid="b71a0c53360df8848a21edc493fb3d3f" ResourceName="Anim/lv1/Boy" />
       <Asset Guid="b8f790017d833da45a5aec7344ed4f97" ResourceName="SharedAssets" />
+      <Asset Guid="bcdce98ddaeac124987f866ca68fb6d3" ResourceName="Anim/lv1/GirlFowller" />
+      <Asset Guid="bf7a6bbc264fef94d9ccc56b9fe241e9" ResourceName="SharedAssets" />
+      <Asset Guid="c18699033e8b29a479c838b90fcc486b" ResourceName="Anim/lv1/door" />
+      <Asset Guid="c3774e3cd825de54e9e5ac3cde50ea0c" ResourceName="Anim/lv1/GrilShy" />
       <Asset Guid="c4e839cf3d001e0499336fb7f53c0310" ResourceName="DataTable" />
+      <Asset Guid="c67d3a7c21fd4a3479cb4b1e30670e3d" ResourceName="Anim/PlayerColorAnim" />
       <Asset Guid="c7a26b8d1ff63834298841254b2332c4" ResourceName="Prefabs/UI" />
       <Asset Guid="d6ecbf62a86c5a743be725f48260ac7e" ResourceName="Prefabs/UI" />
       <Asset Guid="d946c3960d3e44847a45f42524ec6aeb" ResourceName="Config" />
+      <Asset Guid="da952e29253b6604782ac6583865c775" ResourceName="Anim/lv1/door2" />
       <Asset Guid="e09d64781b233da4c8e75adde91c9652" ResourceName="Prefabs/Entity" />
       <Asset Guid="e1a613ebd6f1d6f4a825d14981f3e88d" ResourceName="DataTable" />
+      <Asset Guid="e1a7b05353c197d4dbe581ab392bff96" ResourceName="SharedAssets" />
       <Asset Guid="e28cbf64cd5864f46ad3394fcab85cfd" ResourceName="DataTable" />
+      <Asset Guid="e36380e407afbcc46a883884fb63f4a9" ResourceName="Anim/lv1/BossCallOver" />
+      <Asset Guid="e5506d8c65942154dbf8d1a9341496ce" ResourceName="Audio/Resources/Door_Knock" />
+      <Asset Guid="e57fd7a2d151752458e224681683ca31" ResourceName="Anim/lv1/mishu" />
       <Asset Guid="e81571591a3393745a08aee12b114309" ResourceName="HotfixDlls" />
+      <Asset Guid="e9f9677e08fe0a445997a30c07926083" ResourceName="Audio/Resources/Door_Close" />
       <Asset Guid="ebccf67ac4f5bd44c9439cfb74022bdf" ResourceName="Scene" />
       <Asset Guid="ec835c8e8455a4e3eab94be7baf9c04a" ResourceName="Prefabs/UI" />
       <Asset Guid="ee4ef06ae7ff6d245a7b2b2f6f09689a" ResourceName="Prefabs/Entity" />
       <Asset Guid="f2e08935fbb60d74492b64f3c233fa91" ResourceName="Prefabs/Entity" />
+      <Asset Guid="f84136171cab95947bb9baaa17e5354d" ResourceName="Audio/Resources/Window_Open" />
       <Asset Guid="fb3663d475cbeb74ba97e229b86d2504" ResourceName="Prefabs/Entity" />
       <Asset Guid="fca0697f771517f41a13845450b0f97a" ResourceName="Prefabs/Entity" />
+      <Asset Guid="fcd01407b91a3e944ad8ea61ef7829ed" ResourceName="Audio/Resources/Attack_1" />
+      <Asset Guid="fe179ba7dc78b694694527c4de107666" ResourceName="SharedAssets" />
+      <Asset Guid="fe75e585fa5e5004ab494f06241c467e" ResourceName="Anim/AnimCtrl" />
+      <Asset Guid="fed4e1c4a1ecebb439ed45bef4df136c" ResourceName="Anim/lv1/LoveBoom" />
     </Assets>
   </ResourceCollection>
 </UnityGameFramework>

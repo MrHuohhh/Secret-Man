@@ -158,6 +158,7 @@ public class KongbuEntity : SampleEntity
 
             if (mIsSee1 && !mIsOverSeeDoor && !mIsOverSeeWindow)
             {
+                KongjieEntity.GetComponent<KongjieEntity>().onFind();
                 JieValue++;
                 GF.Event.Fire(this, ReferencePool.Acquire<PlayerEventArgs>().Fill(PlayerEventType.DragBtnKongjie,
                     new Dictionary<string, object>

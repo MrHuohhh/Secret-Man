@@ -19,7 +19,7 @@ public class GameOverProcedure : ProcedureBase
         this.procedure = procedureOwner;
         isWin = this.procedure.GetData<VarBoolean>("IsWin");
 
-        ShowGameOverUIForm(0);
+        ShowGameOverUIForm(1);
     }
     protected override void OnLeave(IFsm<IProcedureManager> procedureOwner, bool isShutdown)
     {
