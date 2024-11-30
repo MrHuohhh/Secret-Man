@@ -99,6 +99,8 @@ public class HandsomeWinEntity : SampleEntity
                 {
                     ["value"] = lvSettingTb[playerDm.LEVEL_STAGE].Damage,
                 }));
+            
+            GF.Event.Fire(this, ReferencePool.Acquire<PlayerEventArgs>().Fill(PlayerEventType.HandsomeYes));
         }
     }
 

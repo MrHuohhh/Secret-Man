@@ -46,6 +46,19 @@ public partial class GameUIForm : UIFormBase
 
         lvSettingTb = GF.DataTable.GetDataTable<Level1SettingTable>();
         varLoveStage.text = playerDm.LEVEL_STAGE.ToString();
+        //GameObject[5] varLoveArr根据playerDm.LEVEL_STAGE显示
+        for (int i = 0; i < varLoveArr.Length; i++)
+        {
+            if (i < playerDm.LEVEL_STAGE-1)
+            {
+                varLoveArr[i].gameObject.SetActive(true);
+            }
+            else
+            {
+                varLoveArr[i].gameObject.SetActive(false);
+            }
+        }
+        
         loveNum = 0;
     }
 
@@ -77,6 +90,17 @@ public partial class GameUIForm : UIFormBase
             {
                 playerDm.LEVEL_STAGE++;
                 varLoveStage.text = playerDm.LEVEL_STAGE.ToString();
+                for (int i = 0; i < varLoveArr.Length; i++)
+                {
+                    if (i < playerDm.LEVEL_STAGE-1)
+                    {
+                        varLoveArr[i].gameObject.SetActive(true);
+                    }
+                    else
+                    {
+                        varLoveArr[i].gameObject.SetActive(false);
+                    }
+                }
                 loveNum = 0;
                 //todo 判断是否完成关卡
             }

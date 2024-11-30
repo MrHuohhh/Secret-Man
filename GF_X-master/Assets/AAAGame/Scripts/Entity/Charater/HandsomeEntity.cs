@@ -21,6 +21,7 @@ public class HandsomeEntity : SampleEntity
     private int mHealth = 0;
     private GameObject mHanson;
     private BoxCollider2D mCollider;
+    private Animator mHansonAni;
 
     private float timer = 3;
     Transform m_transform;
@@ -38,7 +39,8 @@ public class HandsomeEntity : SampleEntity
         mCollider = GetComponent<BoxCollider2D>();
         playerDm = GF.DataModel.GetOrCreate<PlayerDataModel>();
         lvSettingTb = GF.DataTable.GetDataTable<Level1SettingTable>();
-        
+        GameObject mmHansonAni = mHanson.transform.Find("HansonAni").gameObject;
+        mHansonAni = mmHansonAni.GetComponent<Animator>();
         mHanson.SetActive(false);
         mIsStart = false;
         mCollider.enabled = false;
@@ -61,9 +63,10 @@ public class HandsomeEntity : SampleEntity
         m_transform.localPosition = Vector3.zero;
         timer = lvSettingTb[playerDm.LEVEL_STAGE].EnemyMoveTime;
         mHealth = lvSettingTb[playerDm.LEVEL_STAGE].EnemyLives;
+        mHansonAni.Play("StarBoy");
         ActionKit.Sequence()
             .Callback(() =>
-                m_transform.DOLocalMove(new Vector3(-50, 0, -1), timer).SetEase(Ease.InOutSine).SetEase(Ease.InOutSine))
+                m_transform.DOLocalMove(new Vector3(-35, 0, -1), timer).SetEase(Ease.InOutSine).SetEase(Ease.InOutSine))
             .Delay(timer)
             .Callback(Finish)
             .Delay(timer) //todo 动画时间?
@@ -79,17 +82,21 @@ public class HandsomeEntity : SampleEntity
         {
             mIsCanCilck = false;
             mIsStart = false;
-            mHanson.SetActive(false);
             mCollider.enabled = false;
-
-
-            //todo 播放动画
+            
             AudioKit.PlaySound("resources://Enemy_Success");
+            ActionKit.Sequence() // 播放动画
+                .Callback(() => mHansonAni.Play("StarBoyYes"))
+                .Delay(1)
+                .Callback(() => mHanson.SetActive(false)) 
+                .Start(this);
+            
             GF.Event.Fire(this, ReferencePool.Acquire<PlayerEventArgs>().Fill(PlayerEventType.LoseLove,
                 new Dictionary<string, object>
                 {
                     ["value"] = lvSettingTb[playerDm.LEVEL_STAGE].Damage,
                 }));
+            GF.Event.Fire(this, ReferencePool.Acquire<PlayerEventArgs>().Fill(PlayerEventType.HandsomeYes));
         }
     }
 

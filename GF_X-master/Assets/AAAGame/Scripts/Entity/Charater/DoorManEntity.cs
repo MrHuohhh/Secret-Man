@@ -152,6 +152,7 @@ public class DoorManEntity : SampleEntity
             mStaff.transform.DOLocalMove(new Vector3(0,0 , -1), 0.5f).SetEase(Ease.InOutSine).SetEase(Ease.InOutSine)
                 .OnComplete(() =>
                 {
+                    mDoorAnimator.Play("door");
                     mStaff.SetActive(false);
                 });
             mIsSee = false;
@@ -213,6 +214,7 @@ public class DoorManEntity : SampleEntity
                 ActionKit.Sequence()
                     .Delay(lvSettingTb[playerDm.LEVEL_STAGE].EnemyMoveTime)
                     .Callback(() =>  AudioKit.PlaySound("resources://Door_Close"))
+                    .Callback(() => mDoorAnimator.Play("door"))
                     .Callback(() => misBeginNext = false)
                     .Start(this);
             }

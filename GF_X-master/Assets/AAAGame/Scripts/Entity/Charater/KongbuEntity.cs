@@ -73,6 +73,20 @@ public class KongbuEntity : SampleEntity
         lvSettingTb = GF.DataTable.GetDataTable<Level1SettingTable>();
         Stage = playerDm.LEVEL_STAGE;
         mSound = new string[2] {"resources://Kiss_1", "resources://Kiss_2"};
+        GF.Event.Subscribe(PlayerEventArgs.EventId, OnPlayerEvent);
+    }
+
+    private void OnPlayerEvent(object sender, GameEventArgs e)
+    {
+        var args = e as PlayerEventArgs;
+
+        switch (args.EventType)
+        {
+            case PlayerEventType.HandsomeYes:
+                mBoyAnimator.Play("BoyAry");
+                mGirlAnimator.Play("GirlFowller");
+                break;
+        }
     }
 
 

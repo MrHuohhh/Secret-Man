@@ -22,6 +22,7 @@ public enum PlayerEventType
     DragBtnKongbu,//恐怖分子积累
     LoseLove,
     DragBtnKongjie,//空姐警戒积累
+    HandsomeYes,//帅哥偷袭成功
     
     PhoneCall,//电话接通
 }
