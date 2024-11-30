@@ -30,6 +30,8 @@ public class HandsomeWinEntity : SampleEntity
 
     private IDataTable<Level1SettingTable> lvSettingTb;
     private PlayerDataModel playerDm;
+    private string[] mSound;
+
 
     protected override void OnInit(object userData)
     {
@@ -46,6 +48,7 @@ public class HandsomeWinEntity : SampleEntity
         Love.SetActive(false);
         mIsStart = false;
         mCollider.enabled = false;
+        mSound = new string[4] {"resources://Attack_1", "resources://Attack_2", "resources://Attack_3", "resources://Attack_4"};
     }
 
     protected override void OnUpdate(float elapseSeconds, float realElapseSeconds)
@@ -68,7 +71,7 @@ public class HandsomeWinEntity : SampleEntity
         mHealth = lvSettingTb[playerDm.LEVEL_STAGE].EnemyLives;
         ActionKit.Sequence()
             .Callback(() =>
-                mLove.DOLocalMove(new Vector3(12, -11, 0), timer).SetEase(Ease.InOutSine).SetEase(Ease.InOutSine))
+                mLove.DOLocalMove(new Vector3(25, -9, -20), timer).SetEase(Ease.InOutSine).SetEase(Ease.InOutSine))
             .Delay(timer)
             .Callback(Finish)
             .Delay(timer) //todo 动画时间?
@@ -90,7 +93,7 @@ public class HandsomeWinEntity : SampleEntity
 
 
             //todo 播放动画
-
+            AudioKit.PlaySound("resources://Enemy_Success");
             GF.Event.Fire(this, ReferencePool.Acquire<PlayerEventArgs>().Fill(PlayerEventType.LoseLove,
                 new Dictionary<string, object>
                 {
@@ -112,6 +115,7 @@ public class HandsomeWinEntity : SampleEntity
             //受击抖动
             m_transform.DOShakePosition(0.1f, Vector3.one * 0.05f, 10, 90, false, true).SetEase(Ease.OutQuad);
             mHealth -= 1;
+            AudioKit.PlaySound(mSound[UnityEngine.Random.Range(0, mSound.Length)]);
             if (mHealth <= 0)
             {
                 misDie = true;

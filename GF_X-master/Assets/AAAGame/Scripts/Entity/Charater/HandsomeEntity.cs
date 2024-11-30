@@ -20,7 +20,6 @@ public class HandsomeEntity : SampleEntity
     private bool misDie = false;
     private int mHealth = 0;
     private GameObject mHanson;
-    private Vector3 mStartPos;
     private BoxCollider2D mCollider;
 
     private float timer = 3;
@@ -28,20 +27,23 @@ public class HandsomeEntity : SampleEntity
 
     private IDataTable<Level1SettingTable> lvSettingTb;
     private PlayerDataModel playerDm;
+    private string[] mSound;
+
 
     protected override void OnInit(object userData)
     {
         base.OnInit(userData);
         mHanson = transform.Find("Hanson").gameObject;
-        m_transform = GetComponent<Transform>();
+        m_transform = mHanson.GetComponent<Transform>();
         mCollider = GetComponent<BoxCollider2D>();
         playerDm = GF.DataModel.GetOrCreate<PlayerDataModel>();
         lvSettingTb = GF.DataTable.GetDataTable<Level1SettingTable>();
         
         mHanson.SetActive(false);
-        mStartPos = new Vector3(65, -31, -1);
         mIsStart = false;
         mCollider.enabled = false;
+        mSound = new string[4] {"resources://Attack_1", "resources://Attack_2", "resources://Attack_3", "resources://Attack_4"};
+
     }
 
     protected override void OnUpdate(float elapseSeconds, float realElapseSeconds)
@@ -56,16 +58,16 @@ public class HandsomeEntity : SampleEntity
         mIsStart = true;
         mHanson.SetActive(true);
         mIsCanCilck = true;
-        m_transform.position = mStartPos;
+        m_transform.localPosition = Vector3.zero;
         timer = lvSettingTb[playerDm.LEVEL_STAGE].EnemyMoveTime;
         mHealth = lvSettingTb[playerDm.LEVEL_STAGE].EnemyLives;
         ActionKit.Sequence()
             .Callback(() =>
-                m_transform.DOMove(new Vector3(-6, -11, -1), timer).SetEase(Ease.InOutSine).SetEase(Ease.InOutSine))
+                m_transform.DOLocalMove(new Vector3(-50, 0, -1), timer).SetEase(Ease.InOutSine).SetEase(Ease.InOutSine))
             .Delay(timer)
             .Callback(Finish)
             .Delay(timer) //todo 动画时间?
-            .Callback(() => m_transform.position = mStartPos) //设置位置回到初始位置mStartPos
+            .Callback(() => m_transform.localPosition = Vector3.zero) //设置位置回到初始位置mStartPos
             .Start(this);
     }
 
@@ -82,7 +84,7 @@ public class HandsomeEntity : SampleEntity
 
 
             //todo 播放动画
-
+            AudioKit.PlaySound("resources://Enemy_Success");
             GF.Event.Fire(this, ReferencePool.Acquire<PlayerEventArgs>().Fill(PlayerEventType.LoseLove,
                 new Dictionary<string, object>
                 {
@@ -102,6 +104,7 @@ public class HandsomeEntity : SampleEntity
         if (mIsCanCilck && mIsStart)
         {
             //受击抖动
+            AudioKit.PlaySound(mSound[UnityEngine.Random.Range(0, mSound.Length)]);
             m_transform.DOShakePosition(0.1f, Vector3.one * 0.05f, 10, 90, false, true).SetEase(Ease.OutQuad);
             mHealth -= 1;
             if (mHealth <= 0)
@@ -111,7 +114,7 @@ public class HandsomeEntity : SampleEntity
                 //暂停动画
                 DOTween.Pause(m_transform);
                 mHanson.SetActive(false);
-                m_transform.position = mStartPos;
+                m_transform.localPosition = Vector3.zero;
                 mCollider.enabled = false;
             }
         }

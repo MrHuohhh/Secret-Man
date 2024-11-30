@@ -12,6 +12,7 @@ public class Level1d1Entity : LevelBase
     private Transform playerSpawnPoint;
     private Transform KongjieSpawnPoint;
     private Transform WindowSpawnPoint;
+    private Transform WindowManSpawnPoint;
     private Transform DoorSpawnPoint;
     List<int> loadEntityTaskList;
     int mPlayerId;
@@ -19,7 +20,6 @@ public class Level1d1Entity : LevelBase
     public int PlayerId { get => mPlayerId; }
     List<int> enemyList;
     
-    private GameObject m_Item;
 
     protected override void OnInit(object userData)
     {
@@ -29,9 +29,8 @@ public class Level1d1Entity : LevelBase
         playerSpawnPoint = transform.Find("PlayerSpawnPoint");
         KongjieSpawnPoint = transform.Find("KongjieSpawnPoint");
         WindowSpawnPoint = transform.Find("WindowSpawnPoint");
+        WindowManSpawnPoint = transform.Find("WindowManSpawnPoint");
         DoorSpawnPoint = transform.Find("DoorSpawnPoint");
-        m_Item = GameObject.Find(("Item"));
-        m_Item.SetActive(false);
     }
     protected override void OnShow(object userData)
     {
@@ -119,7 +118,6 @@ public class Level1d1Entity : LevelBase
 
         mKongjieId = GF.Entity.ShowEntity<KongjieEntity>("Kongjie", Const.EntityGroup.Player, kongjieParams);
         loadEntityTaskList.Add(mKongjieId);
-        m_Item.SetActive(true);
     }
 
     internal void CreateDoorMan()
@@ -127,14 +125,12 @@ public class Level1d1Entity : LevelBase
         var doorManParams = EntityParams.Create(DoorSpawnPoint.position, DoorSpawnPoint.eulerAngles, DoorSpawnPoint.localScale);
         mKongjieId = GF.Entity.ShowEntity<DoorManEntity>("DoorMan", Const.EntityGroup.Player, doorManParams);
         loadEntityTaskList.Add(mKongjieId);
-        m_Item.SetActive(true);
     }
     internal void CreateHandsome()
     {
         var doorManParams = EntityParams.Create(DoorSpawnPoint.position, DoorSpawnPoint.eulerAngles, DoorSpawnPoint.localScale);
         mKongjieId = GF.Entity.ShowEntity<HandsomeEntity>("Handsome", Const.EntityGroup.Player, doorManParams);
         loadEntityTaskList.Add(mKongjieId);
-        m_Item.SetActive(true);
     }
     internal void CreateWindow()
     {
@@ -144,7 +140,7 @@ public class Level1d1Entity : LevelBase
     }
     internal void CreateHandsomeWin()
     {
-        var doorManParams = EntityParams.Create(WindowSpawnPoint.position, WindowSpawnPoint.eulerAngles, WindowSpawnPoint.localScale);
+        var doorManParams = EntityParams.Create(WindowManSpawnPoint.position, WindowManSpawnPoint.eulerAngles, WindowManSpawnPoint.localScale);
         mKongjieId = GF.Entity.ShowEntity<HandsomeWinEntity>("HandsomeWindow", Const.EntityGroup.Player, doorManParams);
         loadEntityTaskList.Add(mKongjieId);
     }

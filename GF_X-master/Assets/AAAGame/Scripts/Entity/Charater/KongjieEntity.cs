@@ -17,7 +17,7 @@ public class KongjieEntity : SampleEntity
     private IDataTable<Level1SettingTable> lvSettingTb;
     private PlayerDataModel playerDm;
 
-
+    private Animator mBossAnimator;
     public bool IsWatching
     {
         get => mIsSee;
@@ -33,6 +33,8 @@ public class KongjieEntity : SampleEntity
     {
         base.OnInit(userData);
         m_transform = GetComponent<Transform>();
+        GameObject Boss = transform.Find("boos").gameObject;
+        mBossAnimator = Boss.GetComponent<Animator>();
         playerDm = GF.DataModel.GetOrCreate<PlayerDataModel>();
         lvSettingTb = GF.DataTable.GetDataTable<Level1SettingTable>();
         timer = lvSettingTb[playerDm.LEVEL_STAGE].Event_Boss_OpenCD;
@@ -66,8 +68,11 @@ public class KongjieEntity : SampleEntity
         int OpenProp = lvSettingTb[playerDm.LEVEL_STAGE].Event_Boss_OpenProp; //0-100
         if (UnityEngine.Random.Range(0, 100) < OpenProp)
         {
+            AudioKit.PlaySound("resources://Phone_Ringing");
             ActionKit.Sequence()
-                .Callback(() => m_transform.DOLocalRotate(new Vector3(0, 0, 90), 0.5f, RotateMode.Fast))
+                .Callback(() => mBossAnimator.Play("BossCall"))
+                .Delay(0.2f)
+                .Callback(() => AudioKit.PlaySound("resources://Phone_Pickup"))
                 .Delay(0.2f)
                 .Callback(() => mIsSee = false)
                 .Start(this);
@@ -84,8 +89,10 @@ public class KongjieEntity : SampleEntity
         if (UnityEngine.Random.Range(0, 100) < CloseProp)
         {
             ActionKit.Sequence()
-                .Callback(() => m_transform.DOLocalRotate(new Vector3(0, 0, -90), 0.5f, RotateMode.Fast))
-                .Delay(0.5f)
+                .Callback(() => mBossAnimator.Play("BossCallOver"))
+                .Delay(0.1f)
+                .Callback(() => AudioKit.PlaySound("resources://Phone_Hangup"))
+                .Delay(0.4f)
                 .Callback(() => mIsSee = true)
                 .Start(this);
         }

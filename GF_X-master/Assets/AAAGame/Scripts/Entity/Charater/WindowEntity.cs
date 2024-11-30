@@ -72,20 +72,21 @@ public class WindowEntity : SampleEntity
             timer = lvSettingTb[playerDm.LEVEL_STAGE].Event_Windows_OpenCD;
             //进入看不见状态概率
             int OpenProp = lvSettingTb[playerDm.LEVEL_STAGE].Event_Windows_OpenProp; //0-100
-            if (UnityEngine.Random.Range(0, 100) < OpenProp && !misBeginNext)
+            if (UnityEngine.Random.Range(0, 100) < OpenProp && !misBeginNext && !mIsSee)
             {
                 var timePre = preTimeGet();
                 // 先关闭窗
                 DOTween.Pause(mWindowTrans);
                 DOTween.Pause(mShadowTrans);
-                mWindowTrans.localPosition = new Vector3(0, 0, 0);
+                mWindowTrans.localPosition = new Vector3(7, -8.5f, -5);
+                mShadowTrans.localPosition = new Vector3(25, -9f, -7);
                 mShadow.SetActive(true);
                 mStaff.SetActive(false);
                 // mIsSee为false
                 ActionKit.Sequence()
                     .Callback(() => mIsCanCilck = true)
                     .Callback(() => //x轴从初始位置停下
-                        mShadowTrans.DOLocalMove(new Vector3(0, 0, 0), 0.5f).SetEase(Ease.InOutSine))
+                        mShadowTrans.DOLocalMove(new Vector3(6.6f, -9f, -7), 0.5f).SetEase(Ease.InOutSine))
                     //  mShadowTrans.position = new Vector3(50, -40, -1))
                     .Delay(0.5f)
                     //.Callback(() => mIsCanCilck = true)
@@ -153,15 +154,15 @@ public class WindowEntity : SampleEntity
     {
         if (!misBeginNext)
         {
-            DOTween.Pause(mShadowTrans);
-            mWindowTrans.DOLocalMove(new Vector3(0, 0, 0), 0.4f).SetEase(Ease.InOutSine).OnComplete(() =>
+            mShadowTrans.DOKill();
+            mWindowTrans.DOLocalMove(new Vector3(7, -8.5f, -5), 0.4f).SetEase(Ease.InOutSine).OnComplete(() =>
             {
                 mStaff.SetActive(false);
                 mShadow.SetActive(true);
-                mShadowTrans.DOLocalMove(new Vector3(-60, 0, 0), 1f).SetEase(Ease.InOutSine).SetEase(Ease.InOutSine)
+                mShadowTrans.DOLocalMove(new Vector3(-40, -9f, -7), 1f).SetEase(Ease.InOutSine).SetEase(Ease.InOutSine)
                     .OnComplete(() =>
                     {
-                        mShadowTrans.localPosition = new Vector3(22, 0, 0);
+                        mShadowTrans.localPosition = new Vector3(25, -9f, -7);
                         m_Collider2D.enabled = true;
                         mIsSee = false;
                         mIsCanCilck = false;
@@ -189,40 +190,44 @@ public class WindowEntity : SampleEntity
             mIsCanCilck = false;
             //停止mShadowTrans.DOShakePosition
             var lvRow = lvTb.GetDataRow(playerDm.GAME_LEVEL);
-            mShadowTrans.DOKill(); //todo 开门
+            mShadowTrans.DOKill();
+            AudioKit.PlaySound("resources://Window_Open");
             if (UnityEngine.Random.Range(0, 100) < TypeProp) //Event_Window_TypeProp类型1,正常/2.敌人
             {
                 mShadow.SetActive(false);
+                mShadowTrans.localPosition = new Vector3(-8, -9f, -7);
                 mStaff.SetActive(true);
                 //普通员工
                 ActionKit.Sequence()
-                    .Callback(() => mWindowTrans.DOLocalMove(new Vector3(0, 36, 0), 0.5f).SetEase(Ease.InOutSine))
+                    .Callback(() => mWindowTrans.DOLocalMove(new Vector3(7, 8.5f, -5), 0.5f).SetEase(Ease.InOutSine))
                     .Delay(0.5f)
                     .Callback(() => mIsSee = true)
                     .Delay(timeGet())
                     .Callback(() =>
-                        mStaffTrans.DOShakePosition(lvRow.GlobNum[2], new Vector3(5, 5, 0)))
+                        mStaffTrans.DOShakePosition(lvRow.GlobNum[2], new Vector3(2, 1, 0)))
                     .Delay(lvRow.GlobNum[2])
                     .Callback(() => misBeginNext = false)
                     .Callback(getOut)
+                    .Callback(() => AudioKit.PlaySound("resources://Window_Close"))
                     .Start(this);
-                mShadowTrans.localPosition = new Vector3(-21, 0, 0);
             }
             else
             {
                 mShadow.SetActive(false);
+                mShadowTrans.localPosition = new Vector3(-8, -9f, -7);
                 //帅锅
                 if (!GF.Entity.HasEntity("Assets/AAAGame/Prefabs/Entity/HandsomeWindow.prefab")) return;
                 HandsomeEntity = GF.Entity.GetEntity("Assets/AAAGame/Prefabs/Entity/HandsomeWindow.prefab");
                 //初始化和显示
                 HandsomeEntity.GetComponent<HandsomeWinEntity>().onStartAtt();
                 ActionKit.Sequence()
-                    .Callback(() => mWindowTrans.DOLocalMove(new Vector3(0, 36, 0), 0.5f).SetEase(Ease.InOutSine))
+                    .Callback(() => mWindowTrans.DOLocalMove(new Vector3(7, 8.5f, -5), 0.5f).SetEase(Ease.InOutSine))
                     .Delay(0.5f)
                     .Delay(lvSettingTb[playerDm.LEVEL_STAGE].EnemyMoveTime)
                     .Callback(() => misBeginNext = false)
                     .Callback(getOut)
                     .Callback(() => HandsomeEntity.GetComponent<HandsomeWinEntity>().Out())
+                    .Callback(() => AudioKit.PlaySound("resources://Window_Close"))
                     .Start(this);
             }
         }
@@ -231,12 +236,14 @@ public class WindowEntity : SampleEntity
             mIsCanCilck = false;
             //暂停spine
             DOTween.Pause(mWindowTrans);
-            mWindowTrans.localPosition = new Vector3(0, 0, 0);
+            mWindowTrans.localPosition = new Vector3(7, -8.5f, -5);
             // 开空窗
             ActionKit.Sequence()
-                .Callback(() => mWindowTrans.DOLocalMove(new Vector3(0, 36, 0), 0.5f).SetEase(Ease.InOutSine))
+                .Callback(() => mWindowTrans.DOLocalMove(new Vector3(7, 8.5f, -5), 0.5f).SetEase(Ease.InOutSine))
                 .Delay(1f)
-                .Callback(() => mWindowTrans.DOLocalMove(new Vector3(0, 0, 0), 0.5f).SetEase(Ease.InOutSine))
+                .Callback(() => mWindowTrans.DOLocalMove(new Vector3(7, -8.5f, -5), 0.5f).SetEase(Ease.InOutSine))
+                .Callback(() => AudioKit.PlaySound("resources://Window_Close"))
+                .Delay(0.5f)
                 .Callback(() => misBeginNext = false)
                 .Start(this);
         }

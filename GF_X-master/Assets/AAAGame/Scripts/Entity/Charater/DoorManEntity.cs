@@ -24,6 +24,8 @@ public class DoorManEntity : SampleEntity
     private GameObject mDoor;
     private Entity HandsomeEntity;
     private BoxCollider2D m_Collider2D;
+    private Animator mDoorAnimator;
+    private Animator mStaffAnimator;
 
     private float timer = 3;
     private Transform m_transform;
@@ -44,9 +46,13 @@ public class DoorManEntity : SampleEntity
         base.OnInit(userData);
         mStaff = transform.Find("Staff").gameObject;
         mDoor = transform.Find("Door").gameObject;
+        //mStaffAin在Staff/StaffAin
+        GameObject mStaffAin = mStaff.transform.Find("StaffAni").gameObject;
         mStaff.SetActive(false);
         m_Collider2D = GetComponent<BoxCollider2D>();
-        m_transform = GetComponent<Transform>();
+        m_transform = mDoor.GetComponent<Transform>();
+        mDoorAnimator = mDoor.GetComponent<Animator>();
+        mStaffAnimator = mStaffAin.GetComponent<Animator>();
         playerDm = GF.DataModel.GetOrCreate<PlayerDataModel>();
         lvSettingTb = GF.DataTable.GetDataTable<Level1SettingTable>();
         timer = lvSettingTb[playerDm.LEVEL_STAGE].Event_Door_OpenCD;
@@ -68,17 +74,16 @@ public class DoorManEntity : SampleEntity
             {
                 m_Collider2D.enabled = true;
                 var timePre = preTimeGet();
-                //todo 先关闭门
+                //先播放关闭门
+                mDoorAnimator.Play("default");
                 // mIsSee为false
+                AudioKit.PlaySound("resources://Door_Knock");
                 ActionKit.Sequence()
-                    .Callback(() => //x轴从初始位置0到-6停下,震动,增量移动
-                        m_transform.DOMove(new Vector3(50, -40, -1), 0.1f).SetEase(Ease.InOutSine))
                     .Callback(() => mIsCanCilck = false)
-                    //  m_transform.position = new Vector3(50, -40, -1))
-                    .Delay(0.3f)
-                    .Callback(() => m_transform.DOShakePosition(timePre, new Vector3(5, 5, 0)))
+                    .Callback(() => m_transform.DOShakePosition(timePre, new Vector3(1, 0, 0)))
                     .Callback(() => mIsCanCilck = true)
                     .Delay(timePre)
+                    .Callback(() => m_transform.localPosition = Vector3.zero)
                     .Callback(getOut)
                     .Start(this);
             }
@@ -141,8 +146,14 @@ public class DoorManEntity : SampleEntity
     {
         if (!misBeginNext)
         {
-            mStaff.transform.DOMove(new Vector3(56, -40, -1), 0.5f).SetEase(Ease.InOutSine).SetEase(Ease.InOutSine)
-                .OnComplete(() => { mStaff.SetActive(false); });
+            //y旋转180
+            mStaffAnimator.Play("mishu");
+            mStaff.transform.rotation = Quaternion.Euler(0, 180, 0);
+            mStaff.transform.DOLocalMove(new Vector3(0,0 , -1), 0.5f).SetEase(Ease.InOutSine).SetEase(Ease.InOutSine)
+                .OnComplete(() =>
+                {
+                    mStaff.SetActive(false);
+                });
             mIsSee = false;
             mIsCanCilck = false;
             misBeginNext = false;
@@ -160,7 +171,6 @@ public class DoorManEntity : SampleEntity
     //点击mDoorClick
     private void OnMouseDownDoor()
     {
-
         int TypeProp = lvSettingTb[playerDm.LEVEL_STAGE].Event_Door_TypeProp;
         misBeginNext = true;
         if (mIsCanCilck)
@@ -169,21 +179,27 @@ public class DoorManEntity : SampleEntity
             mIsCanCilck = false;
             //停止m_transform.DOShakePosition
             var lvRow = lvTb.GetDataRow(playerDm.GAME_LEVEL);
-            m_transform.DOKill(); //todo 开门
+            m_transform.DOKill(); //开门
+            m_transform.localPosition = Vector3.zero;
+            mDoorAnimator.Play("door");
+            AudioKit.PlaySound("resources://Door_Open");
             if (UnityEngine.Random.Range(0, 100) < TypeProp) //Event_Door_TypeProp类型1,正常/2.敌人
             {
                 mStaff.SetActive(true);
+                mStaff.transform.rotation = Quaternion.Euler(0, 0, 0);
                 //普通员工
                 ActionKit.Sequence()
                     .Callback(() =>
-                        mStaff.transform.DOMove(new Vector3(-50, -6, -5), 0.5f).SetEase(Ease.InOutSine))
+                        mStaff.transform.DOLocalMove(new Vector3(-80, 0, 0), 0.5f).SetEase(Ease.InOutSine))
                     .Delay(0.5f)
                     .Callback(() => mIsSee = true)
+                    .Callback(() => mStaffAnimator.Play("mishuBoss"))
                     .Delay(timeGet())
                     .Callback(() =>
-                        mStaff.transform.DOShakePosition(lvRow.GlobNum[1], new Vector3(5, 5, 0)))
+                        mStaff.transform.DOShakePosition(lvRow.GlobNum[1], new Vector3(1, 1, 0)))
                     .Delay(lvRow.GlobNum[1])
                     .Callback(() => misBeginNext = false)
+                    .Callback(() =>  AudioKit.PlaySound("resources://Door_Close"))
                     .Callback(getOut)
                     .Start(this);
             }
@@ -196,6 +212,7 @@ public class DoorManEntity : SampleEntity
                 HandsomeEntity.GetComponent<HandsomeEntity>().onStartAtt();
                 ActionKit.Sequence()
                     .Delay(lvSettingTb[playerDm.LEVEL_STAGE].EnemyMoveTime)
+                    .Callback(() =>  AudioKit.PlaySound("resources://Door_Close"))
                     .Callback(() => misBeginNext = false)
                     .Start(this);
             }
@@ -203,11 +220,15 @@ public class DoorManEntity : SampleEntity
         else
         {
             mIsCanCilck = false;
-            //todo 开空门
+            m_transform.localPosition = Vector3.zero;
+            // 开空门
             ActionKit.Sequence()
-                .Callback(() => m_transform.DOShakePosition(1f, new Vector3(2, 2, 0)))
+                .Callback(() => mDoorAnimator.Play("door"))
                 .Delay(1f)
+                .Callback(() => m_transform.localPosition = Vector3.zero)
                 .Callback(() => misBeginNext = false)
+                .Callback(() => mDoorAnimator.Play("default"))
+                .Callback(() =>  AudioKit.PlaySound("resources://Door_Close"))
                 .Start(this);
         }
     }

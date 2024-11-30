@@ -12,7 +12,8 @@
         "GameFramework",
         "DOTween.Extension",
         "QFramework.CoreKit",
-        "QFramework"
+        "QFramework",
+        "AudioKit"
     ],
     "includePlatforms": [],
     "excludePlatforms": [],

@@ -36,12 +36,19 @@ public class KongbuEntity : SampleEntity
 
     private Entity WindowEntity;
 
+    private GameObject mBoy;
+
+    private GameObject mGirl;
+    
+    private Animator mBoyAnimator;
+    private Animator mGirlAnimator;
 
     private Transform m_transform;
 
     private IDataTable<Level1SettingTable> lvSettingTb;
     private PlayerDataModel playerDm;
     private int Stage;
+    private string[] mSound;
 
     public bool Ctrlable
     {
@@ -57,10 +64,15 @@ public class KongbuEntity : SampleEntity
     {
         base.OnInit(userData);
         boxClick = GetComponent<BoxCollider2D>();
+        mBoy = GameObject.Find("boy");
+        mGirl = GameObject.Find("girl");
+        mBoyAnimator = mBoy.GetComponent<Animator>();
+        mGirlAnimator = mGirl.GetComponent<Animator>();
         m_transform = GetComponent<Transform>();
         playerDm = GF.DataModel.GetOrCreate<PlayerDataModel>();
         lvSettingTb = GF.DataTable.GetDataTable<Level1SettingTable>();
         Stage = playerDm.LEVEL_STAGE;
+        mSound = new string[2] {"resources://Kiss_1", "resources://Kiss_2"};
     }
 
 
@@ -77,9 +89,12 @@ public class KongbuEntity : SampleEntity
         Debug.Log("Object clicked!");
         isDragging = true;
 
-        m_transform.DOLocalRotate(new Vector3(0, 0, 80), 1f, RotateMode.Fast);
-        //}
-
+        //m_transform.DOLocalRotate(new Vector3(0, 0, 80), 1f, RotateMode.Fast);
+        mBoyAnimator.Play("BoyKiss");
+        mGirlAnimator.Play("GirlShy");
+        //随机播放AudioKit.PlaySound("resources://Enemy_Success");
+        AudioKit.PlaySound(mSound[UnityEngine.Random.Range(0, mSound.Length)]);
+        
         GF.Event.Fire(this, ReferencePool.Acquire<PlayerEventArgs>().Fill(PlayerEventType.DragBtnKongbu,
             new Dictionary<string, object>
             {
@@ -92,6 +107,8 @@ public class KongbuEntity : SampleEntity
     {
         if (isDragging)
         {
+            mBoyAnimator.Play("BoyKiss");
+            mGirlAnimator.Play("GirlShy");
             GF.Event.Fire(this, ReferencePool.Acquire<PlayerEventArgs>().Fill(PlayerEventType.DragBtnKongbu,
                 new Dictionary<string, object>
                 {
@@ -141,8 +158,8 @@ public class KongbuEntity : SampleEntity
     void OnMouseUp()
     {
         //dotween旋转
-        m_transform.DOLocalRotate(new Vector3(0, 0, 0), 1f, RotateMode.Fast);
-
+        //m_transform.DOLocalRotate(new Vector3(0, 0, 0), 1f, RotateMode.Fast);
+        mBoyAnimator.Play("Boy");
         if (isDragging)
         {
             Debug.Log("Object released!");

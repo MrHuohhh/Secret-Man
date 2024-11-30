@@ -31,8 +31,8 @@ RectTransform:
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 4133104451660045858}
-  - {fileID: 8663434542234546775}
   - {fileID: 665695309358805262}
+  - {fileID: 8663434542234546775}
   m_Father: {fileID: 1723033201911164459}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
@@ -860,8 +860,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0.5}
   m_AnchorMax: {x: 0, y: 0.5}
-  m_AnchoredPosition: {x: 75.99744, y: -2.0040894}
-  m_SizeDelta: {x: 271.9548, y: 48.8119}
+  m_AnchoredPosition: {x: 460, y: -154}
+  m_SizeDelta: {x: 1880, y: 1000}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &803347266675660184
 CanvasRenderer:
@@ -884,19 +884,19 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Material: {fileID: 0}
-  m_Color: {r: 0.8396226, g: 0.368325, b: 0.6726947, a: 1}
+  m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_RaycastTarget: 1
   m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
   m_Maskable: 1
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_Sprite: {fileID: 21300000, guid: eaeecdabb574f48e6b92b0234eacc626, type: 3}
+  m_Sprite: {fileID: 21300000, guid: e49e1225af9f9eb45b651d5b2acad588, type: 3}
   m_Type: 3
   m_PreserveAspect: 0
   m_FillCenter: 1
   m_FillMethod: 0
-  m_FillAmount: 0
+  m_FillAmount: 0.517
   m_FillClockwise: 1
   m_FillOrigin: 0
   m_UseSpriteMesh: 0
@@ -1013,8 +1013,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0.5}
   m_AnchorMax: {x: 0, y: 0.5}
-  m_AnchoredPosition: {x: 76, y: -2}
-  m_SizeDelta: {x: 271.95, y: 48.812}
+  m_AnchoredPosition: {x: 460.19995, y: -153.99591}
+  m_SizeDelta: {x: 1880, y: 1000}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &1417068269973195692
 CanvasRenderer:
@@ -1037,15 +1037,15 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Material: {fileID: 0}
-  m_Color: {r: 1, g: 1, b: 1, a: 0.43137255}
+  m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_RaycastTarget: 1
   m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
   m_Maskable: 1
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_Sprite: {fileID: 21300000, guid: eaeecdabb574f48e6b92b0234eacc626, type: 3}
-  m_Type: 1
+  m_Sprite: {fileID: 21300000, guid: 70894fc8658464144a1ef7f20df0349d, type: 3}
+  m_Type: 0
   m_PreserveAspect: 0
   m_FillCenter: 1
   m_FillMethod: 0
