@@ -83,8 +83,14 @@ public class KongbuEntity : SampleEntity
         switch (args.EventType)
         {
             case PlayerEventType.HandsomeYes:
-                mBoyAnimator.Play("BoyAry");
-                mGirlAnimator.Play("GirlFowller");
+                if (mBoyAnimator != null)
+                {
+                    mBoyAnimator.Play("BoyAry");
+                }
+                if (mGirlAnimator != null)
+                {
+                    mGirlAnimator.Play("GirlFowller");
+                }
                 break;
         }
     }
