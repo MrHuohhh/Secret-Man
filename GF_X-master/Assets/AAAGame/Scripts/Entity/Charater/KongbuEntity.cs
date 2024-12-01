@@ -100,7 +100,6 @@ public class KongbuEntity : SampleEntity
     //按下
     void OnMouseDown()
     {
-        Debug.Log("Object clicked!");
         isDragging = true;
 
         //m_transform.DOLocalRotate(new Vector3(0, 0, 80), 1f, RotateMode.Fast);
@@ -177,7 +176,6 @@ public class KongbuEntity : SampleEntity
         mBoyAnimator.Play("Boy");
         if (isDragging)
         {
-            Debug.Log("Object released!");
             isDragging = false;
         }
     }

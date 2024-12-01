@@ -685,7 +685,6 @@ GameObject:
   - component: {fileID: 3663554072606907424}
   - component: {fileID: 7337897977853599595}
   - component: {fileID: 5666750716974925992}
-  - component: {fileID: 8527746073895721774}
   m_Layer: 0
   m_Name: Description
   m_TagString: Untagged
@@ -810,19 +809,6 @@ MonoBehaviour:
   m_hasFontAssetChanged: 0
   m_baseMaterial: {fileID: 0}
   m_maskOffset: {x: 0, y: 0, z: 0, w: 0}
---- !u!114 &8527746073895721774
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2373824114484530625}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 087a56c75d247be4f8f7cf82ceb68e4b, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  m_Key: RatingDialog.Description
 --- !u!1 &4167476948171936209
 GameObject:
   m_ObjectHideFlags: 0
@@ -1194,7 +1180,7 @@ MonoBehaviour:
   m_Loops: 1
   m_LoopType: 0
   m_UpdateType: 0
-  m_Snapping: 0
+  m_IgnoreTimeScale: 0
   m_OnPlay:
     m_PersistentCalls:
       m_Calls: []
@@ -1255,7 +1241,7 @@ MonoBehaviour:
   m_Loops: 1
   m_LoopType: 0
   m_UpdateType: 0
-  m_Snapping: 0
+  m_IgnoreTimeScale: 0
   m_OnPlay:
     m_PersistentCalls:
       m_Calls: []

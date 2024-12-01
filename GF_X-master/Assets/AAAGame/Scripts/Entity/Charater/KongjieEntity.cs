@@ -100,7 +100,6 @@ public class KongjieEntity : SampleEntity
     
     void OnMouseDown()
     {
-        Debug.Log("Object clicked!");
     }
 
     public void onFind()
