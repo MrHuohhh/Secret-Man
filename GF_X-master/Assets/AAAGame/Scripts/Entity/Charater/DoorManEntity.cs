@@ -78,14 +78,38 @@ public class DoorManEntity : SampleEntity
                 mDoorAnimator.Play("default");
                 // mIsSee为false
                 AudioKit.PlaySound("resources://Door_Knock");
-                ActionKit.Sequence()
-                    .Callback(() => mIsCanCilck = false)
-                    .Callback(() => m_transform.DOShakePosition(timePre, new Vector3(1, 0, 0)))
-                    .Callback(() => mIsCanCilck = true)
-                    .Delay(timePre)
-                    .Callback(() => m_transform.localPosition = Vector3.zero)
-                    .Callback(getOut)
-                    .Start(this);
+
+                int TypeProp = lvSettingTb[playerDm.LEVEL_STAGE].Event_Door_TypeProp;
+                if (UnityEngine.Random.Range(0, 100) < TypeProp) //Event_Door_TypeProp类型1,正常/2.敌人
+                {
+                    ActionKit.Sequence()
+                        .Callback(() => mIsCanCilck = false)
+                        .Callback(() => m_transform.DOShakePosition(timePre, new Vector3(1, 0, 0)))
+                        .Callback(() => mIsCanCilck = true)
+                        .Delay(timePre)
+                        .Callback(() => m_transform.localPosition = Vector3.zero)
+                        .Callback(getOut)
+                        .Start(this);
+                }
+                else
+                {
+                    //帅锅
+                    if (!GF.Entity.HasEntity("Assets/AAAGame/Prefabs/Entity/Handsome.prefab")) return;
+                    HandsomeEntity = GF.Entity.GetEntity("Assets/AAAGame/Prefabs/Entity/Handsome.prefab");
+                    ActionKit.Sequence()
+                        .Callback(() => mIsCanCilck = false)
+                        .Callback(() => misBeginNext = true)
+                        .Callback(() => m_transform.DOShakePosition(1, new Vector3(1, 0, 0)))
+                        .Delay(1)
+                        .Callback(() => m_transform.localPosition = Vector3.zero)
+                        .Callback(() =>    HandsomeEntity.GetComponent<HandsomeEntity>().onStartAtt())
+                        .Delay(lvSettingTb[playerDm.LEVEL_STAGE].EnemyMoveTime)
+                        .Callback(() => AudioKit.PlaySound("resources://Door_Close"))
+                        .Callback(() => mDoorAnimator.Play("default"))
+                        .Callback(() => misBeginNext = false)
+                        .Callback(getOut)
+                        .Start(this);
+                }
             }
         }
     }
@@ -149,10 +173,10 @@ public class DoorManEntity : SampleEntity
             //y旋转180
             mStaffAnimator.Play("mishu");
             mStaff.transform.rotation = Quaternion.Euler(0, 180, 0);
-            mStaff.transform.DOLocalMove(new Vector3(0,0 , -1), 0.5f).SetEase(Ease.InOutSine).SetEase(Ease.InOutSine)
+            mStaff.transform.DOLocalMove(new Vector3(0, 0, -1), 0.5f).SetEase(Ease.InOutSine).SetEase(Ease.InOutSine)
                 .OnComplete(() =>
                 {
-                    mDoorAnimator.Play("door");
+                    mDoorAnimator.Play("default");
                     mStaff.SetActive(false);
                 });
             mIsSee = false;
@@ -173,9 +197,9 @@ public class DoorManEntity : SampleEntity
     private void OnMouseDownDoor()
     {
         int TypeProp = lvSettingTb[playerDm.LEVEL_STAGE].Event_Door_TypeProp;
-        misBeginNext = true;
         if (mIsCanCilck)
         {
+            misBeginNext = true;
             m_Collider2D.enabled = false;
             mIsCanCilck = false;
             //停止m_transform.DOShakePosition
@@ -184,8 +208,8 @@ public class DoorManEntity : SampleEntity
             m_transform.localPosition = Vector3.zero;
             mDoorAnimator.Play("door");
             AudioKit.PlaySound("resources://Door_Open");
-            if (UnityEngine.Random.Range(0, 100) < TypeProp) //Event_Door_TypeProp类型1,正常/2.敌人
-            {
+            // if (UnityEngine.Random.Range(0, 100) < TypeProp) //Event_Door_TypeProp类型1,正常/2.敌人
+            // {
                 mStaff.SetActive(true);
                 mStaff.transform.rotation = Quaternion.Euler(0, 0, 0);
                 //普通员工
@@ -200,38 +224,41 @@ public class DoorManEntity : SampleEntity
                         mStaff.transform.DOShakePosition(lvRow.GlobNum[1], new Vector3(1, 1, 0)))
                     .Delay(lvRow.GlobNum[1])
                     .Callback(() => misBeginNext = false)
-                    .Callback(() =>  AudioKit.PlaySound("resources://Door_Close"))
+                    .Callback(() => AudioKit.PlaySound("resources://Door_Close"))
                     .Callback(getOut)
                     .Start(this);
-            }
-            else
-            {
-                //帅锅
-                if (!GF.Entity.HasEntity("Assets/AAAGame/Prefabs/Entity/Handsome.prefab")) return;
-                HandsomeEntity = GF.Entity.GetEntity("Assets/AAAGame/Prefabs/Entity/Handsome.prefab");
-                //初始化和显示
-                HandsomeEntity.GetComponent<HandsomeEntity>().onStartAtt();
-                ActionKit.Sequence()
-                    .Delay(lvSettingTb[playerDm.LEVEL_STAGE].EnemyMoveTime)
-                    .Callback(() =>  AudioKit.PlaySound("resources://Door_Close"))
-                    .Callback(() => mDoorAnimator.Play("door"))
-                    .Callback(() => misBeginNext = false)
-                    .Start(this);
-            }
+            // }
+            // else
+            // {
+            //     //帅锅
+            //     if (!GF.Entity.HasEntity("Assets/AAAGame/Prefabs/Entity/Handsome.prefab")) return;
+            //     HandsomeEntity = GF.Entity.GetEntity("Assets/AAAGame/Prefabs/Entity/Handsome.prefab");
+            //     //初始化和显示
+            //     HandsomeEntity.GetComponent<HandsomeEntity>().onStartAtt();
+            //     ActionKit.Sequence()
+            //         .Delay(lvSettingTb[playerDm.LEVEL_STAGE].EnemyMoveTime)
+            //         .Callback(() => AudioKit.PlaySound("resources://Door_Close"))
+            //         .Callback(() => mDoorAnimator.Play("door"))
+            //         .Callback(() => misBeginNext = false)
+            //         .Start(this);
+            // }
         }
         else
         {
-            mIsCanCilck = false;
-            m_transform.localPosition = Vector3.zero;
-            // 开空门
-            ActionKit.Sequence()
-                .Callback(() => mDoorAnimator.Play("door"))
-                .Delay(1f)
-                .Callback(() => m_transform.localPosition = Vector3.zero)
-                .Callback(() => misBeginNext = false)
-                .Callback(() => mDoorAnimator.Play("default"))
-                .Callback(() =>  AudioKit.PlaySound("resources://Door_Close"))
-                .Start(this);
+            if (!misBeginNext)
+            {
+                mIsCanCilck = false;
+                m_transform.localPosition = Vector3.zero;
+                // 开空门
+                ActionKit.Sequence()
+                    .Callback(() => mDoorAnimator.Play("door"))
+                    .Delay(1f)
+                    .Callback(() => m_transform.localPosition = Vector3.zero)
+                    .Callback(() => misBeginNext = false)
+                    .Callback(() => mDoorAnimator.Play("default"))
+                    .Callback(() => AudioKit.PlaySound("resources://Door_Close"))
+                    .Start(this);
+            }
         }
     }
 }

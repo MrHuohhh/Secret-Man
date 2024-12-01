@@ -126,6 +126,7 @@ public class HandsomeWinEntity : SampleEntity
                 DOTween.Pause(m_transform);
                 //m_transform.gameObject.SetActive(false);
                 Love.SetActive(false);
+                Hanson.SetActive(false);
                 mLove.localPosition =  Vector3.zero;
                 mCollider.enabled = false;
             }
