@@ -18,6 +18,7 @@ public class KongjieEntity : SampleEntity
     private PlayerDataModel playerDm;
 
     private Animator mBossAnimator;
+
     public bool IsWatching
     {
         get => mIsSee;
@@ -78,7 +79,7 @@ public class KongjieEntity : SampleEntity
                 .Start(this);
         }
     }
-    
+
     //进入可见状态
     private void EnterCanSeeState()
     {
@@ -93,11 +94,12 @@ public class KongjieEntity : SampleEntity
                 .Delay(0.1f)
                 .Callback(() => AudioKit.PlaySound("resources://Phone_Hangup"))
                 .Delay(0.4f)
+                .Callback(() => timer = lvSettingTb[playerDm.LEVEL_STAGE].Event_Boss_CloseCD)
                 .Callback(() => mIsSee = true)
                 .Start(this);
         }
     }
-    
+
     void OnMouseDown()
     {
     }
