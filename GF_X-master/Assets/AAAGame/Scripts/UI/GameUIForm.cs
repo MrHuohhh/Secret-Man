@@ -102,7 +102,16 @@ public partial class GameUIForm : UIFormBase
                     }
                 }
                 loveNum = 0;
-                //todo 判断是否完成关卡
+                // 判断是否完成关卡
+                if (playerDm.LEVEL_STAGE >= 6)
+                {
+                    var curProcedure = GF.Procedure.CurrentProcedure;
+                    if (curProcedure is GameProcedure)
+                    {
+                        var gameProcedure = curProcedure as GameProcedure;
+                        gameProcedure.OnGameOver(true);
+                    }
+                }
             }
         }
     }

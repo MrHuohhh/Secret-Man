@@ -183,9 +183,9 @@ public class WindowEntity : SampleEntity
     private void OnMouseDownDoor()
     {
         int TypeProp = lvSettingTb[playerDm.LEVEL_STAGE].Event_Window_TypeProp;
-        misBeginNext = true;
         if (mIsCanCilck)
         {
+            misBeginNext = true;
             m_Collider2D.enabled = false;
             mIsCanCilck = false;
             //停止mShadowTrans.DOShakePosition
@@ -233,19 +233,23 @@ public class WindowEntity : SampleEntity
         }
         else
         {
-            mIsCanCilck = false;
-            //暂停spine
-            DOTween.Pause(mWindowTrans);
-            mWindowTrans.localPosition = new Vector3(7, -8.5f, -5);
-            // 开空窗
-            ActionKit.Sequence()
-                .Callback(() => mWindowTrans.DOLocalMove(new Vector3(7, 8.5f, -5), 0.5f).SetEase(Ease.InOutSine))
-                .Delay(1f)
-                .Callback(() => mWindowTrans.DOLocalMove(new Vector3(7, -8.5f, -5), 0.5f).SetEase(Ease.InOutSine))
-                .Callback(() => AudioKit.PlaySound("resources://Window_Close"))
-                .Delay(0.5f)
-                .Callback(() => misBeginNext = false)
-                .Start(this);
+            if (!misBeginNext)
+            {
+                AudioKit.PlaySound("resources://Window_Open");
+                mIsCanCilck = false;
+                //暂停spine
+                DOTween.Pause(mWindowTrans);
+                mWindowTrans.localPosition = new Vector3(7, -8.5f, -5);
+                // 开空窗
+                ActionKit.Sequence()
+                    .Callback(() => mWindowTrans.DOLocalMove(new Vector3(7, 8.5f, -5), 0.5f).SetEase(Ease.InOutSine))
+                    .Delay(1f)
+                    .Callback(() => mWindowTrans.DOLocalMove(new Vector3(7, -8.5f, -5), 0.5f).SetEase(Ease.InOutSine))
+                    .Callback(() => AudioKit.PlaySound("resources://Window_Close"))
+                    .Delay(0.5f)
+                    .Callback(() => misBeginNext = false)
+                    .Start(this);
+            }
         }
     }
 }
